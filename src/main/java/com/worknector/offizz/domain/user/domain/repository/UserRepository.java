@@ -1,7 +1,7 @@
-package com.worknector.offizz.user.domain.repository;
+package com.worknector.offizz.domain.user.domain.repository;
 
 import com.worknector.offizz.global.entity.StatusType;
-import com.worknector.offizz.user.domain.User;
+import com.worknector.offizz.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

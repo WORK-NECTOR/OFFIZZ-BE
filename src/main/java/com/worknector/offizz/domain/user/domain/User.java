@@ -1,4 +1,4 @@
-package com.worknector.offizz.user.domain;
+package com.worknector.offizz.domain.user.domain;
 
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
