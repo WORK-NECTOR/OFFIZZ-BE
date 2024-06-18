@@ -7,6 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static com.worknector.offizz.domain.user.domain.UserStatusType.DELETED;
+import static com.worknector.offizz.domain.user.domain.UserStatusType.USABLE;
+import static jakarta.persistence.EnumType.STRING;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -22,4 +26,16 @@ public class User extends BaseEntity {
     private Long socialId;
 
     private String nickName;
+
+    @Column(nullable = false)
+    @Enumerated(value = STRING)
+    private UserStatusType status = USABLE;
+
+    public boolean isDeleted() {
+        return this.status.equals(DELETED);
+    }
+
+    public void changeStatusToDeleted() {
+        this.status = DELETED;
+    }
 }
