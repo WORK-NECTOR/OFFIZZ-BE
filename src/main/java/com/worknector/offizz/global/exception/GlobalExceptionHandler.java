@@ -25,7 +25,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             final HttpStatusCode status,
             final WebRequest request
     ) {
-        log.warn(e.getMessage(), e);
+        log.error(e.getMessage(), e);
 
         final String errMessage = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         return ResponseEntity.badRequest()
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ExceptionResponse> handleBadRequestException(final ApplicationException e) {
-        log.warn(e.getMessage(), e);
+        log.error(e.getMessage(), e);
 
         return ResponseEntity.badRequest()
                 .body(new ExceptionResponse(e.getCode(), e.getMessage()));
