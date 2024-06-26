@@ -32,12 +32,15 @@ public class JwtProvider {
     private int accessExpiration;
 
     private static final String TYPE = "type";
+    private static final String ROLE = "role";
+    private static final String USER = "user";
 
     public String generateAccessToken(Long id) {
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
 
         Instant accessDate = LocalDateTime.now().plusSeconds(accessExpiration).atZone(ZoneId.systemDefault()).toInstant();
         return Jwts.builder()
+                .claim(ROLE, USER)
                 .claim(TYPE, Type.ACCESS)
                 .setSubject(String.valueOf(id))
                 .setExpiration(Date.from(accessDate))
@@ -50,6 +53,7 @@ public class JwtProvider {
 
         Instant refreshDate = LocalDateTime.now().plusSeconds(refreshExpiration).atZone(ZoneId.systemDefault()).toInstant();
         String refreshToken = Jwts.builder()
+                .claim(ROLE, USER)
                 .claim(TYPE, Type.REFRESH)
                 .setSubject(String.valueOf(id))
                 .setExpiration(Date.from(refreshDate))

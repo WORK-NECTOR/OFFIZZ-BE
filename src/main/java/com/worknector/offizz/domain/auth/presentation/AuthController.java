@@ -8,11 +8,14 @@ import com.worknector.offizz.domain.auth.application.usecase.JwtUseCase;
 import com.worknector.offizz.domain.auth.application.usecase.oauth.SelectOauth;
 import com.worknector.offizz.domain.auth.application.usecase.oauth.SignInUseCase;
 import com.worknector.offizz.domain.auth.presentation.constant.Provider;
+import com.worknector.offizz.domain.user.domain.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +32,20 @@ public class AuthController {
         SignInUseCase signInUseCase = selectOauth.selectSignIn(provider);
         AuthUserResponse authUser = signInUseCase.getUser(request);
         JwtTokenResponse jwtToken = jwtUseCase.signIn(authUser.user());
+        return ResponseEntity.ok().body(jwtToken);
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "로그아웃", description = "토큰 같이 보내주세요")
+    public ResponseEntity<Void> logout(@AuthenticationPrincipal User user) {
+        jwtUseCase.logout(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/refresh")
+    @Operation(summary = "토큰 재발급 | 토큰 필요", description = "refreshToken 으로 토큰 재발급")
+    public ResponseEntity<JwtTokenResponse> refresh(@AuthenticationPrincipal User user, HttpServletRequest request) {
+        JwtTokenResponse jwtToken = jwtUseCase.regenerateToken(user, request);
         return ResponseEntity.ok().body(jwtToken);
     }
 }

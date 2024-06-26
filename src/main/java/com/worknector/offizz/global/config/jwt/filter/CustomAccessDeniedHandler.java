@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.worknector.offizz.domain.auth.presentation.constant.AuthResponseCode.AUTH_DENIED;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -22,13 +24,13 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
         log.error("AuthenticationEntryPoint : {} {}", null, request.getRequestURI());
         objectMapper.writeValue(
                 response.getOutputStream(),
-                new ExceptionResponse(null, null)
+                new ExceptionResponse(AUTH_DENIED.getCode(), AUTH_DENIED.getMessage())
         );
     }
 }

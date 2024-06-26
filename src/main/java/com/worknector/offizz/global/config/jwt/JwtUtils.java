@@ -55,14 +55,12 @@ public class JwtUtils {
     private static final String CONTENT_TYPE = "application/json";
     private static final String CHARACTER_ENCODING = "UTF-8";
 
-    public String checkRedis(Long id, HttpServletRequest request) {
+    public void checkRedis(Long id, HttpServletRequest request) {
         String refreshToken = request.getHeader(AUTHORIZATION).split(" ")[1];
         String redisToken = redisRepository.getValues(REFRESH.toString() + id)
                 .orElseThrow(NoneRefreshTokenException::new);
         if (!redisToken.equals(refreshToken))
             throw new InvalidRefreshTokenException();
-        Claims claims = parseClaims(refreshToken);
-        return claims.get(ROLE).toString();
     }
 
     public void makeExpired(Long id) {
