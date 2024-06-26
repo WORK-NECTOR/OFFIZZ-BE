@@ -29,6 +29,7 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
+    @Builder.Default
     private UserStatusType status = USABLE;
 
     public boolean isDeleted() {
