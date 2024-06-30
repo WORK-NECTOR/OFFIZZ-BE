@@ -32,7 +32,7 @@ public class AuthController {
         SignInUseCase signInUseCase = selectOauth.selectSignIn(provider);
         AuthUserResponse authUser = signInUseCase.getUser(request);
         JwtTokenResponse jwtToken = jwtUseCase.signIn(authUser.user());
-        return ResponseEntity.ok().body(jwtToken);
+        return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/logout")
@@ -46,6 +46,6 @@ public class AuthController {
     @Operation(summary = "토큰 재발급 | 토큰 필요", description = "refreshToken 으로 토큰 재발급")
     public ResponseEntity<JwtTokenResponse> refresh(@AuthenticationPrincipal User user, HttpServletRequest request) {
         JwtTokenResponse jwtToken = jwtUseCase.regenerateToken(user, request);
-        return ResponseEntity.ok().body(jwtToken);
+        return ResponseEntity.ok(jwtToken);
     }
 }

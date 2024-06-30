@@ -25,10 +25,10 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
-        log.error("AuthenticationEntryPoint : {} {}", null, request.getRequestURI());
+        log.error("AuthenticationEntryPoint : {} {}", AUTH_FAILED.getMessage(), request.getRequestURI());
         objectMapper.writeValue(
                 response.getOutputStream(),
                 new ExceptionResponse(AUTH_FAILED.getCode(), AUTH_FAILED.getMessage())

@@ -24,10 +24,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding("UTF-8");
-        log.error("AuthenticationEntryPoint : {} {}", null, request.getRequestURI());
+        log.error("AuthenticationEntryPoint : {} {}", AUTH_DENIED.getMessage(), request.getRequestURI());
         objectMapper.writeValue(
                 response.getOutputStream(),
                 new ExceptionResponse(AUTH_DENIED.getCode(), AUTH_DENIED.getMessage())
