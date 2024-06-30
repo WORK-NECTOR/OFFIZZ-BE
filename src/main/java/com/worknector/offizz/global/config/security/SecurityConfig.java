@@ -1,5 +1,6 @@
 package com.worknector.offizz.global.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worknector.offizz.global.config.jwt.JwtUtils;
 import com.worknector.offizz.global.config.jwt.filter.CustomAccessDeniedHandler;
 import com.worknector.offizz.global.config.jwt.filter.CustomAuthenticationEntryPoint;
@@ -24,6 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     private static final String[] PASS = {"/resource/**", "/css/**", "/js/**", "/img/**", "/lib/**"};
     private final JwtUtils jwtProvider;
+    private final ObjectMapper objectMapper;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
@@ -49,7 +51,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(customAuthenticationEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler)
                 )
-                .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtFilter(jwtProvider, objectMapper), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
