@@ -16,7 +16,7 @@ public class BucketList extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long workationId;
+    private Long bucketListId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workation_id", nullable = false)

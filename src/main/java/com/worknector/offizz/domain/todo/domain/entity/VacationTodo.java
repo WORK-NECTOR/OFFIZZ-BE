@@ -1,6 +1,7 @@
 package com.worknector.offizz.domain.todo.domain.entity;
 
 import com.worknector.offizz.domain.workation.domain.entity.Daily;
+import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class VacationTodo {
+public class VacationTodo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
