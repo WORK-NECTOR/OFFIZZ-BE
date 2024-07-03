@@ -30,4 +30,14 @@ public class DailyTodo extends BaseEntity {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    private int workCondition;
+
+    private int vacationCondition;
+
+    private String dailyY;
+
+    private String dailyW;
+
+    private String dailyT;
 }
