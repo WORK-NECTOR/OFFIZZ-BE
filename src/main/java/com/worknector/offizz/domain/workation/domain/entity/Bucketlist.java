@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class BucketList extends BaseEntity {
+public class Bucketlist extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bucketListId;
+    private Long bucketlistId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workation_id", nullable = false)
