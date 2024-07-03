@@ -23,4 +23,8 @@ public class BucketList extends BaseEntity {
     private Workation workation;
 
     private String name;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean isComplete = false;
 }
