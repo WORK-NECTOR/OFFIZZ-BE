@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -44,6 +46,7 @@ public class Workation extends BaseEntity {
     private LocalTime endCoreTime;
 
     @Column(nullable = false)
+    @Enumerated(value = STRING)
     private WorkationKeyword keyword;
 
     private String goal;
