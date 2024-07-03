@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.todo.domain.entity;
 
+import com.worknector.offizz.domain.workation.domain.entity.Daily;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +19,8 @@ public class VacationTodo {
     private Long vacationTodoId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "daily_todo_id", nullable = false)
-    private DailyTodo dailyTodo;
+    @JoinColumn(name = "daily_id", nullable = false)
+    private Daily daily;
 
     private int icon;
 

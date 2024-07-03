@@ -1,6 +1,6 @@
 package com.worknector.offizz.domain.title.domain.entity;
 
-import com.worknector.offizz.domain.todo.domain.entity.DailyTodo;
+import com.worknector.offizz.domain.workation.domain.entity.Daily;
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,8 @@ public class DailyTitle extends BaseEntity {
     private Long dailyTitleId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "daily_todo_id", nullable = false)
-    private DailyTodo dailyTodo;
+    @JoinColumn(name = "daily_id", nullable = false)
+    private Daily daily;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "title_id", nullable = false)

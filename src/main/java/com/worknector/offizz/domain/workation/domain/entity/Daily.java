@@ -1,6 +1,5 @@
-package com.worknector.offizz.domain.todo.domain.entity;
+package com.worknector.offizz.domain.workation.domain.entity;
 
-import com.worknector.offizz.domain.workation.domain.entity.Workation;
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,11 +14,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class DailyTodo extends BaseEntity {
+public class Daily extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dailyTodoId;
+    private Long dailyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workation_id", nullable = false)
