@@ -1,9 +1,6 @@
 package com.worknector.offizz.openapi.course.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,14 +21,18 @@ public class Course {
 
   private String crsCycle;
 
+  @Column(columnDefinition = "TEXT")
   private String crsContents;
 
   private String createdtime;
 
+  @Column(columnDefinition = "TEXT")
   private String travelerinfo;
 
+  @Column(columnDefinition = "TEXT")
   private String crsTourInfo;
 
+  @Column(columnDefinition = "TEXT")
   private String crsSummary;
 
   private String routeIdx;
@@ -50,5 +51,6 @@ public class Course {
 
   private String brdDiv;
 
+  @Column(columnDefinition = "TEXT")
   private String gpxpath;
 }
