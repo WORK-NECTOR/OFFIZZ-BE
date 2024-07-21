@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
-import com.worknector.offizz.openapi.tour.domain.Accommodation;
+import com.worknector.offizz.openapi.tour.domain.entity.Accommodation;
 
 public class AccommodationMapper {
 

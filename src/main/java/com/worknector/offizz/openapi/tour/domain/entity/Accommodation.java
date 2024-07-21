@@ -1,4 +1,4 @@
-package com.worknector.offizz.openapi.tour.domain;
+package com.worknector.offizz.openapi.tour.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
