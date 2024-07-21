@@ -1,5 +1,6 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
+import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class TourOpenApiUseCase {
   @Value("${open-api.tour.base-url}")
   private String baseUrl;
 
-  @Value("${open-api.tour.url-path}")
+  @Value("${open-api.tour.url-path.accommodation}")
   private String urlPath;
 
   @Value("${open-api.mobile-os}")
@@ -37,7 +38,7 @@ public class TourOpenApiUseCase {
         .build();
   }
 
-  public String fetchTourData() {
+  public AccommodationResponse fetchAccommodationData(int pageNo, int numOfRows) {
       return tourWebClient()
         .get()
         .uri(uriBuilder ->
@@ -45,14 +46,14 @@ public class TourOpenApiUseCase {
                 .path(urlPath)
                 .queryParam("serviceKey", serviceKey)
                 .queryParam("_type", "json")
-                .queryParam("pageNo", 1)
-                .queryParam("numOfRows", 100)
+                .queryParam("pageNo", pageNo)
+                .queryParam("numOfRows", numOfRows)
                 .queryParam("MobileOS", mobileOS)
                 .queryParam("MobileApp", mobileApp)
                 .build()
         )
         .retrieve()
-        .bodyToMono(String.class)
+        .bodyToMono(AccommodationResponse.class)
         .block();
   }
 
