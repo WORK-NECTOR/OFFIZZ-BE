@@ -1,14 +1,24 @@
 package com.worknector.offizz.openapi.tour.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 public class AccommodationResponse {
 
-    private Header header;
-    private Body body;
+    private Response response;
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Response {
+        private Header header;
+        private Body body;
+    }
 
     @Getter
     @NoArgsConstructor
@@ -22,14 +32,18 @@ public class AccommodationResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Body {
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Items items;
+        private int numOfRows;
+        private int pageNo;
+        private int totalCount;
     }
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Items {
-        private Item item;
+        private List<Item> item;
     }
 
     @Getter
