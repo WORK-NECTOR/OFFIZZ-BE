@@ -13,7 +13,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 @RequiredArgsConstructor
 public class CourseOpenApiUseCase {
 
-  private final WebClient.Builder webClientBuilder;
+  private final WebClient webClient;
 
   @Value("${open-api.course.base-url}")
   private String baseUrl;
@@ -30,30 +30,27 @@ public class CourseOpenApiUseCase {
   @Value("${open-api.service-key}")
   private String serviceKey;
 
-  private WebClient courseWebClient() {
+  public CourseResponse fetchCourseData(int pageNo, int numOfRows) {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
     factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
-    return webClientBuilder
-        .uriBuilderFactory(factory)
-        .baseUrl(baseUrl)
-        .build();
-  }
-
-  public CourseResponse fetchCourseData(int pageNo, int numOfRows) {
-    return courseWebClient().get()
-        .uri(uriBuilder -> uriBuilder
-            .path(baseUrl)
-            .queryParam("pageNo", pageNo)
-            .queryParam("numOfRows", numOfRows)
-            .queryParam("MobileOS", mobileOS)
-            .queryParam("MobileApp", mobileApp)
-            .queryParam("_type", "json")
-            .queryParam("serviceKey", serviceKey)
+    return webClient.mutate()
+            .uriBuilderFactory(factory)
+            .baseUrl(baseUrl)
             .build()
-        )
-        .retrieve()
-        .bodyToMono(CourseResponse.class)
-        .block();
+            .get()
+            .uri(uriBuilder -> uriBuilder
+                    .path(urlPath)
+                    .queryParam("pageNo", pageNo)
+                    .queryParam("numOfRows", numOfRows)
+                    .queryParam("MobileOS", mobileOS)
+                    .queryParam("MobileApp", mobileApp)
+                    .queryParam("_type", "json")
+                    .queryParam("serviceKey", serviceKey)
+                    .build()
+            )
+            .retrieve()
+            .bodyToMono(CourseResponse.class)
+            .block();
   }
 }

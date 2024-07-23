@@ -13,7 +13,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 @RequiredArgsConstructor
 public class OfficeOpenApiUseCase {
 
-  private final WebClient.Builder webClientBuilder;
+  private final WebClient webClient;
 
   @Value("${open-api.office.base-url}")
   private String baseUrl;
@@ -24,28 +24,25 @@ public class OfficeOpenApiUseCase {
   @Value("${open-api.service-key}")
   private String serviceKey;
 
-  private WebClient officeWebClient() {
+  public OfficeResponse fetchOfficeData(int page, int perPage) {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
     factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
-    return webClientBuilder
-        .uriBuilderFactory(factory)
-        .baseUrl(baseUrl)
-        .build();
-  }
-
-  public OfficeResponse fetchOfficeData(int page, int perPage) {
-    return officeWebClient().get()
-        .uri(uriBuilder -> uriBuilder
-            .path(urlPath)
-            .queryParam("page", page)
-            .queryParam("perPage", perPage)
-            .queryParam("returnType", "JSON")
-            .queryParam("serviceKey", serviceKey)
+    return webClient.mutate()
+            .uriBuilderFactory(factory)
+            .baseUrl(baseUrl)
             .build()
-        )
-        .retrieve()
-        .bodyToMono(OfficeResponse.class)
-        .block();
+            .get()
+            .uri(uriBuilder -> uriBuilder
+                    .path(urlPath)
+                    .queryParam("page", page)
+                    .queryParam("perPage", perPage)
+                    .queryParam("returnType", "JSON")
+                    .queryParam("serviceKey", serviceKey)
+                    .build()
+            )
+            .retrieve()
+            .bodyToMono(OfficeResponse.class)
+            .block();
   }
 }
