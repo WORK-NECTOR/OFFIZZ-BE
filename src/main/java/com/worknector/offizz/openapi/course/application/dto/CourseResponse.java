@@ -1,69 +1,33 @@
 package com.worknector.offizz.openapi.course.application.dto;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
-public class CourseResponse {
+public record CourseResponse(Response response) {
 
-  private Response response;
+  public record Response(Header header, Body body) {}
 
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Response {
-    private Header header;
-    private Body body;
-  }
+  public record Header(String resultCode, String resultMsg) {}
 
+  public record Body(int totalCount, Items items, int numOfRows, int pageNo) {}
 
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Header {
-    private String resultCode;
-    private String resultMsg;
-  }
+  public record Items(List<Item> item) {}
 
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Body {
-    private int totalCount;
-    private Items items;
-    private int numOfRows;
-    private int pageNo;
-  }
-
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Items {
-    private List<Item> item;
-  }
-
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
-  public static class Item {
-
-    private String crsLevel;
-    private String crsCycle;
-    private String crsContents;
-    private String createdtime;
-    private String travelerinfo;
-    private String crsTourInfo;
-    private String crsSummary;
-    private String routeIdx;
-    private String crsIdx;
-    private String crsKorNm;
-    private String crsDstnc;
-    private String crsTotlRqrmHour;
-    private String modifiedtime;
-    private String sigun;
-    private String brdDiv;
-    private String gpxpath;
-  }
+  public record Item(
+          String crsLevel,
+          String crsCycle,
+          String crsContents,
+          String createdtime,
+          String travelerinfo,
+          String crsTourInfo,
+          String crsSummary,
+          String routeIdx,
+          String crsIdx,
+          String crsKorNm,
+          String crsDstnc,
+          String crsTotlRqrmHour,
+          String modifiedtime,
+          String sigun,
+          String brdDiv,
+          String gpxpath
+  ) {}
 }

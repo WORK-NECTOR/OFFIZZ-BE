@@ -6,12 +6,13 @@ import com.worknector.offizz.openapi.course.application.dto.CourseResponse.Items
 import com.worknector.offizz.openapi.course.application.mapper.CourseMapper;
 import com.worknector.offizz.openapi.course.domain.entity.Course;
 import com.worknector.offizz.openapi.course.domain.repository.CourseRepository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,16 +30,16 @@ public class CourseOpenDataUseCase {
     while (true) {
       CourseResponse courseResponse = courseOpenApiUseCase.fetchCourseData(pageNo, numOfRows);
 
-      Items items = courseResponse.getResponse().getBody().getItems();
+      Items items = courseResponse.response().body().items();
       if (items != null) {
-        List<Item> courseItemList = courseResponse.getResponse().getBody().getItems().getItem();
+        List<Item> courseItemList = items.item();
         if (courseItemList.isEmpty()) {
           break;
         }
 
         for (CourseResponse.Item item : courseItemList) {
           Optional<Course> existingCourse = courseRepository.findByCrsIdxAndRouteIdx(
-              item.getCrsIdx(), item.getRouteIdx()
+              item.crsIdx(), item.routeIdx()
           );
 
           if (existingCourse.isPresent()) {
