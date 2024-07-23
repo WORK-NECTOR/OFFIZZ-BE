@@ -4,12 +4,10 @@ import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class TourOpenApiUseCase {
 
