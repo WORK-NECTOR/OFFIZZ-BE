@@ -31,29 +31,28 @@ public class CourseOpenDataUseCase {
       CourseResponse courseResponse = courseOpenApiUseCase.fetchCourseData(pageNo, numOfRows);
 
       Items items = courseResponse.response().body().items();
-      if (items != null) {
-        List<Item> courseItemList = items.item();
-        if (courseItemList.isEmpty()) {
-          break;
-        }
-
-        for (CourseResponse.Item item : courseItemList) {
-          Optional<Course> existingCourse = courseRepository.findByCrsIdxAndRouteIdx(
-              item.crsIdx(), item.routeIdx()
-          );
-
-          if (existingCourse.isPresent()) {
-//            Course existingEntity = existingCourse.get();
-//            Course updatedEntity = CourseMapper.toEntity(item);
-            // 기존 데이터 업데이트
-          } else {
-            // 새 데이터 삽입
-            Course courseEntity = CourseMapper.toEntity(item);
-            courseEntityList.add(courseEntity);
-          }
-        }
-      } else {
+      if (items == null) {
         break;
+      }
+
+      List<Item> courseItemList = items.item();
+      if (courseItemList.isEmpty()) {
+        break;
+      }
+
+      for (CourseResponse.Item item : courseItemList) {
+        Optional<Course> existingCourse = courseRepository.findByCrsIdxAndRouteIdx(
+                item.crsIdx(), item.routeIdx()
+        );
+
+        if (existingCourse.isPresent()) {
+          // TODO: 기존 데이터 업데이트 로직 추가
+          continue;
+        }
+
+        // 새 데이터 삽입
+        Course courseEntity = CourseMapper.toEntity(item);
+        courseEntityList.add(courseEntity);
       }
 
       pageNo++;
