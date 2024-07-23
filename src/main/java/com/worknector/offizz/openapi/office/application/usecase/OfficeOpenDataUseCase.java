@@ -27,26 +27,27 @@ public class OfficeOpenDataUseCase {
 
     while (true) {
       OfficeResponse officeResponse = officeOpenApiUseCase.fetchOfficeData(page, perPage);
-      List<OfficeData> offices = officeResponse.data();
-
-      if (officeResponse == null || offices.isEmpty()) {
+      if (officeResponse == null || officeResponse.data().isEmpty()) {
         break;
       }
 
+      List<OfficeResponse.OfficeData> offices = officeResponse.data();
       for (OfficeResponse.OfficeData officeData : offices) {
         Optional<Office> existingOffice = officeRepository.findByOfficeNameAndStreetAddress(
-            officeData.officeName(), officeData.streetAddress()
+                officeData.officeName(), officeData.streetAddress()
         );
 
         if (existingOffice.isPresent()) {
           Office existingEntity = existingOffice.get();
           Office updatedEntity = OfficeMapper.toEntity(officeData);
-          // 기존 데이터 업데이트
-        } else {
-          // 새 데이터 삽입
-          Office officeEntity = OfficeMapper.toEntity(officeData);
-          officeEntityList.add(officeEntity);
+          // TODO: 기존 데이터 업데이트 로직 추가
+
+          continue;
         }
+
+        // 새 데이터 삽입
+        Office officeEntity = OfficeMapper.toEntity(officeData);
+        officeEntityList.add(officeEntity);
       }
 
       page++;
