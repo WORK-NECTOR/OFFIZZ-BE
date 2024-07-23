@@ -7,71 +7,43 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Getter
-public class AccommodationResponse {
+public record AccommodationResponse(Response response) {
 
-    private Response response;
+    public record Response(Header header, Body body) {}
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Response {
-        private Header header;
-        private Body body;
-    }
+    public record Header(String resultCode, String resultMsg) {}
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Header {
-        private String resultCode;
-        private String resultMsg;
-    }
+    public record Body(
+            @JsonInclude(JsonInclude.Include.NON_NULL)
+            Items items,
+            int numOfRows,
+            int pageNo,
+            int totalCount) {}
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Body {
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Items items;
-        private int numOfRows;
-        private int pageNo;
-        private int totalCount;
-    }
+    public record Items(List<Item> item) {}
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Items {
-        private List<Item> item;
-    }
-
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Item {
-        private String addr1;
-        private String cpyrhtDivCd;
-        private String mapy;
-        private String mlevel;
-        private String modifiedtime;
-        private String sigungucode;
-        private String tel;
-        private String title;
-        private String contentid;
-        private String contenttypeid;
-        private String createdtime;
-        private String benikia;
-        private String goodstay;
-        private String hanok;
-        private String firstimage;
-        private String firstimage2;
-        private String mapx;
-        private String addr2;
-        private String areacode;
-        private String booktour;
-        private String cat1;
-        private String cat2;
-        private String cat3;
-    }
+    public record Item(
+            String addr1,
+            String cpyrhtDivCd,
+            String mapy,
+            String mlevel,
+            String modifiedtime,
+            String sigungucode,
+            String tel,
+            String title,
+            String contentid,
+            String contenttypeid,
+            String createdtime,
+            String benikia,
+            String goodstay,
+            String hanok,
+            String firstimage,
+            String firstimage2,
+            String mapx,
+            String addr2,
+            String areacode,
+            String booktour,
+            String cat1,
+            String cat2,
+            String cat3) {}
 }

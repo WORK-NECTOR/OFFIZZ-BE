@@ -28,18 +28,18 @@ public class AccommodationOpenDataUseCase {
         while (true) {
             AccommodationResponse accommodationResponse = tourOpenApiUseCase.fetchAccommodationData(pageNo, numOfRows);
 
-            AccommodationResponse.Items items = accommodationResponse.getResponse().getBody().getItems();
-            int currentRows = accommodationResponse.getResponse().getBody().getNumOfRows();
-            int totalCount = accommodationResponse.getResponse().getBody().getTotalCount();
+            AccommodationResponse.Items items = accommodationResponse.response().body().items();
+            int currentRows = accommodationResponse.response().body().numOfRows();
+            int totalCount = accommodationResponse.response().body().totalCount();
 
             if (currentRows != 0 && items != null) {
-                List<AccommodationResponse.Item> accommodationItemList = accommodationResponse.getResponse().getBody().getItems().getItem();
+                List<AccommodationResponse.Item> accommodationItemList = items.item();
                 if (accommodationItemList.isEmpty()) {
                     break;
                 }
 
                 for (AccommodationResponse.Item item : accommodationItemList) {
-                    Optional<Accommodation> existingAccommodation = accommodationRepository.findByContentid(item.getContentid());
+                    Optional<Accommodation> existingAccommodation = accommodationRepository.findByContentid(item.contentid());
 
                     if (existingAccommodation.isPresent()) {
 //                      Accommodation existingEntity = existingAccommodation.get();
