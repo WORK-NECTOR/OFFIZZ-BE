@@ -27,14 +27,15 @@ public class OfficeOpenDataUseCase {
 
     while (true) {
       OfficeResponse officeResponse = officeOpenApiUseCase.fetchOfficeData(page, perPage);
-      if (officeResponse == null || officeResponse.getData().isEmpty()) {
+      List<OfficeData> offices = officeResponse.data();
+
+      if (officeResponse == null || offices.isEmpty()) {
         break;
       }
 
-      List<OfficeData> offices = officeResponse.getData();
       for (OfficeResponse.OfficeData officeData : offices) {
         Optional<Office> existingOffice = officeRepository.findByOfficeNameAndStreetAddress(
-            officeData.getOfficeName(), officeData.getStreetAddress()
+            officeData.officeName(), officeData.streetAddress()
         );
 
         if (existingOffice.isPresent()) {
