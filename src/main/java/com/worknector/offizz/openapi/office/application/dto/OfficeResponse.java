@@ -1,6 +1,7 @@
 package com.worknector.offizz.openapi.office.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.worknector.offizz.domain.office.domain.entity.PriceType;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public record OfficeResponse(
           @JsonProperty("도로명주소") String streetAddress,
           @JsonProperty("지번주소") String landAddress,
           @JsonProperty("요금") Integer price,
-          @JsonProperty("이용요금단위") String priceType,
+          @JsonProperty("이용요금단위") PriceType priceType,
           @JsonProperty("오피스 타입") String officeType,
           @JsonProperty("수용인원") String capacity,
           @JsonProperty("운영시간(월)") String operatingHoursMonday,

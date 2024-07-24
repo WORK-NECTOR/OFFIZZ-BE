@@ -2,8 +2,8 @@ package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
 import com.worknector.offizz.openapi.tour.application.mapper.AccommodationMapper;
-import com.worknector.offizz.openapi.tour.domain.entity.Accommodation;
-import com.worknector.offizz.openapi.tour.domain.repository.AccommodationRepository;
+import com.worknector.offizz.domain.accommodation.domain.entity.Accommodation;
+import com.worknector.offizz.domain.accommodation.domain.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
