@@ -39,28 +39,44 @@ public class OfficeMapper {
 
   private static Facilities mapToFacilities(OfficeData dto) {
     return Facilities.builder()
-            .airConditioning(!dto.airConditioning().contains("미보유"))
-            .cafeRestaurant(!dto.cafeRestaurant().contains("미보유"))
-            .copierPrinter(!dto.copierPrinter().contains("미보유"))
-            .deliveryService(dto.deliveryService().contains("가능"))
-            .doorLock(!dto.doorLock().contains("미보유"))
-            .powerOutlet(!dto.doorLock().contains("미보유"))
-            .fax(dto.fax().contains("가능"))
-            .twentyFourHoursOperation(dto.twentyFourHoursOperation().contains("24시"))
-            .openAllYear(dto.openAllYear().contains("없음"))
-            .heating(!dto.heating().contains("미보유"))
-            .parking(dto.parking().contains("가능"))
-            .publicLounge(dto.publicLounge().contains("있음"))
-            .sharedKitchen(!dto.sharedKitchen().contains("미보유"))
-            .waterPurifier(!dto.waterPurifier().contains("미보유"))
-            .terraceRooftop(!dto.terraceRooftop().contains("미보유"))
-            .snacksDrinks(!dto.snacksDrinks().contains("미보유"))
-            .personalLocker(!dto.personalLocker().contains("미보유"))
-            .tvProjector(!dto.tvProjector().contains("미보유"))
-            .whiteboard(!dto.whiteboard().contains("미보유"))
-            .internetWifi(!dto.internetWifi().contains("미보유"))
-            .showerFacility(!dto.showerFacility().contains("미보유"))
-            .storage(dto.storage().contains("사용가능"))
+            .airConditioning(isPresent(dto.airConditioning()))
+            .cafeRestaurant(isPresent(dto.cafeRestaurant()))
+            .copierPrinter(isPresent(dto.copierPrinter()))
+            .deliveryService(isAvailable(dto.deliveryService()))
+            .doorLock(isPresent(dto.doorLock()))
+            .powerOutlet(isPresent(dto.doorLock()))
+            .fax(isAvailable(dto.fax()))
+            .twentyFourHoursOperation(contains24Hours(dto.twentyFourHoursOperation()))
+            .openAllYear(isOpenAllYear(dto.openAllYear()))
+            .heating(isPresent(dto.heating()))
+            .parking(isAvailable(dto.parking()))
+            .publicLounge(isPresent(dto.publicLounge()))
+            .sharedKitchen(isPresent(dto.sharedKitchen()))
+            .waterPurifier(isPresent(dto.waterPurifier()))
+            .terraceRooftop(isPresent(dto.terraceRooftop()))
+            .snacksDrinks(isPresent(dto.snacksDrinks()))
+            .personalLocker(isPresent(dto.personalLocker()))
+            .tvProjector(isPresent(dto.tvProjector()))
+            .whiteboard(isPresent(dto.whiteboard()))
+            .internetWifi(isPresent(dto.internetWifi()))
+            .showerFacility(isPresent(dto.showerFacility()))
+            .storage(isAvailable(dto.storage()))
             .build();
+  }
+
+  private static boolean isAvailable(String value) {
+    return value.contains("가능");
+  }
+
+  private static boolean contains24Hours(String value) {
+    return value.contains("24시");
+  }
+
+  private static boolean isOpenAllYear(String value) {
+    return value.contains("없음");
+  }
+
+  private static boolean isPresent(String value) {
+    return value.contains("있음") || !value.contains("미보유");
   }
 }
