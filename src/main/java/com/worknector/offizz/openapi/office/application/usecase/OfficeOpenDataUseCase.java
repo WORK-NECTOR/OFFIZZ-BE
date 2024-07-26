@@ -1,10 +1,9 @@
 package com.worknector.offizz.openapi.office.application.usecase;
 
 import com.worknector.offizz.openapi.office.application.dto.OfficeResponse;
-import com.worknector.offizz.openapi.office.application.dto.OfficeResponse.OfficeData;
 import com.worknector.offizz.openapi.office.application.mapper.OfficeMapper;
-import com.worknector.offizz.openapi.office.domain.entity.Office;
-import com.worknector.offizz.openapi.office.domain.repository.OfficeRepository;
+import com.worknector.offizz.domain.office.domain.entity.Office;
+import com.worknector.offizz.domain.office.domain.repository.OfficeRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
