@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.office.domain.service;
 
+import com.worknector.offizz.domain.office.application.dto.req.Region;
 import com.worknector.offizz.domain.office.domain.entity.Office;
 import com.worknector.offizz.domain.office.domain.repository.OfficeRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class OfficeGetService {
     private static final int PAGE_SIZE = 8;
 
 
-    public List<Office> recommendOffice(String region) {
+    public List<Office> recommendOffice(Region region) {
         return officeRepository.findRecommendByRegion(region);
     }
 
@@ -27,7 +28,7 @@ public class OfficeGetService {
         return office;
     }
 
-    public Page<Office> allOfficePage(String region, Integer page) {
+    public Page<Office> allOfficePage(Region region, Integer page) {
         if (page == null)
             page = 1;
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);

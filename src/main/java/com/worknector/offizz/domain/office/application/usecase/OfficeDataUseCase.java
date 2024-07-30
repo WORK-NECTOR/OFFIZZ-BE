@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.office.application.usecase;
 
+import com.worknector.offizz.domain.office.application.dto.req.Region;
 import com.worknector.offizz.domain.office.application.dto.res.OfficeDetailResponse;
 import com.worknector.offizz.domain.office.application.dto.res.PagingRecOfficeResponse;
 import com.worknector.offizz.domain.office.application.dto.res.RecOffice;
@@ -22,7 +23,7 @@ import static com.worknector.offizz.domain.office.application.mapper.OfficeMappe
 public class OfficeDataUseCase {
     private final OfficeGetService officeGetService;
 
-    public RecOfficeResponse getRecommendOffice(String region) {
+    public RecOfficeResponse getRecommendOffice(Region region) {
         List<Office> offices = officeGetService.recommendOffice(region).subList(0, 3);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
@@ -35,7 +36,7 @@ public class OfficeDataUseCase {
         return mapToOfficeDetail(office);
     }
 
-    public PagingRecOfficeResponse getAllRecommendOffice(String region, Integer page) {
+    public PagingRecOfficeResponse getAllRecommendOffice(Region region, Integer page) {
         Page<Office> offices = officeGetService.allOfficePage(region, page);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)

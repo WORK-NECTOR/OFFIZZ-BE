@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.office.presentation;
 
+import com.worknector.offizz.domain.office.application.dto.req.Region;
 import com.worknector.offizz.domain.office.application.dto.res.OfficeDetailResponse;
 import com.worknector.offizz.domain.office.application.dto.res.PagingRecOfficeResponse;
 import com.worknector.offizz.domain.office.application.dto.res.RecOfficeResponse;
@@ -20,7 +21,7 @@ public class OfficeController {
     private final OfficeDataUseCase officeDataUseCase;
 
     @GetMapping("/rec/{region}")
-    public ResponseEntity<RecOfficeResponse> recommendOffice(@PathVariable String region) {
+    public ResponseEntity<RecOfficeResponse> recommendOffice(@PathVariable Region region) {
         RecOfficeResponse recommendOffice = officeDataUseCase.getRecommendOffice(region);
         return ResponseEntity.ok(recommendOffice);
     }
@@ -32,7 +33,7 @@ public class OfficeController {
     }
 
     @GetMapping("/rec/all/{region}/{page}")
-    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable Integer page, @PathVariable String region) {
+    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable Integer page, @PathVariable Region region) {
         PagingRecOfficeResponse allRecommendOffice = officeDataUseCase.getAllRecommendOffice(region, page);
         return ResponseEntity.ok(allRecommendOffice);
     }
