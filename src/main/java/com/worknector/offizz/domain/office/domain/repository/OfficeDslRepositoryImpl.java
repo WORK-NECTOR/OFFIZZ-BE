@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.worknector.offizz.domain.office.domain.entity.QOffice.office;
@@ -54,5 +55,37 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
         }
 
         return builder.and(office.streetAddress.contains(region.toString()));
+    }
+
+    @Override
+    public Page<Office> findAllPagingBySearch(String search, Pageable pageable) {
+        List<Office> offices = queryFactory.selectFrom(office)
+                .where(searchBuilder(search))
+                .orderBy(office.hit.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory.select(office.count())
+                .from(office)
+                .where(searchBuilder(search))
+                .fetchOne();
+
+        return new PageImpl<>(offices, pageable, total);
+    }
+
+    private BooleanBuilder searchBuilder(String search) {
+        String[] searches = search.split(" ");
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        Arrays.stream(searches).forEach(se -> {
+            BooleanBuilder subBuilder = new BooleanBuilder();
+            subBuilder.or(office.streetAddress.contains(se))
+                    .or(office.officeName.contains(se));
+            builder.and(subBuilder);
+        });
+
+        return builder;
     }
 }

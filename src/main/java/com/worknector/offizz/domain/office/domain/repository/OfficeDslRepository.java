@@ -11,4 +11,6 @@ public interface OfficeDslRepository {
     List<Office> findRecommendByRegion(Region region);
 
     Page<Office> findAllPagingByRegion(Region region, Pageable pageable);
+
+    Page<Office> findAllPagingBySearch(String search, Pageable pageable);
 }
