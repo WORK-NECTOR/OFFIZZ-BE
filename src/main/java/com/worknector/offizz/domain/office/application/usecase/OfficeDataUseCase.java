@@ -36,8 +36,16 @@ public class OfficeDataUseCase {
         return mapToOfficeDetail(office);
     }
 
-    public PagingRecOfficeResponse getAllRecommendOffice(Region region, Integer page) {
-        Page<Office> offices = officeGetService.allOfficePage(region, page);
+    public PagingRecOfficeResponse getAllRecommendOffice(Region region, int page) {
+        Page<Office> offices = officeGetService.allRegionOfficePage(region, page);
+        List<RecOffice> recOffices = offices.stream()
+                .map(OfficeMapper::mapToRecOffice)
+                .toList();
+        return new PagingRecOfficeResponse(recOffices, offices.getTotalPages());
+    }
+
+    public PagingRecOfficeResponse getAllSearchOffice(String search, int page) {
+        Page<Office> offices = officeGetService.allSearchOfficePage(search, page);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();

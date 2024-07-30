@@ -8,10 +8,7 @@ import com.worknector.offizz.domain.office.application.usecase.OfficeDataUseCase
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,8 +30,14 @@ public class OfficeController {
     }
 
     @GetMapping("/rec/all/{region}/{page}")
-    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable Integer page, @PathVariable Region region) {
+    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable int page, @PathVariable Region region) {
         PagingRecOfficeResponse allRecommendOffice = officeDataUseCase.getAllRecommendOffice(region, page);
         return ResponseEntity.ok(allRecommendOffice);
+    }
+
+    @GetMapping("/search/{page}")
+    public ResponseEntity<PagingRecOfficeResponse> searchOffice(@RequestParam String search, @PathVariable int page) {
+        PagingRecOfficeResponse allSearchOffice = officeDataUseCase.getAllSearchOffice(search, page);
+        return ResponseEntity.ok(allSearchOffice);
     }
 }

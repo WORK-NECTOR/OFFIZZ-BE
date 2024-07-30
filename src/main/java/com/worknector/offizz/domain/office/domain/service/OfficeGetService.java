@@ -28,10 +28,14 @@ public class OfficeGetService {
         return office;
     }
 
-    public Page<Office> allOfficePage(Region region, Integer page) {
-        if (page == null)
-            page = 1;
+    public Page<Office> allRegionOfficePage(Region region, int page) {
         Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
         return officeRepository.findAllPagingByRegion(region, pageable);
     }
+
+    public Page<Office> allSearchOfficePage(String search, int page) {
+        Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
+        return officeRepository.findAllPagingBySearch(search, pageable);
+    }
+
 }
