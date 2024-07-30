@@ -31,7 +31,7 @@ public class OfficeGetService {
     public Page<Office> allOfficePage(Region region, Integer page) {
         if (page == null)
             page = 1;
-        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
         return officeRepository.findAllPagingByRegion(region, pageable);
     }
 }
