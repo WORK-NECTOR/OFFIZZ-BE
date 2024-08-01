@@ -33,6 +33,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Create resources directory
+        run: mkdir -p ./src/main/resources
+
       - name: Create application.yml
         run: |
           echo "${{env.APPLICATION}}" > ./src/main/resources/application.yml
