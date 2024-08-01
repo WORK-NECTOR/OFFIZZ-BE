@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface OfficeDslRepository {
-    List<Office> findRecommendByRegion(Region region);
+    List<Office> findRecommendByRegion(Region region, int size);
 
     Page<Office> findAllPagingByRegion(Region region, Pageable pageable);
 

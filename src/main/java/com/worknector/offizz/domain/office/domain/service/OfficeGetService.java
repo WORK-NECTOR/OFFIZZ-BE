@@ -16,10 +16,11 @@ import java.util.List;
 public class OfficeGetService {
     private final OfficeRepository officeRepository;
     private static final int PAGE_SIZE = 8;
+    private static final int RECOMMEND_SIZE = 4;
 
 
     public List<Office> recommendOffice(Region region) {
-        return officeRepository.findRecommendByRegion(region);
+        return officeRepository.findRecommendByRegion(region, RECOMMEND_SIZE);
     }
 
     public Office officeById(long officeId) {

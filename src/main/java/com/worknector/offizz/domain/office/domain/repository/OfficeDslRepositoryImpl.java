@@ -21,10 +21,11 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Office> findRecommendByRegion(Region region) {
+    public List<Office> findRecommendByRegion(Region region, int size) {
         return queryFactory.selectFrom(office)
                 .where(regionBuilder(region))
                 .orderBy(office.hit.desc())
+                .limit(size)
                 .fetch();
     }
 

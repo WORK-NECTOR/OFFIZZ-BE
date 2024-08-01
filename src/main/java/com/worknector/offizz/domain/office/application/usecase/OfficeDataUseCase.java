@@ -24,7 +24,7 @@ public class OfficeDataUseCase {
     private final OfficeGetService officeGetService;
 
     public RecOfficeResponse getRecommendOffice(Region region) {
-        List<Office> offices = officeGetService.recommendOffice(region).subList(0, 3);
+        List<Office> offices = officeGetService.recommendOffice(region);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();
