@@ -76,6 +76,8 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
     }
 
     private BooleanBuilder searchBuilder(String search) {
+        if (search.isBlank())
+            return null;
         String[] searches = search.split(" ");
 
         BooleanBuilder builder = new BooleanBuilder();
