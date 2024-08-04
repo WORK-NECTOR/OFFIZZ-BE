@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class OfficeController {
     private final OfficeDataUseCase officeDataUseCase;
 
-    @GetMapping("/rec/{region}")
+    @GetMapping("/rec/{region}/{size}")
     @Operation(summary = "장소에 따른 오피스 4개 추천 (장소 필수)", description = "서울 / 인천 / 경기 / 대구 / 대전 / 충청 / 경상 / 부산 / 기타")
-    public ResponseEntity<RecOfficeResponse> recommendOffice(@PathVariable Region region) {
-        RecOfficeResponse recommendOffice = officeDataUseCase.getRecommendOffice(region);
+    public ResponseEntity<RecOfficeResponse> recommendOffice(@PathVariable Region region, @PathVariable int size) {
+        RecOfficeResponse recommendOffice = officeDataUseCase.getRecommendOffice(region, size);
         return ResponseEntity.ok(recommendOffice);
     }
 
@@ -35,17 +35,17 @@ public class OfficeController {
         return ResponseEntity.ok(officeDetail);
     }
 
-    @GetMapping("/rec/all/{region}/{page}")
+    @GetMapping("/rec/all/{region}/{page}/{size}")
     @Operation(summary = "장소에 따른 오피스 페이지 - 8개씩 (장소 및 페이지 필수)", description = "서울 / 인천 / 경기 / 대구 / 대전 / 충청 / 경상 / 부산 / 기타")
-    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable int page, @PathVariable Region region) {
-        PagingRecOfficeResponse allRecommendOffice = officeDataUseCase.getAllRecommendOffice(region, page);
+    public ResponseEntity<PagingRecOfficeResponse> pagingRecommendOffice(@PathVariable int page, @PathVariable Region region, @PathVariable int size) {
+        PagingRecOfficeResponse allRecommendOffice = officeDataUseCase.getAllRecommendOffice(region, page, size);
         return ResponseEntity.ok(allRecommendOffice);
     }
 
-    @GetMapping("/search/{page}")
+    @GetMapping("/search/{page}/{size}")
     @Operation(summary = "검색에 따른 오피스 페이지 - 8개씩", description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
-    public ResponseEntity<PagingRecOfficeResponse> searchOffice(@RequestParam String search, @PathVariable int page) {
-        PagingRecOfficeResponse allSearchOffice = officeDataUseCase.getAllSearchOffice(search, page);
+    public ResponseEntity<PagingRecOfficeResponse> searchOffice(@RequestParam String search, @PathVariable int page, @PathVariable int size) {
+        PagingRecOfficeResponse allSearchOffice = officeDataUseCase.getAllSearchOffice(search, page, size);
         return ResponseEntity.ok(allSearchOffice);
     }
 }

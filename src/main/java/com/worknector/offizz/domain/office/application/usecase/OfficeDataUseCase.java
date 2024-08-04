@@ -23,8 +23,8 @@ import static com.worknector.offizz.domain.office.application.mapper.OfficeMappe
 public class OfficeDataUseCase {
     private final OfficeGetService officeGetService;
 
-    public RecOfficeResponse getRecommendOffice(Region region) {
-        List<Office> offices = officeGetService.recommendOffice(region);
+    public RecOfficeResponse getRecommendOffice(Region region, int size) {
+        List<Office> offices = officeGetService.recommendOffice(region, size);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();
@@ -36,16 +36,16 @@ public class OfficeDataUseCase {
         return mapToOfficeDetail(office);
     }
 
-    public PagingRecOfficeResponse getAllRecommendOffice(Region region, int page) {
-        Page<Office> offices = officeGetService.allRegionOfficePage(region, page);
+    public PagingRecOfficeResponse getAllRecommendOffice(Region region, int page, int size) {
+        Page<Office> offices = officeGetService.allRegionOfficePage(region, page, size);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();
         return new PagingRecOfficeResponse(recOffices, offices.getTotalPages());
     }
 
-    public PagingRecOfficeResponse getAllSearchOffice(String search, int page) {
-        Page<Office> offices = officeGetService.allSearchOfficePage(search, page);
+    public PagingRecOfficeResponse getAllSearchOffice(String search, int page, int size) {
+        Page<Office> offices = officeGetService.allSearchOfficePage(search, page, size);
         List<RecOffice> recOffices = offices.stream()
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();

@@ -15,12 +15,9 @@ import java.util.List;
 @Service
 public class OfficeGetService {
     private final OfficeRepository officeRepository;
-    private static final int PAGE_SIZE = 8;
-    private static final int RECOMMEND_SIZE = 4;
 
-
-    public List<Office> recommendOffice(Region region) {
-        return officeRepository.findRecommendByRegion(region, RECOMMEND_SIZE);
+    public List<Office> recommendOffice(Region region, int size) {
+        return officeRepository.findRecommendByRegion(region, size);
     }
 
     public Office officeById(long officeId) {
@@ -29,13 +26,13 @@ public class OfficeGetService {
         return office;
     }
 
-    public Page<Office> allRegionOfficePage(Region region, int page) {
-        Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
+    public Page<Office> allRegionOfficePage(Region region, int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
         return officeRepository.findAllPagingByRegion(region, pageable);
     }
 
-    public Page<Office> allSearchOfficePage(String search, int page) {
-        Pageable pageable = PageRequest.of(page-1, PAGE_SIZE);
+    public Page<Office> allSearchOfficePage(String search, int page, int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
         return officeRepository.findAllPagingBySearch(search, pageable);
     }
 
