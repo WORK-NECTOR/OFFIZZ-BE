@@ -26,11 +26,14 @@ public class CourseOpenDataUseCase {
     int pageNo = 1;
     int numOfRows = 100;
     List<Course> courseEntityList = new ArrayList<>();
+    boolean continueFlag = true;
 
-    while (true) {
+    while (continueFlag) {
       CourseResponse courseResponse = courseOpenApiUseCase.fetchCourseData(pageNo, numOfRows);
 
       Items items = courseResponse.response().body().items();
+      int totalCount = courseResponse.response().body().totalCount();
+
       if (items == null) {
         break;
       }
@@ -53,6 +56,11 @@ public class CourseOpenDataUseCase {
         // 새 데이터 삽입
         Course courseEntity = CourseMapper.toEntity(item);
         courseEntityList.add(courseEntity);
+      }
+
+      int lastPage = (int) Math.ceil((double) totalCount / numOfRows);
+      if (pageNo >= lastPage) {
+        continueFlag = false;
       }
 
       pageNo++;
