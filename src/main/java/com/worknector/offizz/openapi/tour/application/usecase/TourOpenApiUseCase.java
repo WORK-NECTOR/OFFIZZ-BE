@@ -1,6 +1,8 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
+import com.worknector.offizz.openapi.tour.application.dto.AreaCodeResponse;
+import com.worknector.offizz.openapi.tour.application.dto.AreaContentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,13 @@ public class TourOpenApiUseCase {
   private String baseUrl;
 
   @Value("${open-api.tour.url-path.accommodation}")
-  private String urlPath;
+  private String accommodationUrlPath;
+
+  @Value("${open-api.tour.url-path.area-code}")
+  private String areaCodeUrlPath;
+
+  @Value("${open-api.tour.url-path.area-based-list}")
+  private String areaBasedListUrlPath;
 
   @Value("${open-api.mobile-os}")
   private String mobileOS;
@@ -29,6 +37,18 @@ public class TourOpenApiUseCase {
   private String serviceKey;
 
   public AccommodationResponse fetchAccommodationData(int pageNo, int numOfRows) {
+    return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class);
+  }
+
+  public AreaCodeResponse fetchAreaCodeData(int pageNo, int numOfRows) {
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaCodeUrlPath, AreaCodeResponse.class);
+  }
+
+  public AreaContentResponse fetchAreaBasedListData(int pageNo, int numOfRows) {
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaContentResponse.class);
+  }
+
+  private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType) {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
     factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
@@ -49,7 +69,7 @@ public class TourOpenApiUseCase {
                             .build()
             )
             .retrieve()
-            .bodyToMono(AccommodationResponse.class)
+            .bodyToMono(responseType)
             .block();
   }
 }
