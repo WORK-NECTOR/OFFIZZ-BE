@@ -12,7 +12,6 @@ public class CourseMapper {
   public static Course toEntity(Item item) {
     return Course.builder()
             .crsLevel(item.crsLevel())
-            .crsCycle(item.crsCycle())
             .crsContents(item.crsContents())
             .createdtime(item.createdtime())
             .travelerinfo(item.travelerinfo())
@@ -25,7 +24,6 @@ public class CourseMapper {
             .crsTotlRqrmHour(item.crsTotlRqrmHour())
             .modifiedtime(item.modifiedtime())
             .sigun(item.sigun())
-            .brdDiv(item.brdDiv())
             .gpxpath(item.gpxpath())
             .build();
   }

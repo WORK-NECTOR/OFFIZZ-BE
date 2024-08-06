@@ -12,10 +12,8 @@ public class AreaBasedNatureMapper {
     public static Nature toEntity(AreaBasedNatureResponse.Item item) {
         return Nature.builder()
                 .addr1(item.addr1())
-                .addr2(item.addr2())
                 .mapx(item.mapx())
                 .mapy(item.mapy())
-                .mlevel(item.mlevel())
                 .modifiedtime(item.modifiedtime())
                 .tel(item.tel())
                 .title(item.title())
@@ -26,7 +24,6 @@ public class AreaBasedNatureMapper {
                 .firstimage2(item.firstimage2())
                 .areacode(item.areacode())
                 .sigungucode(item.sigungucode())
-                .booktour(item.booktour())
                 .cat1(item.cat1())
                 .cat2(item.cat2())
                 .cat3(item.cat3())
