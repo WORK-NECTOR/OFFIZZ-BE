@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Builder
@@ -22,13 +23,9 @@ public class Nature {
 
     private String addr1;
 
-    private String addr2;
-
     private String mapx;
 
     private String mapy;
-
-    private String mlevel;
 
     private String modifiedtime;
 
@@ -50,11 +47,12 @@ public class Nature {
 
     private String sigungucode;
 
-    private String booktour;
-
     private String cat1;
 
     private String cat2;
 
     private String cat3;
+
+    @ColumnDefault("0")
+    private long hit;
 }
