@@ -1,8 +1,8 @@
 package com.worknector.offizz.openapi.office.application.usecase;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worknector.offizz.openapi.office.application.dto.OfficeResponse;
 import com.worknector.offizz.utils.annotation.CustomIntegrationTest;
+import com.worknector.offizz.utils.openapi.OpenApiUseCaseTestHelper;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -30,25 +29,17 @@ class OfficeOpenApiUseCaseTest {
 
     private MockWebServer mockWebServer;
 
-    @Value("${open-api.office.url-path}")
-    private String urlPath;
-
-    @Value("${open-api.service-key}")
-    private String serviceKey;
-
     @InjectMocks
     private OfficeOpenApiUseCase officeOpenApiUseCase;
 
     @BeforeEach
     public void setUp() throws IOException {
         mockWebServer = new MockWebServer();
-        mockWebServer.start();
+        OpenApiUseCaseTestHelper.setUpMockWebServer(mockWebServer, officeOpenApiUseCase, "baseUrl");
 
-        String mockBaseUrl = mockWebServer.url("/").toString();
-
-        ReflectionTestUtils.setField(officeOpenApiUseCase, "baseUrl", mockBaseUrl);
-        ReflectionTestUtils.setField(officeOpenApiUseCase, "urlPath", urlPath);
-        ReflectionTestUtils.setField(officeOpenApiUseCase, "serviceKey", serviceKey);
+        String[] fields = {"urlPath", "serviceKey"};
+        String[] values = {"/15111411/v1/uddi:d93c5174-47eb-4eb2-830a-b98e595fa163", "encodedKey"};
+        OpenApiUseCaseTestHelper.setUpCommonFields(officeOpenApiUseCase, fields, values);
 
         WebClient webClient = WebClient.builder().build();
         ReflectionTestUtils.setField(officeOpenApiUseCase, "webClient", webClient);
@@ -60,22 +51,18 @@ class OfficeOpenApiUseCaseTest {
     }
 
     @Test
-    @DisplayName("한국관광공사 두루누비 정보 API 호출에 성공한다.")
-    public void testFetchCourseData_success() throws Exception {
+    @DisplayName("공유오피스 API 호출에 성공한다.")
+    public void testFetchOfficeData_success() throws Exception {
         // given
         OfficeResponse mockResponse = mockOfficeResponse();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String mockResponseBody = objectMapper.writeValueAsString(mockResponse);
-
-        mockWebServer.enqueue(new MockResponse()
-                .setBody(mockResponseBody)
-                .addHeader("Content-Type", "application/json"));
+        OpenApiUseCaseTestHelper.enqueueMockResponse(mockWebServer, mockResponse);
 
         // when
         OfficeResponse response = officeOpenApiUseCase.fetchOfficeData(1, 10);
 
         // then
         RecordedRequest request = mockWebServer.takeRequest();
+        assertThat(request.getPath()).isNotNull();
         assertThat(request.getPath().contains("/15111411/v1/uddi:d93c5174-47eb-4eb2-830a-b98e595fa163")).isTrue();
 
         assertNotNull(response);
@@ -83,15 +70,14 @@ class OfficeOpenApiUseCaseTest {
     }
 
     @Test
-    @DisplayName("한국관광공사 두루누비 정보 API 호출에 실패한다.")
-    public void testFetchCourseData_failure() {
+    @DisplayName("공유오피스 API 호출에 실패한다.")
+    public void testFetchOfficeData_failure() {
         // given
         mockWebServer.enqueue(new MockResponse().setResponseCode(500));
 
         // when & then
-        WebClientResponseException exception = assertThrows(WebClientResponseException.class, () -> {
-            officeOpenApiUseCase.fetchOfficeData(1, 10);
-        });
+        WebClientResponseException exception = assertThrows(WebClientResponseException.class,
+                () -> officeOpenApiUseCase.fetchOfficeData(1, 10));
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatusCode());
     }

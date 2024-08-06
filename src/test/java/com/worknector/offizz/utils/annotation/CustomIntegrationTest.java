@@ -22,7 +22,10 @@ import java.lang.annotation.*;
         basePackages = {
                 "com.worknector.offizz.global.config"
         },
-        excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {SwaggerConfig.class,})
+        excludeFilters = @ComponentScan.Filter(
+                type = FilterType.ASSIGNABLE_TYPE,
+                classes = {SwaggerConfig.class}
+        )
 )
 public @interface CustomIntegrationTest {
 
