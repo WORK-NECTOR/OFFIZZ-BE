@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface NatureRepository extends JpaRepository<Nature, Long> {
-
+public interface NatureRepository extends JpaRepository<Nature, Long>, NatureDslRepository {
     Optional<Nature> findByContentid(String contentid);
 }
