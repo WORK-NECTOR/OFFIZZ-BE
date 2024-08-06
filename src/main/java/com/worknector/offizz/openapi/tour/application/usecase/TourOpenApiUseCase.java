@@ -1,7 +1,6 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
-import com.worknector.offizz.openapi.tour.application.dto.AreaCodeResponse;
 import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +20,6 @@ public class TourOpenApiUseCase {
   @Value("${open-api.tour.url-path.accommodation}")
   private String accommodationUrlPath;
 
-  @Value("${open-api.tour.url-path.area-code}")
-  private String areaCodeUrlPath;
-
   @Value("${open-api.tour.url-path.area-based-list}")
   private String areaBasedListUrlPath;
 
@@ -38,10 +34,6 @@ public class TourOpenApiUseCase {
 
   public AccommodationResponse fetchAccommodationData(int pageNo, int numOfRows) {
     return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class, null, null);
-  }
-
-  public AreaCodeResponse fetchAreaCodeData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaCodeUrlPath, AreaCodeResponse.class, null, null);
   }
 
   public AreaBasedNatureResponse fetchAreaBasedListNatureData(int pageNo, int numOfRows) {
