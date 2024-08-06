@@ -20,6 +20,8 @@ public class Office {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private int hit;
+
   private String officeName;
 
   private String streetAddress;
@@ -37,4 +39,8 @@ public class Office {
   private Facilities facilities;
 
   private OperatingTime operatingTime;
+
+  public void updateHit() {
+    this.hit++;
+  }
 }
