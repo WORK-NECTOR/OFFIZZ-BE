@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class AreaContent {
+public class Nature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long areaContentId;
+    private Long natureId;
 
     private String addr1;
 

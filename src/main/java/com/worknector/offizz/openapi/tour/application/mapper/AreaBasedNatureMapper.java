@@ -1,16 +1,16 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
-import com.worknector.offizz.domain.vacation.domain.entity.AreaContent;
-import com.worknector.offizz.openapi.tour.application.dto.AreaContentResponse;
+import com.worknector.offizz.domain.vacation.domain.entity.Nature;
+import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
 
-public class AreaContentMapper {
+public class AreaBasedNatureMapper {
 
-    private AreaContentMapper() {
+    private AreaBasedNatureMapper() {
         throw new IllegalArgumentException();
     }
 
-    public static AreaContent toEntity(AreaContentResponse.Item item) {
-        return AreaContent.builder()
+    public static Nature toEntity(AreaBasedNatureResponse.Item item) {
+        return Nature.builder()
                 .addr1(item.addr1())
                 .addr2(item.addr2())
                 .mapx(item.mapx())

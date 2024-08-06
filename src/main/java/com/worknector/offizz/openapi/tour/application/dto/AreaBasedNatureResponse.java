@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
-public record AreaContentResponse(Response response) {
+public record AreaBasedNatureResponse(Response response) {
 
     public record Response(Header header, Body body) {
     }
