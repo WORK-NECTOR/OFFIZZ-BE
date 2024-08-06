@@ -1,6 +1,6 @@
-package com.worknector.offizz.domain.vacation.domain.repository;
+package com.worknector.offizz.domain.nature.domain.repository;
 
-import com.worknector.offizz.domain.vacation.domain.entity.Nature;
+import com.worknector.offizz.domain.nature.domain.entity.Nature;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

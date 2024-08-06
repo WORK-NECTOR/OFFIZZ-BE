@@ -1,6 +1,6 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
-import com.worknector.offizz.domain.vacation.domain.entity.Nature;
+import com.worknector.offizz.domain.nature.domain.entity.Nature;
 import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
 
 public class AreaBasedNatureMapper {

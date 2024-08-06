@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.vacation.domain.entity;
+package com.worknector.offizz.domain.nature.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
