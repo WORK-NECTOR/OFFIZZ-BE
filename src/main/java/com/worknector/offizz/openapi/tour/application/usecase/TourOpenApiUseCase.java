@@ -2,7 +2,7 @@ package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
 import com.worknector.offizz.openapi.tour.application.dto.AreaCodeResponse;
-import com.worknector.offizz.openapi.tour.application.dto.AreaContentResponse;
+import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,39 +37,47 @@ public class TourOpenApiUseCase {
   private String serviceKey;
 
   public AccommodationResponse fetchAccommodationData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class);
+    return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class, null, null);
   }
 
   public AreaCodeResponse fetchAreaCodeData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaCodeUrlPath, AreaCodeResponse.class);
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaCodeUrlPath, AreaCodeResponse.class, null, null);
   }
 
-  public AreaContentResponse fetchAreaBasedListData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaContentResponse.class);
+  public AreaBasedNatureResponse fetchAreaBasedListNatureData(int pageNo, int numOfRows) {
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaBasedNatureResponse.class, "12", "A01");
   }
 
-  private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType) {
-    DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
-    factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+  private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType, String contentTypeId, String cat1) {
+      DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
+      factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
-    return webClient.mutate()
-            .uriBuilderFactory(factory)
-            .baseUrl(baseUrl)
-            .build()
-            .get()
-            .uri(uriBuilder ->
-                    uriBuilder
-                            .path(urlPath)
-                            .queryParam("serviceKey", serviceKey)
-                            .queryParam("_type", "json")
-                            .queryParam("pageNo", pageNo)
-                            .queryParam("numOfRows", numOfRows)
-                            .queryParam("MobileOS", mobileOS)
-                            .queryParam("MobileApp", mobileApp)
-                            .build()
-            )
-            .retrieve()
-            .bodyToMono(responseType)
-            .block();
+      return webClient.mutate()
+              .uriBuilderFactory(factory)
+              .baseUrl(baseUrl)
+              .build()
+              .get()
+              .uri(uriBuilder -> {
+                  uriBuilder.path(urlPath)
+                          .queryParam("serviceKey", serviceKey)
+                          .queryParam("_type", "json")
+                          .queryParam("pageNo", pageNo)
+                          .queryParam("numOfRows", numOfRows)
+                          .queryParam("MobileOS", mobileOS)
+                          .queryParam("MobileApp", mobileApp);
+
+                  if (contentTypeId != null) {
+                      uriBuilder.queryParam("contentTypeId", contentTypeId);
+                  }
+
+                  if (cat1 != null) {
+                      uriBuilder.queryParam("cat1", cat1);
+                  }
+
+                  return uriBuilder.build();
+              })
+              .retrieve()
+              .bodyToMono(responseType)
+              .block();
   }
 }
