@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Builder
@@ -18,8 +19,6 @@ public class Course {
   private Long courseId;
 
   private String crsLevel;
-
-  private String crsCycle;
 
   @Column(columnDefinition = "TEXT")
   private String crsContents;
@@ -49,8 +48,9 @@ public class Course {
 
   private String sigun;
 
-  private String brdDiv;
-
   @Column(columnDefinition = "TEXT")
   private String gpxpath;
+
+  @ColumnDefault("0")
+  private long hit;
 }
