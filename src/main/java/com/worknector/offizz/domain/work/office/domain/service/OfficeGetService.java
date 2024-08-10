@@ -1,8 +1,8 @@
-package com.worknector.offizz.domain.office.domain.service;
+package com.worknector.offizz.domain.work.office.domain.service;
 
-import com.worknector.offizz.domain.office.application.dto.req.Region;
-import com.worknector.offizz.domain.office.domain.entity.Office;
-import com.worknector.offizz.domain.office.domain.repository.OfficeRepository;
+import com.worknector.offizz.domain.work.office.application.dto.req.Region;
+import com.worknector.offizz.domain.work.office.domain.entity.Office;
+import com.worknector.offizz.domain.work.office.domain.repository.OfficeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

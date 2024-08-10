@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.office.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.worknector.offizz.domain.office.domain.entity.PriceType;
+import com.worknector.offizz.domain.work.office.domain.entity.PriceType;
 
 import java.util.List;
 

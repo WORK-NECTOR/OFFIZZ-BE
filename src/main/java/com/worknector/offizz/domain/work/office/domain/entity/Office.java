@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.office.domain.entity;
+package com.worknector.offizz.domain.work.office.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

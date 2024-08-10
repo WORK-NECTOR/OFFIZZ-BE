@@ -1,7 +1,7 @@
-package com.worknector.offizz.domain.office.domain.repository;
+package com.worknector.offizz.domain.work.office.domain.repository;
 
-import com.worknector.offizz.domain.office.application.dto.req.Region;
-import com.worknector.offizz.domain.office.domain.entity.Office;
+import com.worknector.offizz.domain.work.office.application.dto.req.Region;
+import com.worknector.offizz.domain.work.office.domain.entity.Office;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

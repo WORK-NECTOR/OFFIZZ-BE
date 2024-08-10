@@ -1,6 +1,6 @@
-package com.worknector.offizz.domain.office.application.dto.res;
+package com.worknector.offizz.domain.work.office.application.dto.res;
 
-import com.worknector.offizz.domain.office.domain.entity.PriceType;
+import com.worknector.offizz.domain.work.office.domain.entity.PriceType;
 
 public record RecOffice (
         long officeId,

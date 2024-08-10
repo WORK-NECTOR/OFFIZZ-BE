@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.office.application.dto.req;
+package com.worknector.offizz.domain.work.office.application.dto.req;
 
 import java.util.Arrays;
 import java.util.List;

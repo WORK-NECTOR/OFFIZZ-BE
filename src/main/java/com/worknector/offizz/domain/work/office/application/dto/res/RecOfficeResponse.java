@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.office.application.dto.res;
+package com.worknector.offizz.domain.work.office.application.dto.res;
 
 import java.util.List;
 

@@ -1,9 +1,8 @@
-package com.worknector.offizz.domain.office.application.mapper;
+package com.worknector.offizz.domain.work.office.application.mapper;
 
-import com.worknector.offizz.domain.office.application.dto.res.OfficeDetailResponse;
-import com.worknector.offizz.domain.office.application.dto.res.RecOffice;
-import com.worknector.offizz.domain.office.application.dto.res.RecOffice.Facilities;
-import com.worknector.offizz.domain.office.domain.entity.Office;
+import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.RecOffice;
+import com.worknector.offizz.domain.work.office.domain.entity.Office;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,7 @@ public class OfficeMapper {
         return new RecOffice(
                 office.getId(),
                 office.getOfficeName(),
-                new Facilities(
+                new RecOffice.Facilities(
                         office.getFacilities().isTwentyFourHoursOperation(),
                         office.getFacilities().isOpenAllYear()
                 ),

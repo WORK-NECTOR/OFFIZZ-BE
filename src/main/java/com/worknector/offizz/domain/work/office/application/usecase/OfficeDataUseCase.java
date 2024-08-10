@@ -1,21 +1,19 @@
-package com.worknector.offizz.domain.office.application.usecase;
+package com.worknector.offizz.domain.work.office.application.usecase;
 
-import com.worknector.offizz.domain.office.application.dto.req.Region;
-import com.worknector.offizz.domain.office.application.dto.res.OfficeDetailResponse;
-import com.worknector.offizz.domain.office.application.dto.res.PagingRecOfficeResponse;
-import com.worknector.offizz.domain.office.application.dto.res.RecOffice;
-import com.worknector.offizz.domain.office.application.dto.res.RecOfficeResponse;
-import com.worknector.offizz.domain.office.application.mapper.OfficeMapper;
-import com.worknector.offizz.domain.office.domain.entity.Office;
-import com.worknector.offizz.domain.office.domain.service.OfficeGetService;
+import com.worknector.offizz.domain.work.office.application.dto.req.Region;
+import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.PagingRecOfficeResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.RecOffice;
+import com.worknector.offizz.domain.work.office.application.dto.res.RecOfficeResponse;
+import com.worknector.offizz.domain.work.office.application.mapper.OfficeMapper;
+import com.worknector.offizz.domain.work.office.domain.entity.Office;
+import com.worknector.offizz.domain.work.office.domain.service.OfficeGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.worknector.offizz.domain.office.application.mapper.OfficeMapper.mapToOfficeDetail;
 
 @RequiredArgsConstructor
 @Transactional
@@ -33,7 +31,7 @@ public class OfficeDataUseCase {
 
     public OfficeDetailResponse getOfficeDetail(long officeId) {
         Office office = officeGetService.officeById(officeId);
-        return mapToOfficeDetail(office);
+        return OfficeMapper.mapToOfficeDetail(office);
     }
 
     public PagingRecOfficeResponse getAllRecommendOffice(Region region, int page, int size) {

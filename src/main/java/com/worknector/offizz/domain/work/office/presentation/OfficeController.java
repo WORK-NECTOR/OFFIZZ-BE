@@ -1,10 +1,10 @@
-package com.worknector.offizz.domain.office.presentation;
+package com.worknector.offizz.domain.work.office.presentation;
 
-import com.worknector.offizz.domain.office.application.dto.req.Region;
-import com.worknector.offizz.domain.office.application.dto.res.OfficeDetailResponse;
-import com.worknector.offizz.domain.office.application.dto.res.PagingRecOfficeResponse;
-import com.worknector.offizz.domain.office.application.dto.res.RecOfficeResponse;
-import com.worknector.offizz.domain.office.application.usecase.OfficeDataUseCase;
+import com.worknector.offizz.domain.work.office.application.dto.req.Region;
+import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.PagingRecOfficeResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.RecOfficeResponse;
+import com.worknector.offizz.domain.work.office.application.usecase.OfficeDataUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

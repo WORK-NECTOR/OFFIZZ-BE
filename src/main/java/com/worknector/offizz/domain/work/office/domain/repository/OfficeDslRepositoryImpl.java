@@ -1,9 +1,9 @@
-package com.worknector.offizz.domain.office.domain.repository;
+package com.worknector.offizz.domain.work.office.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.worknector.offizz.domain.office.application.dto.req.Region;
-import com.worknector.offizz.domain.office.domain.entity.Office;
+import com.worknector.offizz.domain.work.office.application.dto.req.Region;
+import com.worknector.offizz.domain.work.office.domain.entity.Office;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.office.domain.entity.QOffice.office;
+import static com.worknector.offizz.domain.work.office.domain.entity.QOffice.office;
 
 @Repository
 @RequiredArgsConstructor
