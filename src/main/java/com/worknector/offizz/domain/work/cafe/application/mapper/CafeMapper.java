@@ -14,6 +14,8 @@ public class CafeMapper {
                 .contentId(cafeResponse.contentid())
                 .image(cafeResponse.firstimage())
                 .tel(cafeResponse.tel())
+                .mapx(cafeResponse.mapx())
+                .mapy(cafeResponse.mapy())
                 .build();
     }
 }

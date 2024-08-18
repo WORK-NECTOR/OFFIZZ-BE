@@ -25,7 +25,7 @@ public class TourOpenApiUseCase {
   private String areaBasedListUrlPath;
 
   @Value("${open-api.tour.url-path.cafe}")
-  private String cafePath;
+  private String cafeUrlPath;
 
   @Value("${open-api.tour.cafe-code}")
   private String cafeCode;
@@ -40,18 +40,18 @@ public class TourOpenApiUseCase {
   private String serviceKey;
 
   public AccommodationResponse fetchAccommodationData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class, null, null);
+    return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class, null, null, null);
   }
 
   public AreaBasedNatureResponse fetchAreaBasedListNatureData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaBasedNatureResponse.class, "12", "A01");
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaBasedNatureResponse.class, "12", "A01", null);
   }
 
   public CafeResponse fetchCafeData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, CafeResponse.class, null, null); //todo : cafeCode cat3에 추가
+    return callOpenApiAndGetResponse(pageNo, numOfRows, cafeUrlPath, CafeResponse.class, null, null, cafeCode);
   }
 
-  private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType, String contentTypeId, String cat1) {
+  private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType, String contentTypeId, String cat1, String cat3) {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
     factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
@@ -75,6 +75,10 @@ public class TourOpenApiUseCase {
 
               if (cat1 != null) {
                 uriBuilder.queryParam("cat1", cat1);
+              }
+
+              if (cat3 != null) {
+                uriBuilder.queryParam("cat3", cat3);
               }
 
               return uriBuilder.build();

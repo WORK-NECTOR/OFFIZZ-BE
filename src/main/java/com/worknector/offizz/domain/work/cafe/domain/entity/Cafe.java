@@ -31,4 +31,8 @@ public class Cafe {
     private String image;
 
     private String tel;
+
+    private String mapx;
+
+    private String mapy;
 }
