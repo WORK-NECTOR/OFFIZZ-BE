@@ -18,7 +18,7 @@ public class Cafe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long cafeId;
 
     private int hit;
 

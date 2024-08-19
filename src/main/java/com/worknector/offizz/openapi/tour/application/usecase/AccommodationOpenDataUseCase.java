@@ -1,6 +1,6 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
-import com.worknector.offizz.domain.work.cafe.application.mapper.CafeMapper;
+import com.worknector.offizz.openapi.tour.application.mapper.CafeMapper;
 import com.worknector.offizz.domain.work.cafe.domain.entity.Cafe;
 import com.worknector.offizz.domain.work.cafe.domain.repository.CafeRepository;
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
@@ -20,8 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class AccommodationOpenDataUseCase {
-    private final static int NUM_OF_ROWS = 100;
-    private final static int PAGE_NO = 1;
+    private static final int NUM_OF_ROWS = 100;
+    private static final int PAGE_NO = 1;
 
     private final TourOpenApiUseCase tourOpenApiUseCase;
     private final AccommodationRepository accommodationRepository;

@@ -18,7 +18,7 @@ public class Office {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long officeId;
 
   private int hit;
 

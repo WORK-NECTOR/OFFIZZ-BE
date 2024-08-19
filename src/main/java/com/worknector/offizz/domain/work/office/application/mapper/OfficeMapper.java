@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class OfficeMapper {
     public static RecOffice mapToRecOffice(Office office) {
         return new RecOffice(
-                office.getId(),
+                office.getOfficeId(),
                 office.getOfficeName(),
                 new RecOffice.Facilities(
                         office.getFacilities().isTwentyFourHoursOperation(),
