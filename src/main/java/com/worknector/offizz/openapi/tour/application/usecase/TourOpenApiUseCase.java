@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
-import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
+import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,12 +36,12 @@ public class TourOpenApiUseCase {
     return callOpenApiAndGetResponse(pageNo, numOfRows, accommodationUrlPath, AccommodationResponse.class, null, null, null);
   }
 
-  public AreaBasedNatureResponse fetchAreaBasedListNatureData(int pageNo, int numOfRows) {
-    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaBasedNatureResponse.class, "12", "A01", null);
+  public TourOpenDataResponse fetchAreaBasedListNatureData(int pageNo, int numOfRows) {
+    return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, TourOpenDataResponse.class, "12", "A01", null);
   }
 
-    public AreaBasedNatureResponse fetchRestaurantData(int pageNo, int numOfRows, String cat3) {
-      return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, AreaBasedNatureResponse.class, "39", null, cat3);
+    public TourOpenDataResponse fetchRestaurantData(int pageNo, int numOfRows, String cat3) {
+      return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, TourOpenDataResponse.class, "39", null, cat3);
     }
 
   private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType, String contentTypeId, String cat1, String cat3) {

@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
-import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
+import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 
 public class RestaurantDataMapper {
 
@@ -9,7 +9,7 @@ public class RestaurantDataMapper {
         throw new IllegalArgumentException();
     }
 
-    public static Restaurant toEntity(AreaBasedNatureResponse.Item item) {
+    public static Restaurant toEntity(TourOpenDataResponse.Item item) {
         return Restaurant.builder()
                 .addr1(item.addr1())
                 .lon(Double.parseDouble(item.mapx()))

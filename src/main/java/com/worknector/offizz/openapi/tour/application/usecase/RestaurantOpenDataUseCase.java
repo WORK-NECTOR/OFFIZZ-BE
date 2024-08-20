@@ -2,7 +2,7 @@ package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import com.worknector.offizz.domain.vacation.restaurant.domain.repository.RestaurantRepository;
-import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
+import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 import com.worknector.offizz.openapi.tour.application.mapper.RestaurantDataMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,22 +29,22 @@ public class RestaurantOpenDataUseCase {
 
         for (String cat3 : cat3List) {
             while (continueFlag) {
-                AreaBasedNatureResponse areaBasedNatureResponse = tourOpenApiUseCase.fetchRestaurantData(pageNo, NUM_OF_ROWS, cat3);
+                TourOpenDataResponse tourOpenDataResponse = tourOpenApiUseCase.fetchRestaurantData(pageNo, NUM_OF_ROWS, cat3);
 
-                AreaBasedNatureResponse.Items items = areaBasedNatureResponse.response().body().items();
-                int currentRows = areaBasedNatureResponse.response().body().numOfRows();
-                int totalCount = areaBasedNatureResponse.response().body().totalCount();
+                TourOpenDataResponse.Items items = tourOpenDataResponse.response().body().items();
+                int currentRows = tourOpenDataResponse.response().body().numOfRows();
+                int totalCount = tourOpenDataResponse.response().body().totalCount();
 
                 if (items == null || currentRows == 0) {
                     break;
                 }
 
-                List<AreaBasedNatureResponse.Item> restaurantItemList = items.item();
+                List<TourOpenDataResponse.Item> restaurantItemList = items.item();
                 if (restaurantItemList.isEmpty()) {
                     break;
                 }
 
-                for (AreaBasedNatureResponse.Item item : restaurantItemList) {
+                for (TourOpenDataResponse.Item item : restaurantItemList) {
                     Optional<Restaurant> existingRestaurant = restaurantRepository.findByContentidAndTitle(item.contentid(), item.title());
 
                     if (existingRestaurant.isPresent()) {
