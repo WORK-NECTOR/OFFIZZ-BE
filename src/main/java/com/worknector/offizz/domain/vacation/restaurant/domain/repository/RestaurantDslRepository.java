@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface RestaurantDslRepository {
-    Page<Restaurant> findAllPagingBySearch(String search, Pageable pageable, double lat, double lon);
+    Page<Restaurant> getAllRestaurantBySearch(String search, Pageable pageable, double lat, double lon);
 }
