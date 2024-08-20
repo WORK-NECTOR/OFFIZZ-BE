@@ -1,0 +1,20 @@
+CREATE TABLE restaurant (
+                            restaurant_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            addr1 VARCHAR(255),
+                            lat DOUBLE,
+                            lon DOUBLE,
+                            modifiedtime VARCHAR(255),
+                            tel VARCHAR(255),
+                            title VARCHAR(255),
+                            contentid VARCHAR(255),
+                            contenttypeid VARCHAR(255),
+                            createdtime VARCHAR(255),
+                            firstimage VARCHAR(255),
+                            firstimage2 VARCHAR(255),
+                            areacode VARCHAR(255),
+                            sigungucode VARCHAR(255),
+                            cat1 VARCHAR(255),
+                            cat2 VARCHAR(255),
+                            cat3 VARCHAR(255),
+                            hit BIGINT DEFAULT 0
+);
