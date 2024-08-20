@@ -32,4 +32,10 @@ public class OpenDataScheduler {
     public void scheduleAccommodationOpenDataUpdate() {
         accommodationOpenDataUseCase.updateAccommodationData();
     }
+
+    // 카페 데이터 매달 1일 자정마다 update
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void scheduleCafeUpdate() {
+        accommodationOpenDataUseCase.updateCafeData();
+    }
 }
