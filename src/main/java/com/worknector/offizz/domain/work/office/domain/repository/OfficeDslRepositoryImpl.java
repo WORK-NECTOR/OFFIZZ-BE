@@ -73,6 +73,25 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
         return new PageImpl<>(offices, pageable, total);
     }
 
+    @Override
+    public Page<Office> findAllPagingBySearchOrLocation(String search, Pageable pageable, double lat, double lon) {
+        List<Office> offices = queryFactory.selectFrom(office)
+                .where(office.lat.between(lat - 1, lat + 1)
+                        .and(office.lon.between(lon - 1, lon + 1)))
+                .orderBy(office.hit.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory.select(office.count())
+                .from(office)
+                .where(office.lat.between(lat - 1, lat + 1)
+                        .and(office.lon.between(lon - 1, lon + 1)))
+                .fetchOne();
+
+        return new PageImpl<>(offices, pageable, total);
+    }
+
     private BooleanBuilder searchBuilder(String search) {
         if (search.isBlank())
             return null;
