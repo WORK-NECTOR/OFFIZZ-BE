@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.work.office.presentation;
 
 import com.worknector.offizz.domain.work.office.application.dto.req.Region;
 import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.PagingOfficeWithLatAndLonResponse;
 import com.worknector.offizz.domain.work.office.application.dto.res.PagingRecOfficeResponse;
 import com.worknector.offizz.domain.work.office.application.dto.res.RecOfficeResponse;
 import com.worknector.offizz.domain.work.office.application.usecase.OfficeDataUseCase;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.util.annotation.Nullable;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +48,17 @@ public class OfficeController {
     @Operation(summary = "검색에 따른 오피스 페이지 - 8개씩", description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
     public ResponseEntity<PagingRecOfficeResponse> searchOffice(@RequestParam String search, @PathVariable int page, @PathVariable int size) {
         PagingRecOfficeResponse allSearchOffice = officeDataUseCase.getAllSearchOffice(search, page, size);
+        return ResponseEntity.ok(allSearchOffice);
+    }
+
+    @GetMapping("/location/{page}/{size}")
+    @Operation(summary = "위치 및 검색 따른 오피스 페이지 - 8개씩", description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
+    public ResponseEntity<PagingOfficeWithLatAndLonResponse> searchOffice(@PathVariable(name = "page") int page,
+                                                                          @PathVariable(name = "size") int size,
+                                                                          @RequestParam(name = "search") @Nullable String search,
+                                                                          @RequestParam(name = "lat") double lat,
+                                                                          @RequestParam(name = "lon") double lon) {
+        PagingOfficeWithLatAndLonResponse allSearchOffice = officeDataUseCase.getAllSearchOrLocation(search, page, size, lat, lon);
         return ResponseEntity.ok(allSearchOffice);
     }
 }

@@ -1,6 +1,7 @@
 package com.worknector.offizz.domain.work.office.application.mapper;
 
 import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.OfficeWithLatAndLon;
 import com.worknector.offizz.domain.work.office.application.dto.res.RecOffice;
 import com.worknector.offizz.domain.work.office.domain.entity.Office;
 import lombok.AccessLevel;
@@ -25,6 +26,16 @@ public class OfficeMapper {
                 office.getFacilities(),
                 office.getCapacity(),
                 office.getOperatingTime()
+        );
+    }
+
+    public static OfficeWithLatAndLon mapToOfficeWithLatAndLon(Office office) {
+        return new OfficeWithLatAndLon(
+                office.getOfficeId(),
+                office.getOfficeName(),
+                office.getStreetAddress(),
+                office.getLat(),
+                office.getLon()
         );
     }
 }
