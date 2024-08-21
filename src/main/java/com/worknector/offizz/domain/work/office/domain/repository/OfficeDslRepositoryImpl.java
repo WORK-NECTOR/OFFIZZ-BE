@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.worknector.offizz.domain.work.office.application.dto.req.Region.findRegionList;
 import static com.worknector.offizz.domain.work.office.domain.entity.QOffice.office;
 
 @Repository
@@ -48,14 +49,11 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
     private BooleanBuilder regionBuilder(Region region) {
         BooleanBuilder builder = new BooleanBuilder();
-        if (region.isEtc()) {
-            for (Region nonEtcRegion : Region.getNonEtcRegions()) {
-                builder.and(office.streetAddress.contains(nonEtcRegion.toString()).not());
-            }
-            return builder;
+        List<String> regions = findRegionList(region);
+        for (String findRegion : regions) {
+            builder.or(office.streetAddress.contains(findRegion));
         }
-
-        return builder.and(office.streetAddress.contains(region.toString()));
+        return builder;
     }
 
     @Override
