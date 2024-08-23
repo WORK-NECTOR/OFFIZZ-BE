@@ -2,9 +2,9 @@ package com.worknector.offizz.domain.vacation.restaurant.application.dto;
 
 import java.util.List;
 
-public record PagingRestaurantRecommendList(
+public record PagingRestaurantRecommend(
 
-        List<RestaurantRecommendList> restaurantRecommendList,
+        List<RestaurantRecommend> restaurantRecommend,
         int totalPage
 ) {
 }
