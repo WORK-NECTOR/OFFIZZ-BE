@@ -52,7 +52,7 @@ public class OfficeController {
     }
 
     @GetMapping("/location/{page}/{size}")
-    @Operation(summary = "위치 및 검색 따른 오피스 페이지 - 8개씩", description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
+    @Operation(summary = "위치 및 검색 따른 오피스 페이지 - 8개씩", description = "lat에 위도, lon에 경도(필수) + '서울 강남' 검색(선택) -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
     public ResponseEntity<PagingOfficeWithLatAndLonResponse> searchOffice(@PathVariable(name = "page") int page,
                                                                           @PathVariable(name = "size") int size,
                                                                           @RequestParam(name = "search") @Nullable String search,
