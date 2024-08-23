@@ -2,7 +2,7 @@ package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.domain.nature.domain.entity.Nature;
 import com.worknector.offizz.domain.nature.domain.repository.NatureRepository;
-import com.worknector.offizz.openapi.tour.application.dto.AreaBasedNatureResponse;
+import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 import com.worknector.offizz.openapi.tour.application.mapper.AreaBasedNatureMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,22 +27,22 @@ public class AreaBasedNatureOpenDataUseCase {
         boolean continueFlag = true;
 
         while (continueFlag) {
-            AreaBasedNatureResponse areaBasedNatureResponse = tourOpenApiUseCase.fetchAreaBasedListNatureData(pageNo, numOfRows);
+            TourOpenDataResponse tourOpenDataResponse = tourOpenApiUseCase.fetchAreaBasedListNatureData(pageNo, numOfRows);
 
-            AreaBasedNatureResponse.Items items = areaBasedNatureResponse.response().body().items();
-            int currentRows = areaBasedNatureResponse.response().body().numOfRows();
-            int totalCount = areaBasedNatureResponse.response().body().totalCount();
+            TourOpenDataResponse.Items items = tourOpenDataResponse.response().body().items();
+            int currentRows = tourOpenDataResponse.response().body().numOfRows();
+            int totalCount = tourOpenDataResponse.response().body().totalCount();
 
             if (items == null || currentRows == 0) {
                 break;
             }
 
-            List<AreaBasedNatureResponse.Item> natureItemList = items.item();
+            List<TourOpenDataResponse.Item> natureItemList = items.item();
             if (natureItemList.isEmpty()) {
                 break;
             }
 
-            for (AreaBasedNatureResponse.Item item : natureItemList) {
+            for (TourOpenDataResponse.Item item : natureItemList) {
                 Optional<Nature> existingNature = natureRepository.findByContentid(item.contentid());
 
                 if (existingNature.isPresent()) {
