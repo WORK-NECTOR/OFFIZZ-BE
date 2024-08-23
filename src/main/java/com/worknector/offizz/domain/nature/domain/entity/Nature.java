@@ -53,6 +53,5 @@ public class Nature {
 
     private String cat3;
 
-    @ColumnDefault("0")
-    private long hit;
+    private int hit;
 }
