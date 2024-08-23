@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.domain.entity;
+package com.worknector.offizz.domain.vacation.restaurant.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Nature {
+public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long natureId;
+    private Long restaurantId;
 
     private String addr1;
 
-    private String mapx;
+    private double lon;
 
-    private String mapy;
+    private double lat;
 
     private String modifiedtime;
 
@@ -54,3 +54,4 @@ public class Nature {
 
     private int hit;
 }
+

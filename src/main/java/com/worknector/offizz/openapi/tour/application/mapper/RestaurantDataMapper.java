@@ -1,19 +1,19 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
-import com.worknector.offizz.domain.nature.domain.entity.Nature;
+import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 
-public class AreaBasedNatureMapper {
+public class RestaurantDataMapper {
 
-    private AreaBasedNatureMapper() {
+    private RestaurantDataMapper() {
         throw new IllegalArgumentException();
     }
 
-    public static Nature toEntity(TourOpenDataResponse.Item item) {
-        return Nature.builder()
+    public static Restaurant toEntity(TourOpenDataResponse.Item item) {
+        return Restaurant.builder()
                 .addr1(item.addr1())
-                .mapx(item.mapx())
-                .mapy(item.mapy())
+                .lon(Double.parseDouble(item.mapx()))
+                .lat(Double.parseDouble(item.mapy()))
                 .modifiedtime(item.modifiedtime())
                 .tel(item.tel())
                 .title(item.title())
