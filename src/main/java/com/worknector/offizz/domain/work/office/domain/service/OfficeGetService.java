@@ -38,8 +38,6 @@ public class OfficeGetService {
 
     public Page<Office> allSearchOrLocationPage(String search, int page, int size, double lat, double lon) {
         Pageable pageable = PageRequest.of(page-1, size);
-        if (search != null)
-            return officeRepository.findAllPagingBySearch(search, pageable);
         return officeRepository.findAllPagingBySearchOrLocation(search, pageable, lat, lon);
     }
 

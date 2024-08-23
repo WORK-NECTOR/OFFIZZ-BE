@@ -15,6 +15,7 @@ import java.util.List;
 
 import static com.worknector.offizz.domain.work.office.application.dto.req.Region.findRegionList;
 import static com.worknector.offizz.domain.work.office.domain.entity.QOffice.office;
+import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
@@ -75,10 +76,32 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
     @Override
     public Page<Office> findAllPagingBySearchOrLocation(String search, Pageable pageable, double lat, double lon) {
+        if (search != null)
+            return bySearch(pageable, search, lat, lon);
+        return byLocation(pageable, lat, lon);
+    }
+
+    private PageImpl<Office> bySearch(Pageable pageable, String search, double lat, double lon) {
+        List<Office> offices = queryFactory.selectFrom(office)
+                .where(searchBuilder(search))
+                .orderBy(distanceTemplate(lat, lon, office.lat, office.lon).asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory.select(office.count())
+                .from(office)
+                .where(searchBuilder(search))
+                .fetchOne();
+
+        return new PageImpl<>(offices, pageable, total);
+    }
+
+    private PageImpl<Office> byLocation(Pageable pageable, double lat, double lon) {
         List<Office> offices = queryFactory.selectFrom(office)
                 .where(office.lat.between(lat - 1, lat + 1)
                         .and(office.lon.between(lon - 1, lon + 1)))
-                .orderBy(office.hit.desc())
+                .orderBy(distanceTemplate(lat, lon, office.lat, office.lon).asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
