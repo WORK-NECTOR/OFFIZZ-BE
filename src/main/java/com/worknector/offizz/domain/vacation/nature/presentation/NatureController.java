@@ -1,7 +1,7 @@
-package com.worknector.offizz.domain.nature.presentation;
+package com.worknector.offizz.domain.vacation.nature.presentation;
 
-import com.worknector.offizz.domain.nature.application.dto.res.RecommendNaturePagingResponse;
-import com.worknector.offizz.domain.nature.application.usecase.RecommendNatureUseCase;
+import com.worknector.offizz.domain.vacation.nature.application.dto.res.RecommendNaturePagingResponse;
+import com.worknector.offizz.domain.vacation.nature.application.usecase.RecommendNatureUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.domain.entity;
+package com.worknector.offizz.domain.vacation.nature.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

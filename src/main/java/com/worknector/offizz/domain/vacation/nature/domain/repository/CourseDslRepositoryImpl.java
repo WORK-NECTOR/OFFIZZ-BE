@@ -1,8 +1,8 @@
-package com.worknector.offizz.domain.nature.domain.repository;
+package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.worknector.offizz.domain.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

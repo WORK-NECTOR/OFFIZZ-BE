@@ -1,12 +1,12 @@
-package com.worknector.offizz.domain.nature.application.usecase;
+package com.worknector.offizz.domain.vacation.nature.application.usecase;
 
-import com.worknector.offizz.domain.nature.application.dto.res.RecommendNaturePagingResponse;
-import com.worknector.offizz.domain.nature.application.dto.res.RecommendNature;
-import com.worknector.offizz.domain.nature.application.mapper.RecommendNatureMapper;
-import com.worknector.offizz.domain.nature.domain.entity.Course;
-import com.worknector.offizz.domain.nature.domain.entity.Nature;
-import com.worknector.offizz.domain.nature.domain.service.CourseGetService;
-import com.worknector.offizz.domain.nature.domain.service.NatureGetService;
+import com.worknector.offizz.domain.vacation.nature.application.dto.res.RecommendNaturePagingResponse;
+import com.worknector.offizz.domain.vacation.nature.application.dto.res.RecommendNature;
+import com.worknector.offizz.domain.vacation.nature.application.mapper.RecommendNatureMapper;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
+import com.worknector.offizz.domain.vacation.nature.domain.service.CourseGetService;
+import com.worknector.offizz.domain.vacation.nature.domain.service.NatureGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

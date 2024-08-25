@@ -1,8 +1,8 @@
-package com.worknector.offizz.domain.nature.application.mapper;
+package com.worknector.offizz.domain.vacation.nature.application.mapper;
 
-import com.worknector.offizz.domain.nature.application.dto.res.RecommendNature;
-import com.worknector.offizz.domain.nature.domain.entity.Course;
-import com.worknector.offizz.domain.nature.domain.entity.Nature;
+import com.worknector.offizz.domain.vacation.nature.application.dto.res.RecommendNature;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

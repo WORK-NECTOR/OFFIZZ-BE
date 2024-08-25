@@ -1,7 +1,7 @@
-package com.worknector.offizz.domain.nature.domain.service;
+package com.worknector.offizz.domain.vacation.nature.domain.service;
 
-import com.worknector.offizz.domain.nature.domain.entity.Course;
-import com.worknector.offizz.domain.nature.domain.repository.CourseRepository;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

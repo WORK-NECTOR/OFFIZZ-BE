@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.application.dto.res;
+package com.worknector.offizz.domain.vacation.nature.application.dto.res;
 
 public record RecommendNature(
         Natures natures,

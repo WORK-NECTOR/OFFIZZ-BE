@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
-import com.worknector.offizz.domain.nature.domain.entity.Nature;
-import com.worknector.offizz.domain.nature.domain.repository.NatureRepository;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
+import com.worknector.offizz.domain.vacation.nature.domain.repository.NatureRepository;
 import com.worknector.offizz.openapi.tour.application.dto.TourOpenDataResponse;
 import com.worknector.offizz.openapi.tour.application.mapper.AreaBasedNatureMapper;
 import lombok.RequiredArgsConstructor;
