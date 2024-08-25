@@ -6,6 +6,7 @@ import com.worknector.offizz.openapi.course.application.dto.CourseResponse.Items
 import com.worknector.offizz.openapi.course.application.mapper.CourseMapper;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import com.worknector.offizz.domain.vacation.nature.domain.repository.CourseRepository;
+import com.worknector.offizz.openapi.utils.CourseGpxParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +22,9 @@ public class CourseOpenDataUseCase {
 
   private final CourseOpenApiUseCase courseOpenApiUseCase;
   private final CourseRepository courseRepository;
+  private final CourseGpxParser courseGpxParser;
 
-  public void updateCourseData() {
+  public void updateCourseData() throws Exception {
     int pageNo = 1;
     int numOfRows = 100;
     List<Course> courseEntityList = new ArrayList<>();
@@ -68,6 +70,7 @@ public class CourseOpenDataUseCase {
 
     if (!courseEntityList.isEmpty()) {
       courseRepository.saveAll(courseEntityList);
+      courseGpxParser.parseGpxAndUpdateAll(courseEntityList);
     }
   }
 }

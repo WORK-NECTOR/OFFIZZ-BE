@@ -29,7 +29,7 @@ public class OpenDataScheduler {
 
     // 산책로 데이터 매달 1일 자정마다 update
     @Scheduled(cron = "0 0 0 1 * ?")
-    public void scheduleCourseOpenDataUpdate() {
+    public void scheduleCourseOpenDataUpdate() throws Exception {
         courseOpenDataUseCase.updateCourseData();
     }
 
