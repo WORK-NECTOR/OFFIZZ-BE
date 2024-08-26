@@ -76,14 +76,16 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
     @Override
     public Page<Office> findAllPagingBySearchOrLocation(String search, Pageable pageable, double lat, double lon) {
-        if (search != null)
-            return bySearch(pageable, search, lat, lon);
-        return byLocation(pageable, lat, lon);
-    }
+        BooleanBuilder condition = new BooleanBuilder();
 
-    private PageImpl<Office> bySearch(Pageable pageable, String search, double lat, double lon) {
+        if (search != null) {
+            condition.and(searchBuilder(search));
+        } else {
+            condition.and(locationBuilder(lat, lon));
+        }
+
         List<Office> offices = queryFactory.selectFrom(office)
-                .where(searchBuilder(search))
+                .where(condition)
                 .orderBy(distanceTemplate(lat, lon, office.lat, office.lon).asc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -91,28 +93,15 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
         long total = queryFactory.select(office.count())
                 .from(office)
-                .where(searchBuilder(search))
+                .where(condition)
                 .fetchOne();
 
         return new PageImpl<>(offices, pageable, total);
     }
 
-    private PageImpl<Office> byLocation(Pageable pageable, double lat, double lon) {
-        List<Office> offices = queryFactory.selectFrom(office)
-                .where(office.lat.between(lat - 1, lat + 1)
-                        .and(office.lon.between(lon - 1, lon + 1)))
-                .orderBy(distanceTemplate(lat, lon, office.lat, office.lon).asc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        long total = queryFactory.select(office.count())
-                .from(office)
-                .where(office.lat.between(lat - 1, lat + 1)
-                        .and(office.lon.between(lon - 1, lon + 1)))
-                .fetchOne();
-
-        return new PageImpl<>(offices, pageable, total);
+    private BooleanBuilder locationBuilder(double lat, double lon) {
+        return new BooleanBuilder()
+                .and(distanceTemplate(lat, lon, office.lat, office.lon).loe(10.0));
     }
 
     private BooleanBuilder searchBuilder(String search) {
