@@ -14,8 +14,8 @@ public class RecommendNatureMapper {
                 new RecommendNature.Natures(
                         nature.getNatureId(),
                         nature.getAddr1(),
-                        nature.getMapx(),
-                        nature.getMapy(),
+                        nature.getLon(),
+                        nature.getLat(),
                         nature.getTel(),
                         nature.getTitle(),
                         nature.getFirstimage(),
