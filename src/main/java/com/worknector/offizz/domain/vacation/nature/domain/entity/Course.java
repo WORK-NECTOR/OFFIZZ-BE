@@ -50,17 +50,17 @@ public class Course {
   @Column(columnDefinition = "TEXT")
   private String gpxpath;
 
-  private double latitude;
+  private double lat;
 
-  private double longitude;
+  private double lon;
 
   private int hit;
 
-  public void updateLatitude(double latitude) {
-    this.latitude = latitude;
+  public void updateLatitude(double lat) {
+    this.lat = lat;
   }
 
-  public void updateLongitude(double longitude) {
-    this.longitude = longitude;
+  public void updateLongitude(double lon) {
+    this.lon = lon;
   }
 }
