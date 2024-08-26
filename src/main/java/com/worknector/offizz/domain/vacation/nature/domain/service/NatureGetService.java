@@ -12,7 +12,7 @@ import java.util.List;
 public class NatureGetService {
     private final NatureRepository natureRepository;
 
-    public List<Nature> getAllNatureBySearch(String search) {
-        return natureRepository.findAllNatureBySearch(search);
+    public List<Nature> getAllNatureBySearch(String search, double lat, double lon) {
+        return natureRepository.findAllNatureBySearch(search, lat, lon);
     }
 }

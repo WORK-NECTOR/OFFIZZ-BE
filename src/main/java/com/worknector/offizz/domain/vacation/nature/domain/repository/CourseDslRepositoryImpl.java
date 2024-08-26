@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.nature.domain.entity.QCourse.course;
+import static com.worknector.offizz.domain.vacation.nature.domain.entity.QCourse.course;
+import static com.worknector.offizz.global.util.scheduler.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,9 +18,10 @@ public class CourseDslRepositoryImpl implements CourseDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Course> findAllCourseBySearch(String search) {
+    public List<Course> findAllCourseBySearch(String search, double lat, double lon) {
         return queryFactory.selectFrom(course)
                 .where(searchBuilder(search))
+                .orderBy(distanceTemplate(lat, lon, course.lat, course.lon).asc())
                 .fetch();
     }
 

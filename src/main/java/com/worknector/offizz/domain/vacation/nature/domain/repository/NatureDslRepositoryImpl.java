@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.nature.domain.entity.QNature.nature;
+import static com.worknector.offizz.domain.vacation.nature.domain.entity.QNature.nature;
+import static com.worknector.offizz.global.util.scheduler.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,9 +18,10 @@ public class NatureDslRepositoryImpl implements NatureDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Nature> findAllNatureBySearch(String search) {
+    public List<Nature> findAllNatureBySearch(String search, double lat, double lon) {
         return queryFactory.selectFrom(nature)
                 .where(searchBuilder(search))
+                .orderBy(distanceTemplate(lat, lon, nature.lat, nature.lon).asc())
                 .fetch();
     }
 

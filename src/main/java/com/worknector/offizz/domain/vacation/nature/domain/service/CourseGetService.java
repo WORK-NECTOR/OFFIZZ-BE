@@ -12,7 +12,7 @@ import java.util.List;
 public class CourseGetService {
     private final CourseRepository courseRepository;
 
-    public List<Course> getAllCourseBySearch(String search) {
-        return courseRepository.findAllCourseBySearch(search);
+    public List<Course> getAllCourseBySearch(String search, double lat, double lon) {
+        return courseRepository.findAllCourseBySearch(search, lat, lon);
     }
 }
