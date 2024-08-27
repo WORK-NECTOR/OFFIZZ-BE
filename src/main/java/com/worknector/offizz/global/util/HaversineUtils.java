@@ -28,4 +28,16 @@ public class HaversineUtils {
                 userLon
         );
     }
+
+    public static double distanceForSort(double userLat, double userLon, double lat, double lon) {
+        double userLatRad = Math.toRadians(userLat);
+        double latRad = Math.toRadians(lat);
+        double lonDiffRad = Math.toRadians(lon - userLon);
+
+        double a = Math.cos(userLatRad) * Math.cos(latRad) * Math.cos(lonDiffRad) +
+                Math.sin(userLatRad) * Math.sin(latRad);
+
+        return EARTH_RADIUS * Math.acos(a);
+    }
+
 }
