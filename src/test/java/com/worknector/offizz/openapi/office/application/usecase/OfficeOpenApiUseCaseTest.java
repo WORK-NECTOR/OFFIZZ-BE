@@ -19,7 +19,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import java.io.IOException;
 import java.util.List;
 
-import static com.worknector.offizz.domain.work.office.domain.entity.PriceType.월;
+import static com.worknector.offizz.domain.work.domain.entity.PriceType.월;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
