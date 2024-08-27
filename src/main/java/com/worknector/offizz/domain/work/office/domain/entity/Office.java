@@ -40,6 +40,9 @@ public class Office {
 
   private OperatingTime operatingTime;
 
+  private double lon;
+
+  private double lat;
   public void updateHit() {
     this.hit++;
   }

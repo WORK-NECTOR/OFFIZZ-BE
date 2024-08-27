@@ -22,6 +22,8 @@ public class OfficeMapper {
             .lastUpdatedAt(dto.lastUpdatedAt())
             .operatingTime(mapToOperatingTime(dto))
             .facilities(mapToFacilities(dto))
+            .lat(Double.parseDouble(dto.latitude()))
+            .lon(Double.parseDouble(dto.longitude()))
             .build();
   }
 

@@ -1,10 +1,7 @@
 package com.worknector.offizz.domain.work.office.application.usecase;
 
 import com.worknector.offizz.domain.work.office.application.dto.req.Region;
-import com.worknector.offizz.domain.work.office.application.dto.res.OfficeDetailResponse;
-import com.worknector.offizz.domain.work.office.application.dto.res.PagingRecOfficeResponse;
-import com.worknector.offizz.domain.work.office.application.dto.res.RecOffice;
-import com.worknector.offizz.domain.work.office.application.dto.res.RecOfficeResponse;
+import com.worknector.offizz.domain.work.office.application.dto.res.*;
 import com.worknector.offizz.domain.work.office.application.mapper.OfficeMapper;
 import com.worknector.offizz.domain.work.office.domain.entity.Office;
 import com.worknector.offizz.domain.work.office.domain.service.OfficeGetService;
@@ -48,5 +45,13 @@ public class OfficeDataUseCase {
                 .map(OfficeMapper::mapToRecOffice)
                 .toList();
         return new PagingRecOfficeResponse(recOffices, offices.getTotalPages());
+    }
+
+    public PagingOfficeWithLatAndLonResponse getAllSearchOrLocation(String search, int page, int size, double lat, double lon) {
+        Page<Office> offices = officeGetService.allSearchOrLocationPage(search, page, size, lat, lon);
+        List<OfficeWithLatAndLon> officeWithLatAndLons = offices.stream()
+                .map(OfficeMapper::mapToOfficeWithLatAndLon)
+                .toList();
+        return new PagingOfficeWithLatAndLonResponse(officeWithLatAndLons, offices.getTotalPages());
     }
 }

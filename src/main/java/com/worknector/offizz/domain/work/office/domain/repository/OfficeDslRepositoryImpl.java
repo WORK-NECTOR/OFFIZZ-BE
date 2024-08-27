@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.worknector.offizz.domain.work.office.application.dto.req.Region.findRegionList;
 import static com.worknector.offizz.domain.work.office.domain.entity.QOffice.office;
+import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
@@ -48,14 +50,11 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
     private BooleanBuilder regionBuilder(Region region) {
         BooleanBuilder builder = new BooleanBuilder();
-        if (region.isEtc()) {
-            for (Region nonEtcRegion : Region.getNonEtcRegions()) {
-                builder.and(office.streetAddress.contains(nonEtcRegion.toString()).not());
-            }
-            return builder;
+        List<String> regions = findRegionList(region);
+        for (String findRegion : regions) {
+            builder.or(office.streetAddress.contains(findRegion));
         }
-
-        return builder.and(office.streetAddress.contains(region.toString()));
+        return builder;
     }
 
     @Override
@@ -73,6 +72,36 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
                 .fetchOne();
 
         return new PageImpl<>(offices, pageable, total);
+    }
+
+    @Override
+    public Page<Office> findAllPagingBySearchOrLocation(String search, Pageable pageable, double lat, double lon) {
+        BooleanBuilder condition = new BooleanBuilder();
+
+        if (search != null) {
+            condition.and(searchBuilder(search));
+        } else {
+            condition.and(locationBuilder(lat, lon));
+        }
+
+        List<Office> offices = queryFactory.selectFrom(office)
+                .where(condition)
+                .orderBy(distanceTemplate(lat, lon, office.lat, office.lon).asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory.select(office.count())
+                .from(office)
+                .where(condition)
+                .fetchOne();
+
+        return new PageImpl<>(offices, pageable, total);
+    }
+
+    private BooleanBuilder locationBuilder(double lat, double lon) {
+        return new BooleanBuilder()
+                .and(distanceTemplate(lat, lon, office.lat, office.lon).loe(10.0));
     }
 
     private BooleanBuilder searchBuilder(String search) {

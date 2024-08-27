@@ -32,7 +32,7 @@ public class Cafe {
 
     private String tel;
 
-    private String mapx;
+    private double lon;
 
-    private String mapy;
+    private double lat;
 }
