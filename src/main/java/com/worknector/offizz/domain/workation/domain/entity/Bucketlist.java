@@ -24,6 +24,8 @@ public class Bucketlist extends BaseEntity {
 
     private String name;
 
+    private String address;
+
     @Column(nullable = false)
     @Builder.Default
     private boolean isComplete = false;
