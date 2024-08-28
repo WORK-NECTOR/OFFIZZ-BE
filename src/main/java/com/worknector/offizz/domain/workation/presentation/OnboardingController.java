@@ -22,7 +22,7 @@ public class OnboardingController {
     private final OnboardingUseCase onboardingUseCase;
 
     @PostMapping
-    @Operation(summary = "온보딩", description = "워케이션에 대한 온보딩")
+    @Operation(summary = "온보딩", description = "온보딩 요청으로 워케이션 정보 저장 후 워케이션 id 반환")
     public ResponseEntity<Long> createOnboarding(@AuthenticationPrincipal User user,
                                                  @RequestBody OnboardingRequest onboardingRequest) {
         Long workationId = onboardingUseCase.createOnboarding(user, onboardingRequest);
