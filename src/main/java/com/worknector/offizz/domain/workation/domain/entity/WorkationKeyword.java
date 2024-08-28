@@ -1,31 +1,30 @@
 package com.worknector.offizz.domain.workation.domain.entity;
 
+import com.worknector.offizz.global.entity.BaseEntity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import java.util.Arrays;
+import static jakarta.persistence.EnumType.STRING;
 
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@RequiredArgsConstructor
-public enum WorkationKeyword {
+public class WorkationKeyword extends BaseEntity {
 
-    HEALING("힐링"),
-    FOOD("맛집"),
-    CULTURE_ART("문화/예술"),
-    SHOPPING("쇼핑"),
-    EVENT_FESTIVAL("공연/행사/축제"),
-    ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long workationKeywordId;
 
-    private final String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workation_id", nullable = false)
+    private Workation workation;
 
-    public static WorkationKeyword from(String keywordName) {
-        if (keywordName == null) {
-            return null;
-        }
-
-        return Arrays.stream(WorkationKeyword.values())
-                .filter(type -> type.name().equalsIgnoreCase(keywordName))
-                .findFirst()
-                .orElse(null);
-    }
+    @Column(nullable = false)
+    @Enumerated(value = STRING)
+    private Keyword keyword;
 }
