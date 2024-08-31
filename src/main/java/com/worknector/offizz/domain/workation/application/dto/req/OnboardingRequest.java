@@ -1,6 +1,7 @@
 package com.worknector.offizz.domain.workation.application.dto.req;
 
 import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.WorkKeyword;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +32,9 @@ public record OnboardingRequest(
         @NotNull
         @Schema(name = "코어타임 종료 시각", example = "12:00")
         LocalTime endCoreTime,
+        @NotNull
+        @Schema(name = "일 키워드 (OFFICE / CAFE / LIBRARY / STUDYCAFE / STUDYROOM)", example = "[OFFICE]")
+        List<WorkKeyword> workKeywords,
         @NotNull
         @Schema(name = "여행 키워드 (NATURE / RESTAURANT / CULTURE / SHOPPING)", example = "[NATURE]")
         List<VacationKeyword> vacationKeywords,

@@ -1,7 +1,7 @@
 package com.worknector.offizz.domain.workation.domain.service;
 
 import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
-import com.worknector.offizz.domain.workation.domain.repository.WorkationKeywordRepository;
+import com.worknector.offizz.domain.workation.domain.repository.WorkationVacationKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class WorkationKeywordSaveService {
+public class WorkationVacationKeywordSaveService {
 
-    private final WorkationKeywordRepository workationKeywordRepository;
+    private final WorkationVacationKeywordRepository workationVacationKeywordRepository;
 
     public WorkationVacationKeyword save(WorkationVacationKeyword workationVacationKeyword) {
-        return workationKeywordRepository.save(workationVacationKeyword);
+        return workationVacationKeywordRepository.save(workationVacationKeyword);
     }
 }

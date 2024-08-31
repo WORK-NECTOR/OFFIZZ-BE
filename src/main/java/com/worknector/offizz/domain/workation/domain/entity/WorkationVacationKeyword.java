@@ -18,7 +18,7 @@ public class WorkationVacationKeyword extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long workationKeywordId;
+    private Long workationVacationKeywordId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workation_id", nullable = false)

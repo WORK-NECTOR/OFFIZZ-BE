@@ -1,8 +1,6 @@
 package com.worknector.offizz.domain.workation.application.mapper;
 
-import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
-import com.worknector.offizz.domain.workation.domain.entity.Workation;
-import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.*;
 
 public class WorkationKeywordMapper {
 
@@ -14,6 +12,13 @@ public class WorkationKeywordMapper {
         return WorkationVacationKeyword.builder()
                 .workation(workation)
                 .keyword(vacationKeyword)
+                .build();
+    }
+
+    public static WorkationWorkKeyword mapToWorkationWorkKeyword(Workation workation, WorkKeyword workKeyword) {
+        return WorkationWorkKeyword.builder()
+                .workation(workation)
+                .keyword(workKeyword)
                 .build();
     }
 }

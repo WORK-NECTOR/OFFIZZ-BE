@@ -5,13 +5,11 @@ import com.worknector.offizz.domain.workation.application.dto.req.OnboardingRequ
 import com.worknector.offizz.domain.workation.application.mapper.BucketlistMapper;
 import com.worknector.offizz.domain.workation.application.mapper.WorkationKeywordMapper;
 import com.worknector.offizz.domain.workation.application.mapper.WorkationMapper;
-import com.worknector.offizz.domain.workation.domain.entity.Bucketlist;
-import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
-import com.worknector.offizz.domain.workation.domain.entity.Workation;
-import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.*;
 import com.worknector.offizz.domain.workation.domain.service.BucketlistSaveService;
-import com.worknector.offizz.domain.workation.domain.service.WorkationKeywordSaveService;
+import com.worknector.offizz.domain.workation.domain.service.WorkationVacationKeywordSaveService;
 import com.worknector.offizz.domain.workation.domain.service.WorkationSaveService;
+import com.worknector.offizz.domain.workation.domain.service.WorkationWorkKeywordSaveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +22,8 @@ import java.util.List;
 public class OnboardingUseCase {
 
     private final BucketlistSaveService bucketlistSaveService;
-    private final WorkationKeywordSaveService workationKeywordSaveService;
+    private final WorkationVacationKeywordSaveService workationVacationKeywordSaveService;
+    private final WorkationWorkKeywordSaveService workationWorkKeywordSaveService;
     private final WorkationSaveService workationSaveService;
 
     /**
@@ -35,7 +34,7 @@ public class OnboardingUseCase {
      */
     public Long createOnboarding(User user, OnboardingRequest onboardingRequest) {
         Workation workation = saveWorkation(user, onboardingRequest);
-        saveWorkationKeywords(workation, onboardingRequest.vacationKeywords());
+        saveWorkationKeywords(workation, onboardingRequest.workKeywords(), onboardingRequest.vacationKeywords());
         saveBucketlists(workation, onboardingRequest.bucketlists());
         return workation.getWorkationId();
     }
@@ -45,12 +44,21 @@ public class OnboardingUseCase {
         return workationSaveService.save(workation);
     }
 
-    private void saveWorkationKeywords(Workation savedWorkation, List<VacationKeyword> vacationKeywords) {
+    private void saveWorkationKeywords(Workation savedWorkation,
+                                       List<WorkKeyword> workKeywords,
+                                       List<VacationKeyword> vacationKeywords) {
+        // 일 키워드 저장
+        for (WorkKeyword workKeyword : workKeywords) {
+            WorkationWorkKeyword workationWorkKeyword = WorkationKeywordMapper
+                    .mapToWorkationWorkKeyword(savedWorkation, workKeyword);
+            workationWorkKeywordSaveService.save(workationWorkKeyword);
+        }
+
+        // 여행 키워드 저장
         for (VacationKeyword vacationKeyword : vacationKeywords) {
-            WorkationVacationKeyword workationVacationKeyword = WorkationKeywordMapper.mapToWorkationVacationKeyword(
-                    savedWorkation, vacationKeyword
-            );
-            workationKeywordSaveService.save(workationVacationKeyword);
+            WorkationVacationKeyword workationVacationKeyword = WorkationKeywordMapper
+                    .mapToWorkationVacationKeyword(savedWorkation, vacationKeyword);
+            workationVacationKeywordSaveService.save(workationVacationKeyword);
         }
     }
 
