@@ -1,6 +1,6 @@
 package com.worknector.offizz.domain.workation.domain.service;
 
-import com.worknector.offizz.domain.workation.domain.entity.WorkationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationKeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class WorkationKeywordSaveService {
 
     private final WorkationKeywordRepository workationKeywordRepository;
 
-    public WorkationKeyword save(WorkationKeyword workationKeyword) {
-        return workationKeywordRepository.save(workationKeyword);
+    public WorkationVacationKeyword save(WorkationVacationKeyword workationVacationKeyword) {
+        return workationKeywordRepository.save(workationVacationKeyword);
     }
 }

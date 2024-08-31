@@ -14,7 +14,7 @@ import static jakarta.persistence.EnumType.STRING;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WorkationKeyword extends BaseEntity {
+public class WorkationVacationKeyword extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +26,5 @@ public class WorkationKeyword extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(value = STRING)
-    private Keyword keyword;
+    private VacationKeyword keyword;
 }

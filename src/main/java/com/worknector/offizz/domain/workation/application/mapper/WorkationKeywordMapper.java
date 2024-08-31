@@ -1,8 +1,8 @@
 package com.worknector.offizz.domain.workation.application.mapper;
 
-import com.worknector.offizz.domain.workation.domain.entity.Keyword;
+import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
 import com.worknector.offizz.domain.workation.domain.entity.Workation;
-import com.worknector.offizz.domain.workation.domain.entity.WorkationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
 
 public class WorkationKeywordMapper {
 
@@ -10,10 +10,10 @@ public class WorkationKeywordMapper {
         throw new IllegalArgumentException();
     }
 
-    public static WorkationKeyword mapToWorkationKeyword(Workation workation, Keyword keyword) {
-        return WorkationKeyword.builder()
+    public static WorkationVacationKeyword mapToWorkationVacationKeyword(Workation workation, VacationKeyword vacationKeyword) {
+        return WorkationVacationKeyword.builder()
                 .workation(workation)
-                .keyword(keyword)
+                .keyword(vacationKeyword)
                 .build();
     }
 }

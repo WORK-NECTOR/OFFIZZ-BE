@@ -6,9 +6,9 @@ import com.worknector.offizz.domain.workation.application.mapper.BucketlistMappe
 import com.worknector.offizz.domain.workation.application.mapper.WorkationKeywordMapper;
 import com.worknector.offizz.domain.workation.application.mapper.WorkationMapper;
 import com.worknector.offizz.domain.workation.domain.entity.Bucketlist;
-import com.worknector.offizz.domain.workation.domain.entity.Keyword;
+import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
 import com.worknector.offizz.domain.workation.domain.entity.Workation;
-import com.worknector.offizz.domain.workation.domain.entity.WorkationKeyword;
+import com.worknector.offizz.domain.workation.domain.entity.WorkationVacationKeyword;
 import com.worknector.offizz.domain.workation.domain.service.BucketlistSaveService;
 import com.worknector.offizz.domain.workation.domain.service.WorkationKeywordSaveService;
 import com.worknector.offizz.domain.workation.domain.service.WorkationSaveService;
@@ -35,7 +35,7 @@ public class OnboardingUseCase {
      */
     public Long createOnboarding(User user, OnboardingRequest onboardingRequest) {
         Workation workation = saveWorkation(user, onboardingRequest);
-        saveWorkationKeywords(workation, onboardingRequest.keywords());
+        saveWorkationKeywords(workation, onboardingRequest.vacationKeywords());
         saveBucketlists(workation, onboardingRequest.bucketlists());
         return workation.getWorkationId();
     }
@@ -45,10 +45,12 @@ public class OnboardingUseCase {
         return workationSaveService.save(workation);
     }
 
-    private void saveWorkationKeywords(Workation savedWorkation, List<Keyword> keywords) {
-        for (Keyword keyword : keywords) {
-            WorkationKeyword workationKeyword = WorkationKeywordMapper.mapToWorkationKeyword(savedWorkation, keyword);
-            workationKeywordSaveService.save(workationKeyword);
+    private void saveWorkationKeywords(Workation savedWorkation, List<VacationKeyword> vacationKeywords) {
+        for (VacationKeyword vacationKeyword : vacationKeywords) {
+            WorkationVacationKeyword workationVacationKeyword = WorkationKeywordMapper.mapToWorkationVacationKeyword(
+                    savedWorkation, vacationKeyword
+            );
+            workationKeywordSaveService.save(workationVacationKeyword);
         }
     }
 
