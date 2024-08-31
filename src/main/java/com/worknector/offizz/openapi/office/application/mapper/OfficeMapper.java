@@ -1,9 +1,9 @@
 package com.worknector.offizz.openapi.office.application.mapper;
 
 import com.worknector.offizz.openapi.office.application.dto.OfficeResponse.OfficeData;
-import com.worknector.offizz.domain.work.office.domain.entity.Facilities;
-import com.worknector.offizz.domain.work.office.domain.entity.Office;
-import com.worknector.offizz.domain.work.office.domain.entity.OperatingTime;
+import com.worknector.offizz.domain.work.domain.entity.Facilities;
+import com.worknector.offizz.domain.work.domain.entity.Office;
+import com.worknector.offizz.domain.work.domain.entity.OperatingTime;
 
 public class OfficeMapper {
 

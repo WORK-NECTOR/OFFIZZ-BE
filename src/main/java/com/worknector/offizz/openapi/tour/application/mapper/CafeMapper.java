@@ -1,6 +1,6 @@
 package com.worknector.offizz.openapi.tour.application.mapper;
 
-import com.worknector.offizz.domain.work.cafe.domain.entity.Cafe;
+import com.worknector.offizz.domain.work.domain.entity.Cafe;
 import com.worknector.offizz.openapi.tour.application.dto.CafeResponse.Item;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

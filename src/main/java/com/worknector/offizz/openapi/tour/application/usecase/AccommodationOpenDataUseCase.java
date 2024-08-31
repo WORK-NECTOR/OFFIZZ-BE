@@ -1,8 +1,8 @@
 package com.worknector.offizz.openapi.tour.application.usecase;
 
 import com.worknector.offizz.openapi.tour.application.mapper.CafeMapper;
-import com.worknector.offizz.domain.work.cafe.domain.entity.Cafe;
-import com.worknector.offizz.domain.work.cafe.domain.repository.CafeRepository;
+import com.worknector.offizz.domain.work.domain.entity.Cafe;
+import com.worknector.offizz.domain.work.domain.repository.CafeRepository;
 import com.worknector.offizz.openapi.tour.application.dto.AccommodationResponse;
 import com.worknector.offizz.openapi.tour.application.dto.CafeResponse;
 import com.worknector.offizz.openapi.tour.application.mapper.AccommodationMapper;
