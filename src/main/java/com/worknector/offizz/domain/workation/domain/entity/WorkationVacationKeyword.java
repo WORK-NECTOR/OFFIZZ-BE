@@ -7,26 +7,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Bucketlist extends BaseEntity {
+public class WorkationVacationKeyword extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bucketlistId;
+    private Long workationVacationKeywordId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workation_id", nullable = false)
     private Workation workation;
 
-    private String name;
-
-    private String address;
-
     @Column(nullable = false)
-    @Builder.Default
-    private boolean isComplete = false;
+    @Enumerated(value = STRING)
+    private VacationKeyword keyword;
 }
