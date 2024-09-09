@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.worknector.offizz.domain.vacation.restaurant.domain.entity.QRestaurant.restaurant;
-import static com.worknector.offizz.global.util.scheduler.HaversineUtils.distanceTemplate;
+import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
