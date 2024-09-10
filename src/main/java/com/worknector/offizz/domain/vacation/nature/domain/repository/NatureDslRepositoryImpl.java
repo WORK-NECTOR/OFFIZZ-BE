@@ -19,17 +19,21 @@ public class NatureDslRepositoryImpl implements NatureDslRepository {
 
     @Override
     public List<Nature> findAllNatureBySearch(String search, double lat, double lon) {
+        BooleanBuilder condition = new BooleanBuilder();
+
+        if (search != null) {
+            condition.and(searchBuilder(search));
+        } else {
+            condition.and(locationBuilder(lat, lon));
+        }
+
         return queryFactory.selectFrom(nature)
-                .where(searchBuilder(search))
+                .where(condition)
                 .orderBy(distanceTemplate(lat, lon, nature.lat, nature.lon).asc())
                 .fetch();
     }
 
     private BooleanBuilder searchBuilder(String search) {
-        if (search.isBlank()) {
-            return null;
-        }
-
         String[] searches = search.split(" ");
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -42,5 +46,10 @@ public class NatureDslRepositoryImpl implements NatureDslRepository {
         });
 
         return builder;
+    }
+
+    private BooleanBuilder locationBuilder(double lat, double lon) {
+        return new BooleanBuilder()
+                .and(distanceTemplate(lat, lon, nature.lat, nature.lon).loe(10.0));
     }
 }
