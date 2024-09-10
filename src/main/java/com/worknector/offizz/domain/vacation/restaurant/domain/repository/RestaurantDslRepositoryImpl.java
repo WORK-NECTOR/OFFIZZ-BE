@@ -4,9 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
@@ -21,26 +18,22 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<Restaurant> getAllRestaurantBySearch(String search, Pageable pageable, double lat, double lon) {
-        List<Restaurant> restaurants = queryFactory.selectFrom(restaurant)
-                .where(searchBuilder(search))
+    public List<Restaurant> getAllRestaurantBySearch(String search, double lat, double lon) {
+        BooleanBuilder condition = new BooleanBuilder();
+
+        if (search != null) {
+            condition.and(searchBuilder(search));
+        } else {
+            condition.and(locationBuilder(lat, lon));
+        }
+
+        return queryFactory.selectFrom(restaurant)
+                .where(condition)
                 .orderBy(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).asc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
                 .fetch();
-
-        Long count = queryFactory.select(restaurant.count())
-                .from(restaurant)
-                .where(searchBuilder(search))
-                .fetchOne();
-        long total = (count != null) ? count : 0L;
-
-        return new PageImpl<>(restaurants, pageable, total);
     }
 
     private BooleanBuilder searchBuilder(String search) {
-        if (search.isBlank())
-            return null;
         String[] searches = search.split(" ");
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -53,5 +46,10 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
         });
 
         return builder;
+    }
+
+    private BooleanBuilder locationBuilder(double lat, double lon) {
+        return new BooleanBuilder()
+                .and(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).loe(10.0));
     }
 }
