@@ -3,6 +3,7 @@ package com.worknector.offizz.domain.vacation.recommend.application.mapper;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
+import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,18 @@ public class VacationRecommendMapper {
                 course.getCrsKorNm(),
                 null,
                 null
+        );
+    }
+
+    public static VacationRecommendResponse fromRestaurant(Restaurant restaurant) {
+        return new VacationRecommendResponse(
+                restaurant.getRestaurantId(),
+                restaurant.getAddr1(),
+                restaurant.getLon(),
+                restaurant.getLat(),
+                restaurant.getTitle(),
+                restaurant.getFirstimage(),
+                restaurant.getFirstimage2()
         );
     }
 }
