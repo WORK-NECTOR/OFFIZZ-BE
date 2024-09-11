@@ -1,25 +1,27 @@
-package com.worknector.offizz.domain.nature.domain.repository;
+package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.worknector.offizz.domain.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.nature.domain.entity.QCourse.course;
+import static com.worknector.offizz.domain.vacation.nature.domain.entity.QNature.nature;
+import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
-public class CourseDslRepositoryImpl implements CourseDslRepository {
+public class NatureDslRepositoryImpl implements NatureDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Course> findAllCourseBySearch(String search) {
-        return queryFactory.selectFrom(course)
+    public List<Nature> findAllNatureBySearch(String search, double lat, double lon) {
+        return queryFactory.selectFrom(nature)
                 .where(searchBuilder(search))
+                .orderBy(distanceTemplate(lat, lon, nature.lat, nature.lon).asc())
                 .fetch();
     }
 
@@ -34,8 +36,8 @@ public class CourseDslRepositoryImpl implements CourseDslRepository {
 
         Arrays.stream(searches).forEach(se -> {
             BooleanBuilder subBuilder = new BooleanBuilder();
-            subBuilder.or(course.sigun.contains(se))
-                    .or(course.crsKorNm.contains(se));
+            subBuilder.or(nature.addr1.contains(se))
+                    .or(nature.title.contains(se));
             builder.and(subBuilder);
         });
 

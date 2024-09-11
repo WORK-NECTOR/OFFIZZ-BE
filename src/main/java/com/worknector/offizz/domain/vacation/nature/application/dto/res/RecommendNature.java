@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.application.dto.res;
+package com.worknector.offizz.domain.vacation.nature.application.dto.res;
 
 public record RecommendNature(
         Natures natures,
@@ -7,8 +7,8 @@ public record RecommendNature(
     public record Natures(
             Long natureId,
             String addr1,
-            String mapx,
-            String mapy,
+            double lon,
+            double lat,
             String tel,
             String title,
             String firstimage,

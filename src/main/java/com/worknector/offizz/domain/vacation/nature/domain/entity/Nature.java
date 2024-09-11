@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.domain.entity;
+package com.worknector.offizz.domain.vacation.nature.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +22,9 @@ public class Nature {
 
     private String addr1;
 
-    private String mapx;
+    private double lon;
 
-    private String mapy;
+    private double lat;
 
     private String modifiedtime;
 

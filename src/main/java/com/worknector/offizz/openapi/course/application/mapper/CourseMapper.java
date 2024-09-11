@@ -1,7 +1,7 @@
 package com.worknector.offizz.openapi.course.application.mapper;
 
 import com.worknector.offizz.openapi.course.application.dto.CourseResponse.Item;
-import com.worknector.offizz.domain.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 
 public class CourseMapper {
 

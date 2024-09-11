@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.domain.entity;
+package com.worknector.offizz.domain.vacation.nature.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,5 +50,17 @@ public class Course {
   @Column(columnDefinition = "TEXT")
   private String gpxpath;
 
+  private double lat;
+
+  private double lon;
+
   private int hit;
+
+  public void updateLatitude(double lat) {
+    this.lat = lat;
+  }
+
+  public void updateLongitude(double lon) {
+    this.lon = lon;
+  }
 }

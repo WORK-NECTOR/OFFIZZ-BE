@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.nature.application.dto.res;
+package com.worknector.offizz.domain.vacation.nature.application.dto.res;
 
 import java.util.List;
 

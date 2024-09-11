@@ -1,6 +1,6 @@
-package com.worknector.offizz.domain.nature.domain.repository;
+package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
-import com.worknector.offizz.domain.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 
 import java.util.Optional;
 
