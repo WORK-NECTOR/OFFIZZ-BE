@@ -12,37 +12,37 @@ public class VacationRecommendMapper {
 
     public static VacationRecommendResponse fromNature(Nature nature) {
         return new VacationRecommendResponse(
+                "nature",
                 nature.getNatureId(),
                 nature.getAddr1(),
                 nature.getLon(),
                 nature.getLat(),
                 nature.getTitle(),
-                nature.getFirstimage(),
-                nature.getFirstimage2()
+                nature.getFirstimage()
         );
     }
 
     public static VacationRecommendResponse fromCourse(Course course) {
         return new VacationRecommendResponse(
+                "nature",
                 course.getCourseId(),
                 course.getSigun(),
                 course.getLon(),
                 course.getLat(),
                 course.getCrsKorNm(),
-                null,
                 null
         );
     }
 
     public static VacationRecommendResponse fromRestaurant(Restaurant restaurant) {
         return new VacationRecommendResponse(
+                "restaurant",
                 restaurant.getRestaurantId(),
                 restaurant.getAddr1(),
                 restaurant.getLon(),
                 restaurant.getLat(),
                 restaurant.getTitle(),
-                restaurant.getFirstimage(),
-                restaurant.getFirstimage2()
+                restaurant.getFirstimage()
         );
     }
 }
