@@ -19,17 +19,21 @@ public class CourseDslRepositoryImpl implements CourseDslRepository {
 
     @Override
     public List<Course> findAllCourseBySearch(String search, double lat, double lon) {
+        BooleanBuilder condition = new BooleanBuilder();
+
+        if (search != null) {
+            condition.and(searchBuilder(search));
+        } else {
+            condition.and(locationBuilder(lat, lon));
+        }
+
         return queryFactory.selectFrom(course)
-                .where(searchBuilder(search))
+                .where(condition)
                 .orderBy(distanceTemplate(lat, lon, course.lat, course.lon).asc())
                 .fetch();
     }
 
     private BooleanBuilder searchBuilder(String search) {
-        if (search.isBlank()) {
-            return null;
-        }
-
         String[] searches = search.split(" ");
 
         BooleanBuilder builder = new BooleanBuilder();
@@ -42,5 +46,10 @@ public class CourseDslRepositoryImpl implements CourseDslRepository {
         });
 
         return builder;
+    }
+
+    private BooleanBuilder locationBuilder(double lat, double lon) {
+        return new BooleanBuilder()
+                .and(distanceTemplate(lat, lon, course.lat, course.lon).loe(10.0));
     }
 }
