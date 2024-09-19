@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/vacation/recommend")
@@ -22,7 +20,7 @@ public class VacationRecommendController {
     @GetMapping("/{filter}/{page}/{size}")
     @Operation(summary = "VACATION > 추천) 검색에 따른 vacation 페이지",
             description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 자연/맛집/문화예술/쇼핑 이름")
-    public ResponseEntity<PagingVacationRecommendResponse> searchRecommendVacation(@PathVariable List<Filter> filter,
+    public ResponseEntity<PagingVacationRecommendResponse> searchRecommendVacation(@PathVariable Filter filter,
                                                                                    @RequestParam(name = "search") String search,
                                                                                    @RequestParam(name = "lat") double lat,
                                                                                    @RequestParam(name = "lon") double lon,
