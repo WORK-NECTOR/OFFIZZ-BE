@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.workation.application.dto.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.worknector.offizz.domain.workation.domain.entity.VacationKeyword;
 import com.worknector.offizz.domain.workation.domain.entity.WorkKeyword;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,10 +22,12 @@ public record OnboardingRequest(
         @Schema(name = "어디서 워케이션 참여하는지 (장소 주소)", example = "창해로 307 ...")
         String address,
         @NotNull
-        @Schema(name = "워케이션 시작 날짜", example = "2024-08-25")
+        @Schema(name = "워케이션 시작 날짜", example = "2024.08.25")
+        @JsonFormat(pattern = "yyyy.MM.dd")
         LocalDate startDate,
         @NotNull
-        @Schema(name = "워케이션 종료 날짜", example = "2024-09-05")
+        @Schema(name = "워케이션 종료 날짜", example = "2024.09.05")
+        @JsonFormat(pattern = "yyyy.MM.dd")
         LocalDate endDate,
         @NotNull
         @Schema(name = "코어타임 시작 시각", example = "09:00")

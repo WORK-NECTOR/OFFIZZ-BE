@@ -1,24 +1,24 @@
-package com.worknector.offizz.domain.vacation.restaurant.domain.repository;
+package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.vacation.restaurant.domain.entity.QRestaurant.restaurant;
+import static com.worknector.offizz.domain.vacation.nature.domain.entity.QCourse.course;
 import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
 @Repository
 @RequiredArgsConstructor
-public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
+public class CourseDslRepositoryImpl implements CourseDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Restaurant> getAllRestaurantBySearch(String search, double lat, double lon) {
+    public List<Course> findAllCourseBySearch(String search, double lat, double lon) {
         BooleanBuilder condition = new BooleanBuilder();
 
         if (search != null) {
@@ -27,9 +27,9 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
             condition.and(locationBuilder(lat, lon));
         }
 
-        return queryFactory.selectFrom(restaurant)
+        return queryFactory.selectFrom(course)
                 .where(condition)
-                .orderBy(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).asc())
+                .orderBy(distanceTemplate(lat, lon, course.lat, course.lon).asc())
                 .fetch();
     }
 
@@ -40,8 +40,8 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
 
         Arrays.stream(searches).forEach(se -> {
             BooleanBuilder subBuilder = new BooleanBuilder();
-            subBuilder.or(restaurant.addr1.contains(se))
-                    .or(restaurant.title.contains(se));
+            subBuilder.or(course.sigun.contains(se))
+                    .or(course.crsKorNm.contains(se));
             builder.and(subBuilder);
         });
 
@@ -50,6 +50,6 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, course.lat, course.lon).loe(10.0));
     }
 }
