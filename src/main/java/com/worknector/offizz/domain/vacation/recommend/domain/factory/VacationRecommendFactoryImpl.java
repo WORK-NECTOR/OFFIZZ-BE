@@ -1,9 +1,6 @@
 package com.worknector.offizz.domain.vacation.recommend.domain.factory;
 
-import com.worknector.offizz.domain.vacation.recommend.domain.strategy.CompositeVacationRecommendStrategy;
-import com.worknector.offizz.domain.vacation.recommend.domain.strategy.RestaurantRecommendStrategy;
-import com.worknector.offizz.domain.vacation.recommend.domain.strategy.VacationRecommendStrategy;
-import com.worknector.offizz.domain.vacation.recommend.domain.strategy.NatureRecommendStrategy;
+import com.worknector.offizz.domain.vacation.recommend.domain.strategy.*;
 import com.worknector.offizz.domain.vacation.recommend.exception.InvalidVacationFilterException;
 import com.worknector.offizz.domain.vacation.recommend.presentation.constant.Filter;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +11,25 @@ import java.util.Arrays;
 @Service
 @RequiredArgsConstructor
 public class VacationRecommendFactoryImpl implements VacationRecommendFactory {
-    private final NatureRecommendStrategy natureRecommendationStrategy;
-    private final RestaurantRecommendStrategy restaurantRecommendationStrategy;
+    private final NatureRecommendStrategy natureRecommendStrategy;
+    private final RestaurantRecommendStrategy restaurantRecommendStrategy;
+    private final CultureRecommendStrategy cultureRecommendStrategy;
 
     @Override
     public VacationRecommendStrategy getRecommendationStrategy(Filter filter) {
         switch (filter) {
             case nature:
-                return natureRecommendationStrategy;
+                return natureRecommendStrategy;
             case restaurant:
-                return restaurantRecommendationStrategy;
+                return restaurantRecommendStrategy;
+            case culture:
+                return cultureRecommendStrategy;
             case all:
                 return new CompositeVacationRecommendStrategy(
                         Arrays.asList(
-                                natureRecommendationStrategy,
-                                restaurantRecommendationStrategy
+                                natureRecommendStrategy,
+                                restaurantRecommendStrategy,
+                                cultureRecommendStrategy
                         )
                 );
             default:
