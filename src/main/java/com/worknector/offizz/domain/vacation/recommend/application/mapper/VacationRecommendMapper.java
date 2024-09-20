@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.vacation.recommend.application.mapper;
 
+import com.worknector.offizz.domain.vacation.culture.domain.entity.Culture;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
@@ -43,6 +44,18 @@ public class VacationRecommendMapper {
                 restaurant.getLat(),
                 restaurant.getTitle(),
                 restaurant.getFirstimage()
+        );
+    }
+
+    public static VacationRecommendResponse fromCulture(Culture culture) {
+        return new VacationRecommendResponse(
+                "culture",
+                culture.getCultureId(),
+                culture.getAddr1(),
+                culture.getLon(),
+                culture.getLat(),
+                culture.getTitle(),
+                culture.getFirstimage()
         );
     }
 }
