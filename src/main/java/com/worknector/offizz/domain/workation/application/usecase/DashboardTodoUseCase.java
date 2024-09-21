@@ -1,5 +1,7 @@
 package com.worknector.offizz.domain.workation.application.usecase;
 
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
+import com.worknector.offizz.domain.likes.domain.service.LikesGetService;
 import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.work.domain.service.WorkGetService;
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoFinRequest;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.worknector.offizz.domain.workation.application.mapper.TodoMapper.mapToVacationTodo;
@@ -30,9 +33,9 @@ public class DashboardTodoUseCase {
     private final TodoUpdateService todoUpdateService;
     private final WorkationGetSave workationGetSave;
     private final WorkGetService workGetService;
+    private final LikesGetService likesGetService;
 
     //todo : todo 완료시 근무시간, 조건에 따라 버킷리스트 완료 처리 필요 -> 프론트에 어떤 정보를 응답해야할까 생각
-
     public WorkHours getCoreTime(User user, int day) {
         Workation workation = workationGetSave.findByUser(user);
         LocalTime startCoreTime = workation.getStartCoreTime();
@@ -45,10 +48,15 @@ public class DashboardTodoUseCase {
         return new WorkHours(todoHours, startCoreTime, endCoreTime);
     }
 
-    public void recommendWork(User user) {
+    public RecommendWork recommendWork(User user) {
         List<WorkKeyword> workKeywords = workationGetSave.findWorkKeyword(user);
-        // todo : work, vacation에서 추천항목은 어떤 기준으로 몇개를 보여주는 것인지 확인 필요
+        List<Likes> likes = likesGetService.findWorkLikes(user);
+        List<String> recommendWorks = new ArrayList<>();
+        workKeywords.forEach(workKeyword -> recommendWorks.add(workGetService.recommendWork(workKeyword)));
+        List<String> likeWorks = workGetService.likeWork(likes);
+        return new RecommendWork(recommendWorks, likeWorks);
     }
+    // todo : work, vacation에서 추천항목은 어떤 기준으로 몇개를 보여주는 것인지 확인 필요
 
     public AllTodoResponse addWorkTodo(User user, int day, WorkTodoRequest request) {
         Daily daily = dailyGetService.findDailyByWorkation(user, day);

@@ -6,6 +6,7 @@ import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoRe
 import com.worknector.offizz.domain.workation.application.dto.req.WorkTodoFinRequest;
 import com.worknector.offizz.domain.workation.application.dto.req.WorkTodoRequest;
 import com.worknector.offizz.domain.workation.application.dto.res.AllTodoResponse;
+import com.worknector.offizz.domain.workation.application.dto.res.RecommendWork;
 import com.worknector.offizz.domain.workation.application.dto.res.WorkHours;
 import com.worknector.offizz.domain.workation.application.usecase.DashboardTodoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +22,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "DASHBOARD Controller")
 public class DashBoardController {
     private final DashboardTodoUseCase dashboardTodoUseCase;
+
+    @GetMapping("/recommend/work}")
+    public ResponseEntity<RecommendWork> bucketList(@AuthenticationPrincipal User user) {
+        RecommendWork recommendWork = dashboardTodoUseCase.recommendWork(user);
+        return ResponseEntity.ok(recommendWork);
+    }
 
     @GetMapping("/coretime/{day}")
     @Operation(summary = "오늘의 코어타임과 작업 시간 확인", description = "토큰과 워케이션 날짜 포함")
