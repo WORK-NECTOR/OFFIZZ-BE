@@ -1,5 +1,7 @@
 package com.worknector.offizz.domain.work.presenation;
 
+import com.worknector.offizz.domain.likes.application.dto.req.Like;
+import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.work.application.usecase.WorkDataUseCase;
 import com.worknector.offizz.domain.work.application.dto.res.PagingCafeAndOffice;
 import com.worknector.offizz.domain.work.presenation.constant.Region;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import reactor.util.annotation.Nullable;
 
@@ -20,6 +23,13 @@ import reactor.util.annotation.Nullable;
 @Tag(name = "WORK CONTROLLER")
 public class WorkController {
     private final WorkDataUseCase workDataUseCase;
+
+    @PostMapping("/office/like}")
+    @Operation(summary = "오피스 혹은 카페 좋아요", description = "토큰 함께")
+    public ResponseEntity<Void> saveLike(@AuthenticationPrincipal User user, @RequestBody Like workLike) {
+        workDataUseCase.saveWorkLike(user, workLike);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/office/rec/{region}/{size}")
     @Operation(summary = "장소에 따른 오피스 4개 추천 (장소 필수)", description = "수도권, 경상권, 전라권, 강원권, 제주권, 충청권")
@@ -54,13 +64,14 @@ public class WorkController {
 
     @GetMapping("/{filter}/location/{page}/{size}")
     @Operation(summary = "위치 및 검색 따른 오피스 페이지 - 8개씩", description = "lat에 위도, lon에 경도(필수) + '서울 강남' 검색(선택) -> 서울과 강남을 모두 포함하는 주소 혹은 오피스 이름")
-    public ResponseEntity<PagingCafeAndOffice> searchOffice(@PathVariable Filter filter,
+    public ResponseEntity<PagingCafeAndOffice> searchOffice(@AuthenticationPrincipal User user,
+                                                            @PathVariable Filter filter,
                                                             @PathVariable(name = "page") int page,
                                                             @PathVariable(name = "size") int size,
                                                             @RequestParam(name = "search") @Nullable String search,
                                                             @RequestParam(name = "lat") double lat,
                                                             @RequestParam(name = "lon") double lon) {
-        PagingCafeAndOffice a = workDataUseCase.getAllSearchOrLocation(filter, search, page, size, lat, lon);
+        PagingCafeAndOffice a = workDataUseCase.getAllSearchOrLocation(filter, search, page, size, lat, lon, user);
         return ResponseEntity.ok(a);
     }
 }

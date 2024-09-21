@@ -1,9 +1,13 @@
 package com.worknector.offizz.domain.work.application.usecase;
 
+import com.worknector.offizz.domain.likes.application.dto.req.Like;
+import com.worknector.offizz.domain.likes.application.mapper.LikeMapper;
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
+import com.worknector.offizz.domain.likes.domain.service.LikesSaveService;
+import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.work.domain.service.WorkGetService;
 import com.worknector.offizz.domain.work.presenation.constant.Region;
 import com.worknector.offizz.domain.work.application.dto.res.*;
-import com.worknector.offizz.domain.work.domain.entity.Cafe;
 import com.worknector.offizz.domain.work.application.mapper.WorkMapper;
 import com.worknector.offizz.domain.work.presenation.constant.Filter;
 import com.worknector.offizz.domain.work.domain.entity.Office;
@@ -25,6 +29,12 @@ import static com.worknector.offizz.global.util.HaversineUtils.distanceForSort;
 @Transactional
 public class WorkDataUseCase {
     private final WorkGetService workGetService;
+    private final LikesSaveService likesSaveService;
+
+    public void saveWorkLike(User user, Like workLike) {
+        Likes likes = LikeMapper.mapToLikes(user, workLike);
+        likesSaveService.save(likes);
+    }
 
     public RecOfficeResponse getRecommendOffice(Region region, int size) {
         List<Office> offices = workGetService.recommendOffice(region, size);
@@ -55,8 +65,8 @@ public class WorkDataUseCase {
         return new PagingRecOfficeResponse(recOffices, offices.getTotalPages());
     }
 
-    public PagingCafeAndOffice getAllSearchOrLocation (Filter filter, String search, int page, int size, double lat, double lon) {
-        List<CafeAndOffice> cafeAndOffices = getCafeAndOffices(filter, search, lat, lon);
+    public PagingCafeAndOffice getAllSearchOrLocation (Filter filter, String search, int page, int size, double lat, double lon, User user) {
+        List<CafeAndOffice> cafeAndOffices = getCafeAndOffices(filter, search, lat, lon, user);
         cafeAndOffices.sort((o1, o2) -> {
             double first = distanceForSort(lat, lon, o1.lat(), o1.lon());
             double second = distanceForSort(lat, lon, o2.lat(), o2.lon());
@@ -70,14 +80,14 @@ public class WorkDataUseCase {
         return getPagingCafeAndOffice(page, size, cafeAndOffices);
     }
 
-    private List<CafeAndOffice> getCafeAndOffices(Filter filter, String search, double lat, double lon) {
+    private List<CafeAndOffice> getCafeAndOffices(Filter filter, String search, double lat, double lon, User user) {
         List<CafeAndOffice> cafeAndOffices = new ArrayList<>();
-        List<Cafe> cafes = new ArrayList<>();
-        List<Office> offices = new ArrayList<>();
+        List<SelectCafe> cafes = new ArrayList<>();
+        List<SelectOffice> offices = new ArrayList<>();
         if (filter.equals(Filter.cafe) || filter.equals(Filter.all))
-            cafes = workGetService.allCafeSearchOrLocationPage(search, lat, lon);
+            cafes = workGetService.allCafeSearchOrLocationPage(search, lat, lon, user);
         if (filter.equals(Filter.office) || filter.equals(Filter.all))
-            offices = workGetService.allOfficeSearchOrLocationPage(search, lat, lon);
+            offices = workGetService.allOfficeSearchOrLocationPage(search, lat, lon, user);
 
         cafes.forEach(
                 cafe -> cafeAndOffices.add(WorkMapper.mapToCafeAndOffice(cafe))
