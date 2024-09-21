@@ -1,5 +1,8 @@
 package com.worknector.offizz.domain.work.domain.repository;
 
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
+import com.worknector.offizz.domain.user.domain.entity.User;
+import com.worknector.offizz.domain.work.application.dto.res.SelectOffice;
 import com.worknector.offizz.domain.work.presenation.constant.Region;
 import com.worknector.offizz.domain.work.domain.entity.Office;
 import org.springframework.data.domain.Page;
@@ -14,5 +17,7 @@ public interface OfficeDslRepository {
 
     Page<Office> findAllPagingBySearch(String search, Pageable pageable);
 
-    List<Office> findAllPagingBySearchOrLocation(String search, double lat, double lon);
+    List<SelectOffice> findAllPagingBySearchOrLocation(String search, double lat, double lon, User user);
+
+    List<Office> findAllOfficeById(List<Likes> likes);
 }

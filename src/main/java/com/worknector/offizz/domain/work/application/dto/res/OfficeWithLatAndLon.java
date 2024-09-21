@@ -5,6 +5,7 @@ public record OfficeWithLatAndLon(
         String name,
         String address,
         double lat,
-        double lon
+        double lon,
+        boolean isLike
 ) {
 }

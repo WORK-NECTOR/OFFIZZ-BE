@@ -7,6 +7,7 @@ public record CafeAndOffice(
         String address,
         double lat,
         double lon,
-        String image
+        String image,
+        boolean isLike
 ) {
 }
