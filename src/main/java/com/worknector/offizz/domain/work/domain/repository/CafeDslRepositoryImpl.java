@@ -39,7 +39,7 @@ public class CafeDslRepositoryImpl implements CafeDslRepository {
                 .distinct()
                 .where(condition)
                 .leftJoin(likes)
-                .on(likes.likesCategory.eq(LikesCategory.cafe)
+                .on(likes.likesCategory.eq(LikesCategory.CAFE)
                         .and(likes.fkId.eq(cafe.cafeId))
                         .and(likes.user.eq(user)))
                 .fetchJoin()
