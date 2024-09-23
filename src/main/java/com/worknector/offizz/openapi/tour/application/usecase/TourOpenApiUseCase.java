@@ -54,6 +54,10 @@ public class TourOpenApiUseCase {
         return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, TourOpenDataResponse.class, "39", null, cat3);
     }
 
+    public TourOpenDataResponse fetchCultureData(int pageNo, int numOfRows) {
+        return callOpenApiAndGetResponse(pageNo, numOfRows, areaBasedListUrlPath, TourOpenDataResponse.class, "14", null, null);
+    }
+
     private <T> T callOpenApiAndGetResponse(int pageNo, int numOfRows, String urlPath, Class<T> responseType, String contentTypeId, String cat1, String cat3) {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
