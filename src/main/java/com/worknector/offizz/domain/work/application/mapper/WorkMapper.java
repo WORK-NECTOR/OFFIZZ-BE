@@ -1,9 +1,6 @@
 package com.worknector.offizz.domain.work.application.mapper;
 
-import com.worknector.offizz.domain.work.application.dto.res.CafeAndOffice;
-import com.worknector.offizz.domain.work.application.dto.res.OfficeDetailResponse;
-import com.worknector.offizz.domain.work.application.dto.res.OfficeWithLatAndLon;
-import com.worknector.offizz.domain.work.application.dto.res.RecOffice;
+import com.worknector.offizz.domain.work.application.dto.res.*;
 import com.worknector.offizz.domain.work.domain.entity.Cafe;
 import com.worknector.offizz.domain.work.domain.entity.Office;
 import lombok.AccessLevel;
@@ -31,17 +28,8 @@ public class WorkMapper {
         );
     }
 
-    public static OfficeWithLatAndLon mapToOfficeWithLatAndLon(Office office) {
-        return new OfficeWithLatAndLon(
-                office.getOfficeId(),
-                office.getOfficeName(),
-                office.getStreetAddress(),
-                office.getLat(),
-                office.getLon()
-        );
-    }
-
-    public static CafeAndOffice mapToCafeAndOffice(Cafe cafe) {
+    public static CafeAndOffice mapToCafeAndOffice(SelectCafe selectCafe) {
+        Cafe cafe = selectCafe.cafe();
         return new CafeAndOffice(
                 "cafe",
                 cafe.getCafeId(),
@@ -49,11 +37,13 @@ public class WorkMapper {
                 cafe.getStreetAddress(),
                 cafe.getLat(),
                 cafe.getLon(),
-                cafe.getImage()
+                cafe.getImage(),
+                selectCafe.isLike()
         );
     }
 
-    public static CafeAndOffice mapToCafeAndOffice(Office office) {
+    public static CafeAndOffice mapToCafeAndOffice(SelectOffice selectOffice) {
+        Office office = selectOffice.office();
         return new CafeAndOffice(
                 "office",
                 office.getOfficeId(),
@@ -61,7 +51,8 @@ public class WorkMapper {
                 office.getStreetAddress(),
                 office.getLat(),
                 office.getLon(),
-                null
+                null,
+                selectOffice.isLike()
         );
     }
 }
