@@ -24,7 +24,7 @@ import reactor.util.annotation.Nullable;
 public class WorkController {
     private final WorkDataUseCase workDataUseCase;
 
-    @PostMapping("/office/like}")
+    @PostMapping("/like")
     @Operation(summary = "오피스 혹은 카페 좋아요", description = "토큰 함께")
     public ResponseEntity<Void> saveLike(@AuthenticationPrincipal User user, @RequestBody Like workLike) {
         workDataUseCase.saveWorkLike(user, workLike);

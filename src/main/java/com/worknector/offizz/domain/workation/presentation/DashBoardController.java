@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class DashBoardController {
     private final DashboardTodoUseCase dashboardTodoUseCase;
 
-    @GetMapping("/recommend/work}")
+    @GetMapping("/recommend/work")
     public ResponseEntity<RecommendWork> bucketList(@AuthenticationPrincipal User user) {
         RecommendWork recommendWork = dashboardTodoUseCase.recommendWork(user);
         return ResponseEntity.ok(recommendWork);
@@ -71,5 +71,5 @@ public class DashBoardController {
     public ResponseEntity<AllTodoResponse> finTodo(@AuthenticationPrincipal User user, @PathVariable int day, @RequestBody VacationTodoFinRequest request) {
         AllTodoResponse allTodoResponse = dashboardTodoUseCase.finVacationTodo(user, day, request);
         return ResponseEntity.ok(allTodoResponse);
-    }
+    } //todo : workTodo와 완료 로직 다름 -> 수정 필요
 }
