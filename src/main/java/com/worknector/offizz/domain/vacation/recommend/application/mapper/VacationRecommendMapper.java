@@ -5,6 +5,7 @@ import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
+import com.worknector.offizz.domain.vacation.shopping.domain.entity.Shopping;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -56,6 +57,18 @@ public class VacationRecommendMapper {
                 culture.getLat(),
                 culture.getTitle(),
                 culture.getFirstimage()
+        );
+    }
+
+    public static VacationRecommendResponse fromShopping(Shopping shopping) {
+        return new VacationRecommendResponse(
+                "shopping",
+                shopping.getShoppingId(),
+                shopping.getAddr1(),
+                shopping.getLon(),
+                shopping.getLat(),
+                shopping.getTitle(),
+                shopping.getFirstimage()
         );
     }
 }
