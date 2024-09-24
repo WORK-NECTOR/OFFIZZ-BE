@@ -14,6 +14,7 @@ public class VacationRecommendFactoryImpl implements VacationRecommendFactory {
     private final NatureRecommendStrategy natureRecommendStrategy;
     private final RestaurantRecommendStrategy restaurantRecommendStrategy;
     private final CultureRecommendStrategy cultureRecommendStrategy;
+    private final ShoppingRecommendStrategy shoppingRecommendStrategy;
 
     @Override
     public VacationRecommendStrategy getRecommendationStrategy(Filter filter) {
@@ -24,12 +25,15 @@ public class VacationRecommendFactoryImpl implements VacationRecommendFactory {
                 return restaurantRecommendStrategy;
             case culture:
                 return cultureRecommendStrategy;
+            case shopping:
+                return shoppingRecommendStrategy;
             case all:
                 return new CompositeVacationRecommendStrategy(
                         Arrays.asList(
                                 natureRecommendStrategy,
                                 restaurantRecommendStrategy,
-                                cultureRecommendStrategy
+                                cultureRecommendStrategy,
+                                shoppingRecommendStrategy
                         )
                 );
             default:
