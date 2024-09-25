@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.vacation.shopping.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.vacation.shopping.domain.entity.Shopping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,14 @@ public class ShoppingDslRepositoryImpl implements ShoppingDslRepository {
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
                 .and(distanceTemplate(lat, lon, shopping.lat, shopping.lon).loe(10.0));
+    }
+
+    @Override
+    public List<Shopping> findAllShoppingById(List<Likes> likes) {
+        return jpaQueryFactory.selectFrom(shopping)
+                .where(shopping.shoppingId.in(likes.stream()
+                        .map(Likes::getFkId)
+                        .toList()))
+                .fetch();
     }
 }

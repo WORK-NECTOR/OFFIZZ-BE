@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.vacation.culture.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.vacation.culture.domain.entity.Culture;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,14 @@ public class CultureDslRepositoryImpl implements CultureDslRepository {
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
                 .and(distanceTemplate(lat, lon, culture.lat, culture.lon).loe(10.0));
+    }
+
+    @Override
+    public List<Culture> findAllCourseId(List<Likes> likes) {
+        return jpaQueryFactory.selectFrom(culture)
+                .where(culture.cultureId.in(likes.stream()
+                        .map(Likes::getFkId)
+                        .toList()))
+                .fetch();
     }
 }
