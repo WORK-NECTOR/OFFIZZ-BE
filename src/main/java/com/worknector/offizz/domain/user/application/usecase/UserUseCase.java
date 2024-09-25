@@ -27,4 +27,9 @@ public class UserUseCase {
         findUser.updateNickName(userInfoRequest.nickName());
         return mapToUserInfoResponse(findUser);
     }
+
+    public Long withdrawUser(User user) {
+        user.changeStatusToDeleted();
+        return user.getUserId();
+    }
 }
