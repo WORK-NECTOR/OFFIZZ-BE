@@ -33,4 +33,11 @@ public class UserController {
         UserInfoResponse userInfo = userUseCase.updateUserInfo(user, userInfoRequest);
         return ResponseEntity.ok(userInfo);
     }
+
+    @DeleteMapping
+    @Operation(summary = "마이페이지 > 회원 탈퇴", description = "토큰으로 요청 -> 회원 탈퇴")
+    public ResponseEntity<Long> withdrawUser(@AuthenticationPrincipal User user) {
+        Long userId = userUseCase.withdrawUser(user);
+        return ResponseEntity.ok(userId);
+    }
 }
