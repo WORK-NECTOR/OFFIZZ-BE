@@ -26,7 +26,7 @@ public class VacationRecommendMapper {
 
     public static VacationRecommendResponse fromCourse(Course course) {
         return new VacationRecommendResponse(
-                "nature",
+                "course",
                 course.getCourseId(),
                 course.getSigun(),
                 course.getLon(),
