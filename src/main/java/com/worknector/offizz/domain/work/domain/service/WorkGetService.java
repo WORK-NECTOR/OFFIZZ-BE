@@ -58,10 +58,10 @@ public class WorkGetService {
 
     public List<String> likeWork(List<Likes> likes) {
         List<Likes> cafeLikes = likes.stream()
-                .filter(like -> like.getLikesCategory().equals(LikesCategory.CAFE))
+                .filter(like -> like.getLikesCategory().equals(LikesCategory.cafe))
                 .toList();
         List<Likes> officeLikes = likes.stream()
-                .filter(like -> like.getLikesCategory().equals(LikesCategory.OFFICE))
+                .filter(like -> like.getLikesCategory().equals(LikesCategory.office))
                 .toList();
         List<String> workNames = new ArrayList<>();
         cafeRepository.findAllCafeById(cafeLikes)
