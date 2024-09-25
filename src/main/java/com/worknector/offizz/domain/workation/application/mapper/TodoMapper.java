@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.workation.application.mapper;
 
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoRequest;
 import com.worknector.offizz.domain.workation.application.dto.req.WorkTodoRequest;
+import com.worknector.offizz.domain.workation.application.dto.res.RecordVacation;
 import com.worknector.offizz.domain.workation.application.dto.res.TodoHours;
 import com.worknector.offizz.domain.workation.application.dto.res.VacationTodoResponse;
 import com.worknector.offizz.domain.workation.application.dto.res.WorkTodoResponse;
@@ -52,5 +53,9 @@ public class TodoMapper {
 
     public static TodoHours mapToTodoHours(WorkTodo workTodo) {
         return new TodoHours(workTodo.getName(), workTodo.getStartTime(), workTodo.getEndTime());
+    }
+
+    public static RecordVacation mapToRecordVacation(VacationTodo vacationTodo) {
+        return new RecordVacation(vacationTodo.getName(), vacationTodo.getLocate(), vacationTodo.getComment(), vacationTodo.getImage());
     }
 }

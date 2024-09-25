@@ -34,4 +34,14 @@ public class TodoGetService {
         List<VacationTodo> vacationTodos = vacationTodoRepository.findAllByDaily(daily);
         return new AllTodo(workTodos, vacationTodos);
     }
+
+    public List<VacationTodo> findAllFinVacationTodo(User user, int day) {
+        Workation workation = workationRepository.findAllByUserOrderByCreatedAtDesc(user)
+                .stream()
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        Daily daily = dailyRepository.findByWorkationAndDay(workation, day)
+                .orElseThrow(IllegalArgumentException::new);
+        return vacationTodoRepository.findAllByIsCompleteIsTrueAndDaily(daily);
+    }
 }

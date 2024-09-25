@@ -5,9 +5,7 @@ import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoFi
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoRequest;
 import com.worknector.offizz.domain.workation.application.dto.req.WorkTodoFinRequest;
 import com.worknector.offizz.domain.workation.application.dto.req.WorkTodoRequest;
-import com.worknector.offizz.domain.workation.application.dto.res.AllTodoResponse;
-import com.worknector.offizz.domain.workation.application.dto.res.RecommendWork;
-import com.worknector.offizz.domain.workation.application.dto.res.WorkHours;
+import com.worknector.offizz.domain.workation.application.dto.res.*;
 import com.worknector.offizz.domain.workation.application.usecase.DashboardTodoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dashboard")
@@ -23,8 +23,20 @@ import org.springframework.web.bind.annotation.*;
 public class DashBoardController {
     private final DashboardTodoUseCase dashboardTodoUseCase;
 
+    @GetMapping("/record/vacation/{day}")
+    public ResponseEntity recordVacation(@AuthenticationPrincipal User user, @PathVariable int day) {
+        List<RecordVacation> recordVacations = dashboardTodoUseCase.recordVacation(user, day);
+        return ResponseEntity.ok(recordVacations);
+    }
+
+    @GetMapping("/recommend/vacation")
+    public ResponseEntity<RecommendVacation> vacationBucketList(@AuthenticationPrincipal User user) {
+        RecommendVacation recommendVacation = dashboardTodoUseCase.recommendVacation(user);
+        return ResponseEntity.ok(recommendVacation);
+    }
+
     @GetMapping("/recommend/work")
-    public ResponseEntity<RecommendWork> bucketList(@AuthenticationPrincipal User user) {
+    public ResponseEntity<RecommendWork> workBucketList(@AuthenticationPrincipal User user) {
         RecommendWork recommendWork = dashboardTodoUseCase.recommendWork(user);
         return ResponseEntity.ok(recommendWork);
     }
