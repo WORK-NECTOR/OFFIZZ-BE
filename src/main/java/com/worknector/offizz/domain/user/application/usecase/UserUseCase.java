@@ -4,11 +4,13 @@ import com.worknector.offizz.domain.user.application.dto.req.UserInfoRequest;
 import com.worknector.offizz.domain.user.application.dto.res.UserInfoResponse;
 import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.user.domain.service.UserGetService;
+import com.worknector.offizz.global.exception.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.worknector.offizz.domain.user.application.mapper.UserInfoMapper.mapToUserInfoResponse;
+import static com.worknector.offizz.domain.user.presentation.constant.UserResponseCode.USER_DELETED;
 
 @RequiredArgsConstructor
 @Service
@@ -19,11 +21,13 @@ public class UserUseCase {
 
     public UserInfoResponse getUserInfo(User user) {
         User findUser = userGetService.byUserId(user.getUserId());
+        validateUsableUser(findUser);
         return mapToUserInfoResponse(findUser);
     }
 
     public UserInfoResponse updateUserInfo(User user, UserInfoRequest userInfoRequest) {
         User findUser = userGetService.byUserId(user.getUserId());
+        validateUsableUser(findUser);
         findUser.updateNickName(userInfoRequest.nickName());
         return mapToUserInfoResponse(findUser);
     }
@@ -31,5 +35,11 @@ public class UserUseCase {
     public Long withdrawUser(User user) {
         user.changeStatusToDeleted();
         return user.getUserId();
+    }
+
+    private void validateUsableUser(User user) {
+        if (user.isDeleted()) {
+            new ExceptionResponse(USER_DELETED.getCode(), USER_DELETED.getMessage());
+        }
     }
 }
