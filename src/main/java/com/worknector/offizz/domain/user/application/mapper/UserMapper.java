@@ -13,6 +13,7 @@ public class UserMapper {
         return User.builder()
                 .socialId(userInfo.id())
                 .nickName(provider.name() + userInfo.id())
+                .email(userInfo.kakaoAccount().email())
                 .build();
     }
 }
