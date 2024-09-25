@@ -1,0 +1,1 @@
+ALTER TABLE culture CHANGE cultureId culture_id BIGINT;
