@@ -19,14 +19,14 @@ public class LikeController {
     private final LikeUseCase likeUseCase;
 
     @PostMapping("vacation")
-    @Operation(summary = "자연, 맛집, 문화예술, 쇼핑 좋아요", description = "토큰 함께")
+    @Operation(summary = "nature, course, culture, shopping, restaurant 좋아요 누르는 카테고리에 맞춰서 요청", description = "토큰 함께")
     public ResponseEntity<Void> saveVacationLike(@AuthenticationPrincipal User user, @RequestBody Like vacationLike) {
         likeUseCase.saveVacationLike(user, vacationLike);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("work")
-    @Operation(summary = "오피스 혹은 카페 좋아요", description = "토큰 함께")
+    @Operation(summary = "office, cafe 좋아요 누르는 카테고리에 맞춰서 요청", description = "토큰 함께")
     public ResponseEntity<Void> saveWorkLike(@AuthenticationPrincipal User user, @RequestBody Like workLike) {
         likeUseCase.saveWorkLike(user, workLike);
         return ResponseEntity.ok().build();

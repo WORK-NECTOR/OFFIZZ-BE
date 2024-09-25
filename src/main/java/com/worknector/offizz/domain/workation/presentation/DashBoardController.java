@@ -24,18 +24,21 @@ public class DashBoardController {
     private final DashboardTodoUseCase dashboardTodoUseCase;
 
     @GetMapping("/record/vacation/{day}")
+    @Operation(summary = "여행 기록 조회", description = "토큰과 며칠째 워케이션인지 PathVariable로 요청")
     public ResponseEntity recordVacation(@AuthenticationPrincipal User user, @PathVariable int day) {
         List<RecordVacation> recordVacations = dashboardTodoUseCase.recordVacation(user, day);
         return ResponseEntity.ok(recordVacations);
     }
 
     @GetMapping("/recommend/vacation")
+    @Operation(summary = "Vacation의 버킷리스트 겸 추천 부분", description = "토큰 필요")
     public ResponseEntity<RecommendVacation> vacationBucketList(@AuthenticationPrincipal User user) {
         RecommendVacation recommendVacation = dashboardTodoUseCase.recommendVacation(user);
         return ResponseEntity.ok(recommendVacation);
     }
 
     @GetMapping("/recommend/work")
+    @Operation(summary = "Work의 추천 부분", description = "토큰 필요")
     public ResponseEntity<RecommendWork> workBucketList(@AuthenticationPrincipal User user) {
         RecommendWork recommendWork = dashboardTodoUseCase.recommendWork(user);
         return ResponseEntity.ok(recommendWork);
