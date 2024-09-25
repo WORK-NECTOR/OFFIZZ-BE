@@ -27,6 +27,8 @@ public class User extends BaseEntity {
 
     private String nickName;
 
+    private String email;
+
     @Column(nullable = false)
     @Enumerated(value = STRING)
     @Builder.Default
