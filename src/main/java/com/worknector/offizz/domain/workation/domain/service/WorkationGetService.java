@@ -1,8 +1,7 @@
 package com.worknector.offizz.domain.workation.domain.service;
 
 import com.worknector.offizz.domain.user.domain.entity.User;
-import com.worknector.offizz.domain.workation.domain.entity.WorkKeyword;
-import com.worknector.offizz.domain.workation.domain.entity.Workation;
+import com.worknector.offizz.domain.workation.domain.entity.*;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationRepository;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationVacationKeywordRepository;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationWorkKeywordRepository;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class WorkationGetSave {
+public class WorkationGetService {
     private final WorkationRepository workationRepository;
     private final WorkationWorkKeywordRepository workKeywordRepository;
     private final WorkationVacationKeywordRepository vacationKeywordRepository;
@@ -25,11 +24,17 @@ public class WorkationGetSave {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public List<WorkKeyword> findWorkKeyword(User user) {
-        Workation workation = workationRepository.findAllByUserOrderByCreatedAtDesc(user)
+    public List<WorkKeyword> findWorkKeyword(Workation workation) {
+        return workKeywordRepository.findAllByWorkation(workation)
                 .stream()
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
-        return workKeywordRepository.findAllByWorkation(workation);
+                .map(WorkationWorkKeyword::getKeyword)
+                .toList();
+    }
+
+    public List<VacationKeyword> findVacationKeyword(Workation workation) {
+        return vacationKeywordRepository.findAllByWorkation(workation)
+                .stream()
+                .map(WorkationVacationKeyword::getKeyword)
+                .toList();
     }
 }
