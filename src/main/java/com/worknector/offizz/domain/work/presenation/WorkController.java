@@ -24,13 +24,6 @@ import reactor.util.annotation.Nullable;
 public class WorkController {
     private final WorkDataUseCase workDataUseCase;
 
-    @PostMapping("/like")
-    @Operation(summary = "오피스 혹은 카페 좋아요", description = "토큰 함께")
-    public ResponseEntity<Void> saveLike(@AuthenticationPrincipal User user, @RequestBody Like workLike) {
-        workDataUseCase.saveWorkLike(user, workLike);
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/office/rec/{region}/{size}")
     @Operation(summary = "장소에 따른 오피스 4개 추천 (장소 필수)", description = "수도권, 경상권, 전라권, 강원권, 제주권, 충청권")
     public ResponseEntity<RecOfficeResponse> recommendOffice(@PathVariable Region region, @PathVariable int size) {
