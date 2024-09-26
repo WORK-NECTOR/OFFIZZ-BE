@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface VacationTodoRepository extends JpaRepository<VacationTodo, Long> {
     List<VacationTodo> findAllByDaily(Daily daily);
+    List<VacationTodo> findAllByIsCompleteIsTrueAndDaily(Daily daily);
 }

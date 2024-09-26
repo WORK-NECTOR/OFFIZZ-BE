@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Nature;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,14 @@ public class NatureDslRepositoryImpl implements NatureDslRepository {
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
                 .and(distanceTemplate(lat, lon, nature.lat, nature.lon).loe(10.0));
+    }
+
+    @Override
+    public List<Nature> findAllNatureId(List<Likes> likes) {
+        return queryFactory.selectFrom(nature)
+                .where(nature.natureId.in(likes.stream()
+                        .map(Likes::getFkId)
+                        .toList()))
+                .fetch();
     }
 }

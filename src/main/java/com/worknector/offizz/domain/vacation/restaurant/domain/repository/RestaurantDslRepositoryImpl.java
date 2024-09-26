@@ -2,6 +2,7 @@ package com.worknector.offizz.domain.vacation.restaurant.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -51,5 +52,14 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
                 .and(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).loe(10.0));
+    }
+
+    @Override
+    public List<Restaurant> findAllRestaurantById(List<Likes> likes) {
+        return queryFactory.selectFrom(restaurant)
+                .where(restaurant.restaurantId.in(likes.stream()
+                        .map(Likes::getFkId)
+                        .toList()))
+                .fetch();
     }
 }
