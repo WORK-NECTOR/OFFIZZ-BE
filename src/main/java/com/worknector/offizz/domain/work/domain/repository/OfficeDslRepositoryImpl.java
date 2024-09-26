@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.worknector.offizz.domain.likes.domain.entity.Likes;
+import com.worknector.offizz.domain.likes.domain.entity.LikesCategory;
 import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.work.application.dto.res.SelectOffice;
 import com.worknector.offizz.domain.work.presenation.constant.Region;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.worknector.offizz.domain.likes.domain.entity.LikesCategory.OFFICE;
 import static com.worknector.offizz.domain.likes.domain.entity.QLikes.likes;
 import static com.worknector.offizz.domain.work.domain.entity.QOffice.office;
 import static com.worknector.offizz.domain.work.presenation.constant.Region.findRegionList;
@@ -96,7 +96,7 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
                 .distinct()
                 .where(condition)
                 .leftJoin(likes)
-                .on(likes.likesCategory.eq(OFFICE)
+                .on(likes.likesCategory.eq(LikesCategory.office)
                         .and(likes.fkId.eq(office.officeId))
                         .and(likes.user.eq(user)))
                 .fetchJoin()

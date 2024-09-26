@@ -3,7 +3,9 @@ package com.worknector.offizz.global.util.scheduler;
 import com.worknector.offizz.openapi.course.application.usecase.CourseOpenDataUseCase;
 import com.worknector.offizz.openapi.office.application.usecase.OfficeOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.AccommodationOpenDataUseCase;
+import com.worknector.offizz.openapi.tour.application.usecase.CultureOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.RestaurantOpenDataUseCase;
+import com.worknector.offizz.openapi.tour.application.usecase.ShoppingOpenDataUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +24,8 @@ public class OpenDataScheduler {
     private final OfficeOpenDataUseCase officeDataUseCase;
     private final AccommodationOpenDataUseCase accommodationOpenDataUseCase;
     private final RestaurantOpenDataUseCase restaurantOpenDataUseCase;
+    private final CultureOpenDataUseCase cultureOpenDataUseCase;
+    private final ShoppingOpenDataUseCase shoppingOpenDataUseCase;
 
     // 공유오피스 데이터 매달 1일 자정마다 update
     @Scheduled(cron = "0 0 0 1 * ?")
@@ -55,5 +59,16 @@ public class OpenDataScheduler {
     @Scheduled(cron = "0 0 0 1 * ?")
     public void scheduleRestaurantOpenDataUpdate() {
         restaurantOpenDataUseCase.updateRestaurantData(RESTAURANT_CAT3_LIST);
+    }
+
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void scheduleCultureOpenDataUpdate() {
+        cultureOpenDataUseCase.updateCultureData();
+    }
+
+
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void scheduleShoppingOpenDataUpdate() {
+        shoppingOpenDataUseCase.updateShoppingData();
     }
 }

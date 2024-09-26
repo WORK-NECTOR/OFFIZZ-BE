@@ -16,6 +16,10 @@ public class LikesGetService {
     private final LikesRepository likesRepository;
 
     public List<Likes> findWorkLikes(User user) {
-        return likesRepository.findAllByUserAndCategory(user, List.of(OFFICE, CAFE));
+        return likesRepository.findAllByUserAndCategory(user, List.of(office, cafe));
+    }
+
+    public List<Likes> findVacationLikes(User user) {
+        return likesRepository.findAllByUserAndCategory(user, List.of(nature, course, culture, restaurant, shopping));
     }
 }

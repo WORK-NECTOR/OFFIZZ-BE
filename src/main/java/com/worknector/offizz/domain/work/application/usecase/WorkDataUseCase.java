@@ -29,12 +29,6 @@ import static com.worknector.offizz.global.util.HaversineUtils.distanceForSort;
 @Transactional
 public class WorkDataUseCase {
     private final WorkGetService workGetService;
-    private final LikesSaveService likesSaveService;
-
-    public void saveWorkLike(User user, Like workLike) {
-        Likes likes = LikeMapper.mapToLikes(user, workLike);
-        likesSaveService.save(likes);
-    }
 
     public RecOfficeResponse getRecommendOffice(Region region, int size) {
         List<Office> offices = workGetService.recommendOffice(region, size);
