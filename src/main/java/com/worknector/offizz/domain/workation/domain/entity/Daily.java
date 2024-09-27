@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import static jakarta.persistence.EnumType.STRING;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -30,9 +32,11 @@ public class Daily extends BaseEntity {
     @Column(nullable = false)
     private LocalDate date;
 
-    private int workCondition;
+    @Enumerated(value = STRING)
+    private ConditionType workCondition;
 
-    private int vacationCondition;
+    @Enumerated(value = STRING)
+    private ConditionType vacationCondition;
 
     private String dailyY;
 
