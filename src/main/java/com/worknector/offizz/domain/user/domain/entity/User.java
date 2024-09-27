@@ -27,6 +27,8 @@ public class User extends BaseEntity {
 
     private String nickName;
 
+    private String email;
+
     @Column(nullable = false)
     @Enumerated(value = STRING)
     @Builder.Default
@@ -38,5 +40,9 @@ public class User extends BaseEntity {
 
     public void changeStatusToDeleted() {
         this.status = DELETED;
+    }
+
+    public void updateNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
