@@ -71,7 +71,7 @@ public class OnboardingUseCase {
     }
 
     private void saveDaily(Workation saveWorkation) {
-        Duration between = Duration.between(saveWorkation.getStartDate(), saveWorkation.getEndDate());
+        Duration between = Duration.between(saveWorkation.getStartDate().atStartOfDay(), saveWorkation.getEndDate().atStartOfDay());
         for (int day = 0; day < between.toDays(); day++) {
             Daily daily = DailyMapper.mapToDaily(saveWorkation, day);
             dailySaveService.save(daily);
