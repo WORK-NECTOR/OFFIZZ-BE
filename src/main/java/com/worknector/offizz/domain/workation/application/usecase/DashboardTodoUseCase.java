@@ -3,7 +3,7 @@ package com.worknector.offizz.domain.workation.application.usecase;
 import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.likes.domain.service.LikesGetService;
 import com.worknector.offizz.domain.user.domain.entity.User;
-import com.worknector.offizz.domain.vacation.vacation.service.VacationGetService;
+import com.worknector.offizz.domain.vacation.recommend.domain.service.VacationGetService;
 import com.worknector.offizz.domain.work.domain.service.WorkGetService;
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoFinRequest;
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoRequest;
