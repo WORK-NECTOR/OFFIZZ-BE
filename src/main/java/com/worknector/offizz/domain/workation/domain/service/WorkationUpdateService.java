@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 public class WorkationUpdateService {
     private final WorkationRepository workationRepository;
 
-    public void updateWorkationFin(User user, EntireRetrospectRequest request) {
+    public Workation updateWorkationFin(User user, EntireRetrospectRequest request) {
         Workation workation = workationRepository.findAllByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
         workation.finishWorkation(new WorkationRetrospect(request.score(), request.review()));
+        return workation;
     }
 }
