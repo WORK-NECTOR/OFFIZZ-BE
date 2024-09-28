@@ -1,6 +1,7 @@
 package com.worknector.offizz.domain.workation.application.usecase;
 
 import com.worknector.offizz.domain.user.domain.entity.User;
+import com.worknector.offizz.domain.workation.application.dto.req.RetrospectRequest;
 import com.worknector.offizz.domain.workation.application.dto.res.RecordVacation;
 import com.worknector.offizz.domain.workation.application.dto.res.RetrospectResponse;
 import com.worknector.offizz.domain.workation.application.mapper.TodoMapper;
@@ -8,6 +9,7 @@ import com.worknector.offizz.domain.workation.domain.entity.Daily;
 import com.worknector.offizz.domain.workation.domain.entity.VacationTodo;
 import com.worknector.offizz.domain.workation.domain.entity.WorkTodo;
 import com.worknector.offizz.domain.workation.domain.service.DailyGetService;
+import com.worknector.offizz.domain.workation.domain.service.DailyUpdateService;
 import com.worknector.offizz.domain.workation.domain.service.TodoGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class RetrospectUseCase {
 
     private final DailyGetService dailyGetService;
     private final TodoGetService todoGetService;
+    private final DailyUpdateService dailyUpdateService;
 
     public RetrospectResponse getRetrospectByDay(User user, int day) {
         Daily daily = dailyGetService.findDailyByWorkation(user, day);
@@ -40,6 +43,13 @@ public class RetrospectUseCase {
                 vacationRecords,
                 daily
         );
+    }
+
+    public Long updateRetrospect(User user, int day, RetrospectRequest retrospectRequest) {
+        Daily daily = dailyGetService.findDailyByWorkation(user, day);
+        dailyUpdateService.updateDailyRetrospect(daily, retrospectRequest);
+
+        return daily.getDailyId();
     }
 
     /**
