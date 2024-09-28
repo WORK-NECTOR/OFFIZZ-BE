@@ -40,6 +40,10 @@ public class VacationTodo extends BaseEntity {
     @Builder.Default
     private boolean isComplete = false;
 
+    public boolean isComplete() {
+        return isComplete;
+    }
+
     public void updateVacationTodoFin(VacationTodoFinRequest request) {
         this.locate = request.locate();
         this.rating = request.rating();
