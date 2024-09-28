@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.workation.domain.entity;
 
+import com.worknector.offizz.domain.workation.application.dto.req.RetrospectRequest;
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,4 +44,12 @@ public class Daily extends BaseEntity {
     private String dailyW;
 
     private String dailyT;
+
+    public void updateDailyRetrospect(RetrospectRequest retrospectRequest) {
+        this.workCondition = retrospectRequest.workCondition();
+        this.vacationCondition = retrospectRequest.vacationCondition();
+        this.dailyY = retrospectRequest.dailyY();
+        this.dailyW = retrospectRequest.dailyW();
+        this.dailyT = retrospectRequest.dailyT();
+    }
 }
