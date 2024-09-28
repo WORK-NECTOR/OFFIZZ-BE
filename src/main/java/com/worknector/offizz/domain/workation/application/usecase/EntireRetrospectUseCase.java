@@ -92,7 +92,6 @@ public class EntireRetrospectUseCase {
         int day = 0;
         long total = 0;
         long diff = 0;
-        int bestScore = 0;
         for (int i = 0; i < dailies.size(); i++) {
             Daily daily = dailies.get(i);
             long totalTime = todoGetService.findAllWorkTodos(daily)
@@ -105,9 +104,9 @@ public class EntireRetrospectUseCase {
                 total = totalTime;
                 day = daily.getDay();
             }
-            if (bestScore < daily.getWorkCondition()) {
-                bestScore = daily.getWorkCondition();
-            }
+//            if (bestScore < daily.getWorkCondition()) {
+//                bestScore = daily.getWorkCondition();
+//            }
         }
 
         LocalDate bestWorkDay = workation.getStartDate().plusDays(day - 1);
@@ -116,10 +115,15 @@ public class EntireRetrospectUseCase {
 
     private RecapResponse.FifthPage getFifthPage(Workation workation, List<Daily> dailies) {
         List<LocalDate> bestWorkDays = new ArrayList<>();
-        int finalBestScore = 0;
-        dailies.stream()
-                .filter(daily -> daily.getWorkCondition() == finalBestScore)
-                .map(daily -> bestWorkDays.add(workation.getStartDate().plusDays(daily.getDay()-1)));
+//        int finalBestScore = 0;
+//        dailies.stream()
+//                .filter(daily -> daily.getWorkCondition() == finalBestScore)
+//                .map(daily -> bestWorkDays.add(workation.getStartDate().plusDays(daily.getDay()-1)));
+        Daily daily = dailies.get(0);
+        bestWorkDays.add(daily.getDate());
+        /**
+         * condition 변경에 따른 임시 데이터
+         */
         return new RecapResponse.FifthPage(bestWorkDays);
     }
 
