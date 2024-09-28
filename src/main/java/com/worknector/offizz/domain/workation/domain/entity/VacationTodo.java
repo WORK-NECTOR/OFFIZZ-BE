@@ -1,6 +1,7 @@
 package com.worknector.offizz.domain.workation.domain.entity;
 
 import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoFinRequest;
+import com.worknector.offizz.domain.workation.application.dto.req.VacationTodoRequest;
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -51,5 +52,24 @@ public class VacationTodo extends BaseEntity {
         this.isComplete = true;
         if (request.image() != null)
             this.image = request.image();
+    }
+
+    public void updateVacationTodo(VacationTodoFinRequest request) {
+        this.locate = request.locate();
+        this.rating = request.rating();
+        this.comment = request.comment();
+        this.isComplete = true;
+        if (request.image() != null)
+            this.image = request.image();
+        else
+            this.image = null;
+    }
+
+    public void updateNotFin() {
+        this.locate = null;
+        this.rating = null;
+        this.comment = null;
+        this.isComplete = false;
+        this.image = null;
     }
 }
