@@ -46,4 +46,11 @@ public class Workation extends BaseEntity {
     private LocalTime endCoreTime;
 
     private String goal;
+
+    @Embedded
+    private WorkationRetrospect retrospect;
+
+    public void finishWorkation(WorkationRetrospect retrospect) {
+        this.retrospect = retrospect;
+    }
 }
