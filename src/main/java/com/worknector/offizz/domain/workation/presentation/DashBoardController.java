@@ -25,7 +25,7 @@ public class DashBoardController {
 
     @GetMapping("/record/vacation/{day}")
     @Operation(summary = "여행 기록 조회", description = "토큰과 며칠째 워케이션인지 PathVariable로 요청")
-    public ResponseEntity recordVacation(@AuthenticationPrincipal User user, @PathVariable int day) {
+    public ResponseEntity<List<RecordVacation>> recordVacation(@AuthenticationPrincipal User user, @PathVariable int day) {
         List<RecordVacation> recordVacations = dashboardTodoUseCase.recordVacation(user, day);
         return ResponseEntity.ok(recordVacations);
     }
