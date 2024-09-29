@@ -107,6 +107,22 @@ public class DashboardTodoUseCase {
         return getAllDailyTodo(user, day);
     }
 
+    public List<RecordVacation> updateVacationTodo(User user, int day, VacationTodoFinRequest request) {
+        todoUpdateService.updateVacationTodo(request);
+        List<VacationTodo> vacationTodos = todoGetService.findAllFinVacationTodo(user, day);
+        return vacationTodos.stream()
+                .map(TodoMapper::mapToRecordVacation)
+                .toList();
+    }
+
+    public List<RecordVacation> deleteRecord(User user, int day, long vacationTodoId) {
+        todoUpdateService.updateNotFin(vacationTodoId);
+        List<VacationTodo> vacationTodos = todoGetService.findAllFinVacationTodo(user, day);
+        return vacationTodos.stream()
+                .map(TodoMapper::mapToRecordVacation)
+                .toList();
+    }
+
     public AllTodoResponse getAllDailyTodo(User user, int day) {
         AllTodo allTodos = todoGetService.findAllTodos(user, day);
         List<WorkTodoResponse> workTodoResponses = allTodos.workTodos().stream()

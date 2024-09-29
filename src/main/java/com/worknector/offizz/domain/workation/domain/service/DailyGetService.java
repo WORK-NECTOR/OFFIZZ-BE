@@ -8,6 +8,8 @@ import com.worknector.offizz.domain.workation.domain.repository.WorkationReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class DailyGetService {
@@ -21,5 +23,9 @@ public class DailyGetService {
                 .orElseThrow(IllegalAccessError::new);
         return dailyRepository.findByWorkationAndDay(workation, day)
                 .orElseThrow(IllegalAccessError::new);
+    }
+
+    public List<Daily> findAllDailyByWorkation(Workation workation) {
+        return dailyRepository.findAllByWorkation(workation);
     }
 }

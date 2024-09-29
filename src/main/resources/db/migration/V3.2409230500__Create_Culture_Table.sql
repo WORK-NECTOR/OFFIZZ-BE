@@ -1,4 +1,4 @@
-CREATE TABLE Culture (
+CREATE TABLE culture (
     cultureId BIGINT NOT NULL AUTO_INCREMENT,
     addr1 VARCHAR(255),
     lon DOUBLE,

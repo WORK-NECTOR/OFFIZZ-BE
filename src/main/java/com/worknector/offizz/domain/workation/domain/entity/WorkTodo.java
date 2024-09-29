@@ -45,4 +45,8 @@ public class WorkTodo extends BaseEntity {
         this.isComplete = true;
         this.actualTime = actualTime;
     }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
 }
