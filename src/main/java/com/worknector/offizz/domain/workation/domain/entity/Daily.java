@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.workation.domain.entity;
 
+import com.worknector.offizz.domain.workation.application.dto.req.RetrospectRequest;
 import com.worknector.offizz.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+
+import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Builder
@@ -30,13 +33,23 @@ public class Daily extends BaseEntity {
     @Column(nullable = false)
     private LocalDate date;
 
-    private int workCondition;
+    @Enumerated(value = STRING)
+    private ConditionType workCondition;
 
-    private int vacationCondition;
+    @Enumerated(value = STRING)
+    private ConditionType vacationCondition;
 
     private String dailyY;
 
     private String dailyW;
 
     private String dailyT;
+
+    public void updateDailyRetrospect(RetrospectRequest retrospectRequest) {
+        this.workCondition = retrospectRequest.workCondition();
+        this.vacationCondition = retrospectRequest.vacationCondition();
+        this.dailyY = retrospectRequest.dailyY();
+        this.dailyW = retrospectRequest.dailyW();
+        this.dailyT = retrospectRequest.dailyT();
+    }
 }

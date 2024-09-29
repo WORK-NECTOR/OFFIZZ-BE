@@ -64,4 +64,8 @@ public class TodoGetService {
                 .orElseThrow(IllegalArgumentException::new);
         return vacationTodoRepository.findAllByIsCompleteIsTrueAndDaily(daily);
     }
+
+    public List<WorkTodo> findAllWorkTodosByDaily(Daily daily) {
+        return workToDoRepository.findAllByDaily(daily);
+    }
 }
