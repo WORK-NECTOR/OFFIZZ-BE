@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.vacation.recommend.application.usecase;
 
+import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.PagingVacationRecommendResponse;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
 import com.worknector.offizz.domain.vacation.recommend.domain.factory.VacationRecommendFactory;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -33,8 +35,8 @@ public class VacationRecommendUseCase {
      * @param size     한 페이지 당 개수
      * @return  페이징된 추천 vacation 리스트와 총 페이지 수 반환
      */
-    public PagingVacationRecommendResponse getRecommendVacation(Filter filter, String search, double lat, double lon, int page, int size) {
-        List<VacationRecommendResponse> allRecommendations = getAllRecommendations(filter, search, lat, lon);
+    public PagingVacationRecommendResponse getRecommendVacation(Filter filter, String search, double lat, double lon, User user, int page, int size) {
+        List<VacationRecommendResponse> allRecommendations = new ArrayList<>(getAllRecommendations(filter, search, lat, lon, user.getUserId()));
 
         allRecommendations.sort(Comparator.comparingDouble(o -> distanceForSort(lat, lon, o.lat(), o.lon())));
 
@@ -43,9 +45,9 @@ public class VacationRecommendUseCase {
         return new PagingVacationRecommendResponse(responses.getContent(), responses.getTotalPages());
     }
 
-    private List<VacationRecommendResponse> getAllRecommendations(Filter filter, String search, double lat, double lon) {
+    private List<VacationRecommendResponse> getAllRecommendations(Filter filter, String search, double lat, double lon, Long userId) {
         VacationRecommendStrategy strategy = vacationRecommendFactory.getRecommendationStrategy(filter);
-        List<VacationRecommendResponse> recommendations = strategy.recommend(search, lat, lon);
+        List<VacationRecommendResponse> recommendations = strategy.recommend(search, lat, lon, userId);
 
         return recommendations;
     }

@@ -7,6 +7,7 @@ public record VacationRecommendResponse(
         double lon,
         double lat,
         String title,
-        String firstImage
+        String firstImage,
+        boolean isLike
 ) {
 }
