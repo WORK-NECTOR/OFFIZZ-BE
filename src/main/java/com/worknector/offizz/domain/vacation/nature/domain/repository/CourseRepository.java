@@ -1,12 +1,11 @@
 package com.worknector.offizz.domain.vacation.nature.domain.repository;
 
 import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
-
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long>, CourseDslRepository {
 
-  Optional<Course> findByCrsIdxAndRouteIdx(String crsIdx, String routeIdx);
+  List<Course> findAllByCrsIdxAndCrsKorNm(String crsIdx, String crsKorNm);
 }
