@@ -1,5 +1,6 @@
 package com.worknector.offizz.domain.vacation.nature.domain.service;
 
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
 import com.worknector.offizz.domain.vacation.nature.domain.repository.CourseRepository;
 import com.worknector.offizz.domain.vacation.recommend.application.projection.VacationRecommendProjection;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,10 @@ public class CourseGetService {
 
     public List<VacationRecommendProjection> getAllCourseBySearch(String search, double lat, double lon, Long userId) {
         return courseRepository.findAllCourseBySearch(search, lat, lon, userId);
+    }
+
+    public Course findCourseById(long courseId) {
+        Course course = courseRepository.findById(courseId).orElseThrow();
+        return course;
     }
 }
