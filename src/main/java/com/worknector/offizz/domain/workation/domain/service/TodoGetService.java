@@ -13,6 +13,7 @@ import com.worknector.offizz.domain.workation.domain.repository.WorkationReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,6 +33,25 @@ public class TodoGetService {
                 .orElseThrow(IllegalArgumentException::new);
         List<WorkTodo> workTodos = workToDoRepository.findAllByDaily(daily);
         List<VacationTodo> vacationTodos = vacationTodoRepository.findAllByDaily(daily);
+        return new AllTodo(workTodos, vacationTodos);
+    }
+
+    public List<WorkTodo> findAllWorkTodos(Daily daily) {
+        return workToDoRepository.findAllByDaily(daily);
+    }
+
+    public List<VacationTodo> findAllVacationTodo(Daily daily) {
+        return vacationTodoRepository.findAllByDaily(daily);
+    }
+
+    public AllTodo findAllTodoEveryday(Workation workation) {
+        List<Daily> dailies = dailyRepository.findAllByWorkation(workation);
+        List<WorkTodo> workTodos = new ArrayList<>();
+        List<VacationTodo> vacationTodos = new ArrayList<>();
+        dailies.forEach(daily -> {
+            workToDoRepository.findAllByDaily(daily).forEach(workTodos::add);
+            vacationTodoRepository.findAllByDaily(daily).forEach(vacationTodos::add);
+        });
         return new AllTodo(workTodos, vacationTodos);
     }
 

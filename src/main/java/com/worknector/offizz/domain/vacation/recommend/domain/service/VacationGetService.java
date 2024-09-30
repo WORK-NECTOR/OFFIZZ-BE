@@ -42,10 +42,12 @@ public class VacationGetService {
         }
         if (keyword.equals(VacationKeyword.NATURE)) {
             List<Nature> natures = natureRepository.findAll();
-            List<String> titles = natures.stream()
+            List<String> titles = new ArrayList<>(natures.stream()
                     .map(Nature::getTitle)
-                    .toList();
+                    .toList());
             courseRepository.findAll()
+                    .stream()
+                    .filter(course -> course.getCrsKorNm() != null)
                     .forEach(course -> titles.add(course.getCrsKorNm()));
             Collections.shuffle(titles);
             return titles.stream()

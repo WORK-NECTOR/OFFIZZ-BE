@@ -26,4 +26,16 @@ public class TodoUpdateService {
                 .orElseThrow(IllegalArgumentException::new);
         vacationTodo.updateVacationTodoFin(request);
     }
+
+    public void updateVacationTodo(VacationTodoFinRequest request) {
+        VacationTodo vacationTodo = vacationTodoRepository.findById(request.vacationTodoId())
+                .orElseThrow();
+        vacationTodo.updateVacationTodo(request);
+    }
+
+    public void updateNotFin(long vacationTodoId) {
+        VacationTodo vacationTodo = vacationTodoRepository.findById(vacationTodoId)
+                .orElseThrow();
+        vacationTodo.updateNotFin();
+    }
 }

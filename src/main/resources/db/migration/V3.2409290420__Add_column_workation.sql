@@ -1,0 +1,1 @@
+ALTER TABLE workation ADD COLUMN score int, ADD COLUMN review varchar(255);

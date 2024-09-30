@@ -56,6 +56,6 @@ public class TodoMapper {
     }
 
     public static RecordVacation mapToRecordVacation(VacationTodo vacationTodo) {
-        return new RecordVacation(vacationTodo.getName(), vacationTodo.getLocate(), vacationTodo.getComment(), vacationTodo.getImage());
+        return new RecordVacation(vacationTodo.getVacationTodoId(), vacationTodo.getName(), vacationTodo.getLocate(), vacationTodo.getComment(), vacationTodo.getImage());
     }
 }
