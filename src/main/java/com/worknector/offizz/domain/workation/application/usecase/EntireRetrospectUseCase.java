@@ -2,8 +2,10 @@ package com.worknector.offizz.domain.workation.application.usecase;
 
 import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.workation.application.dto.req.EntireRetrospectRequest;
+import com.worknector.offizz.domain.workation.application.dto.res.AllRecapResponse;
 import com.worknector.offizz.domain.workation.application.dto.res.AllTodo;
 import com.worknector.offizz.domain.workation.application.dto.res.RecapResponse;
+import com.worknector.offizz.domain.workation.application.mapper.WorkationMapper;
 import com.worknector.offizz.domain.workation.domain.entity.*;
 import com.worknector.offizz.domain.workation.domain.service.DailyGetService;
 import com.worknector.offizz.domain.workation.domain.service.TodoGetService;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.stream.Collectors.*;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -31,6 +35,18 @@ public class EntireRetrospectUseCase {
 
     public RecapResponse saveRetrospect(User user, EntireRetrospectRequest request) {
         Workation workation = workationUpdateService.updateWorkationFin(user, request);
+        return getEntireRetrospect(workation);
+    }
+
+    public List<AllRecapResponse> findAllRecap(User user) {
+        List<Workation> workations = workationGetService.allWorkation(user);
+        return workations.stream()
+                .map(WorkationMapper::mapToRecapResponse)
+                .toList();
+    }
+
+    public RecapResponse getRecap(long workationId) {
+        Workation workation = workationGetService.findByWorkationId(workationId);
         return getEntireRetrospect(workation);
     }
 
@@ -56,7 +72,7 @@ public class EntireRetrospectUseCase {
                 .filter(WorkTodo::isComplete)
                 .count();
 
-        double finishRate = (finishCount / workTodos.size()) * 100;
+        double finishRate = workTodos.size() == 0 ? 100 : (finishCount / workTodos.size()) * 100;
         RecapResponse.ThirdPage thirdPage = new RecapResponse.ThirdPage(finishRate);
         // 페이지 2
 
@@ -73,7 +89,7 @@ public class EntireRetrospectUseCase {
         List<VacationTodo> vacationTodos = allTodo.vacationTodos();
         List<VacationTodo> finVacationTodos = vacationTodos.stream()
                 .filter(VacationTodo::isComplete)
-                .toList();
+                .collect(toCollection(ArrayList::new));
         RecapResponse.SixthPage sixthPage = getSixthPage(finVacationTodos);
         //페이지 7
 
@@ -145,7 +161,7 @@ public class EntireRetrospectUseCase {
             }
         });
         int last = 0;
-        for (int i = 1; i < finVacationTodos.size(); i++) {
+        for (int i = 0; i < finVacationTodos.size(); i++) {
             VacationTodo vacationTodo = finVacationTodos.get(i);
             VacationTodo bestVacation = finVacationTodos.get(last);
             Double rating = vacationTodo.getRating();
