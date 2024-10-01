@@ -31,16 +31,16 @@ public class S3UploaderUseCase {
     private String bucket;
 
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("jpg", "jpeg", "png", "gif");
+    private static final String dirName = "offizz-record";
 
-
-    public String uploadMultipartFile(MultipartFile multipartFile, String dirName) throws IOException {
+    public String uploadMultipartFile(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty() || Objects.isNull(multipartFile.getOriginalFilename())) {
             throw new EmptyMultipartFileException();
         }
 
         validateExtension(multipartFile.getOriginalFilename());
 
-        return uploadMultipartFileToS3(multipartFile, dirName);
+        return uploadMultipartFileToS3(multipartFile);
     }
 
     private void validateExtension(String fileName) {
@@ -55,7 +55,7 @@ public class S3UploaderUseCase {
         }
     }
 
-    private String uploadMultipartFileToS3(MultipartFile multipartFile, String dirName) throws IOException {
+    private String uploadMultipartFileToS3(MultipartFile multipartFile) throws IOException {
         String fileName = dirName + "/" +
                 multipartFile.getOriginalFilename() + "_" +
                 UUID.randomUUID().toString().substring(0, 10);
