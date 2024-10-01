@@ -41,9 +41,11 @@ public class WorkTodo extends BaseEntity {
 
     private LocalTime endTime;
 
-    public void updateFin(LocalTime actualTime) {
+    public void updateFin(LocalTime actualTime, LocalTime startTime, LocalTime endTime) {
         this.isComplete = true;
         this.actualTime = actualTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public boolean isComplete() {
