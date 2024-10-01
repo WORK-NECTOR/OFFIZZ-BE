@@ -18,7 +18,7 @@ public class TodoUpdateService {
     public void updateWorkTodoFin(WorkTodoFinRequest request) {
         WorkTodo workTodo = workToDoRepository.findById(request.workTodoId())
                 .orElseThrow(IllegalArgumentException::new);
-        workTodo.updateFin(request.actualTime());
+        workTodo.updateFin(request.actualTime(), request.startTime(), request.endTime());
     }
 
     public void updateVacationTodoFin(VacationTodoFinRequest request) {
