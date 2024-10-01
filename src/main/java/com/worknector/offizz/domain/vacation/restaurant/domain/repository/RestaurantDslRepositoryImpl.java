@@ -1,8 +1,12 @@
 package com.worknector.offizz.domain.vacation.restaurant.domain.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.worknector.offizz.domain.likes.domain.entity.Likes;
+import com.worknector.offizz.domain.likes.domain.entity.LikesCategory;
+import com.worknector.offizz.domain.vacation.recommend.application.projection.VacationRecommendProjection;
 import com.worknector.offizz.domain.vacation.restaurant.domain.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.worknector.offizz.domain.likes.domain.entity.QLikes.likes;
 import static com.worknector.offizz.domain.vacation.restaurant.domain.entity.QRestaurant.restaurant;
 import static com.worknector.offizz.global.util.HaversineUtils.distanceTemplate;
 
@@ -19,7 +24,7 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Restaurant> getAllRestaurantBySearch(String search, double lat, double lon) {
+    public List<VacationRecommendProjection> getAllRestaurantBySearch(String search, double lat, double lon, Long userId) {
         BooleanBuilder condition = new BooleanBuilder();
 
         if (search != null) {
@@ -28,7 +33,25 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
             condition.and(locationBuilder(lat, lon));
         }
 
-        return queryFactory.selectFrom(restaurant)
+        return queryFactory.select(
+                        Projections.constructor(
+                                VacationRecommendProjection.class,
+                                Expressions.asString("restaurant").as("category"),
+                                restaurant.restaurantId.as("objectPk"),
+                                restaurant.addr1.as("addr"),
+                                restaurant.lon,
+                                restaurant.lat,
+                                restaurant.title,
+                                restaurant.firstimage,
+                                likes.isNotNull().as("isLike")
+                        )
+                )
+                .from(restaurant)
+                .leftJoin(likes)
+                .on(likes.likesCategory.eq(LikesCategory.restaurant)
+                        .and(likes.fkId.eq(restaurant.restaurantId))
+                        .and(likes.user.userId.eq(userId)))
+                .fetchJoin()
                 .where(condition)
                 .orderBy(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).asc())
                 .fetch();

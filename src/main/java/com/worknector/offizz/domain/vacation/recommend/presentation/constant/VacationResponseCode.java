@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum VacationResponseCode {
 
     INVALID_VACATION_FILTER("EX400", "유효하지 않은 VACATION 필터입니다."),
+    INVALID_VACATION_CATEGORY("EX401", "유효하지 않은 VACATION 카테고리입니다."),
     ;
 
     private final String code;

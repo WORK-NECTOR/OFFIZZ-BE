@@ -1,8 +1,8 @@
-package com.worknector.offizz.domain.vacation.recommend.application.dto.res;
+package com.worknector.offizz.domain.vacation.recommend.application.projection;
 
-public record VacationRecommendResponse(
+public record VacationRecommendProjection(
         String category,
-        Long natureId,
+        Long objectPk,
         String addr,
         double lon,
         double lat,

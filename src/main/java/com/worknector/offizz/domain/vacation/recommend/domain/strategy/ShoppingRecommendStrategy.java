@@ -2,7 +2,7 @@ package com.worknector.offizz.domain.vacation.recommend.domain.strategy;
 
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
 import com.worknector.offizz.domain.vacation.recommend.application.mapper.VacationRecommendMapper;
-import com.worknector.offizz.domain.vacation.shopping.domain.entity.Shopping;
+import com.worknector.offizz.domain.vacation.recommend.application.projection.VacationRecommendProjection;
 import com.worknector.offizz.domain.vacation.shopping.domain.service.ShoppingGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +24,11 @@ public class ShoppingRecommendStrategy implements VacationRecommendStrategy {
      * @return 주어진 검색어와 위치를 기반으로 쇼핑 추천 목록을 {@link VacationRecommendResponse} 형식으로 반환
      */
     @Override
-    public List<VacationRecommendResponse> recommend(String search, double lat, double lon) {
-        List<Shopping> cultures = shoppingGetService.getAllShoppingBySearch(search, lat, lon);
+    public List<VacationRecommendResponse> recommend(String search, double lat, double lon, Long userId) {
+        List<VacationRecommendProjection> cultures = shoppingGetService.getAllShoppingBySearch(search, lat, lon, userId);
 
         return cultures.stream()
-                .map(VacationRecommendMapper::fromShopping)
+                .map(VacationRecommendMapper::fromVacationRecommendProjection)
                 .toList();
     }
 }

@@ -1,4 +1,4 @@
-package com.worknector.offizz.domain.vacation.vacation.service;
+package com.worknector.offizz.domain.vacation.recommend.domain.service;
 
 import com.worknector.offizz.domain.likes.domain.entity.Likes;
 import com.worknector.offizz.domain.likes.domain.entity.LikesCategory;

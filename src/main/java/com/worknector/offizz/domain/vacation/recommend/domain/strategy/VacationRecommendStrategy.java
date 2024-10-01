@@ -5,5 +5,5 @@ import com.worknector.offizz.domain.vacation.recommend.application.dto.res.Vacat
 import java.util.List;
 
 public interface VacationRecommendStrategy {
-    List<VacationRecommendResponse> recommend(String search, double lat, double lon);
+    List<VacationRecommendResponse> recommend(String search, double lat, double lon, Long userId);
 }

@@ -1,11 +1,11 @@
 package com.worknector.offizz.openapi.course.application.usecase;
 
+import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
+import com.worknector.offizz.domain.vacation.nature.domain.repository.CourseRepository;
 import com.worknector.offizz.openapi.course.application.dto.CourseResponse;
 import com.worknector.offizz.openapi.course.application.dto.CourseResponse.Item;
 import com.worknector.offizz.openapi.course.application.dto.CourseResponse.Items;
 import com.worknector.offizz.openapi.course.application.mapper.CourseMapper;
-import com.worknector.offizz.domain.vacation.nature.domain.entity.Course;
-import com.worknector.offizz.domain.vacation.nature.domain.repository.CourseRepository;
 import com.worknector.offizz.openapi.utils.CourseGpxParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,12 +45,17 @@ public class CourseOpenDataUseCase {
       }
 
       for (CourseResponse.Item item : courseItemList) {
-        Optional<Course> existingCourse = courseRepository.findByCrsIdxAndRouteIdx(
-                item.crsIdx(), item.routeIdx()
+        List<Course> existingCourse = courseRepository.findAllByCrsIdxAndCrsKorNm(
+                item.crsIdx(), item.crsKorNm()
         );
 
-        if (existingCourse.isPresent()) {
+        if (existingCourse.size() >= 2) {
           // TODO: 기존 데이터 업데이트 로직 추가
+
+          for (int i = 1; i < existingCourse.size(); i++) {
+            existingCourse.remove(i);
+          }
+
           continue;
         }
 

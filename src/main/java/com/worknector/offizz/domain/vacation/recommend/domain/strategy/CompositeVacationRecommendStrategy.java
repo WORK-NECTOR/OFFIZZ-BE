@@ -13,11 +13,11 @@ public class CompositeVacationRecommendStrategy implements VacationRecommendStra
     private final List<VacationRecommendStrategy> strategies;
 
     @Override
-    public List<VacationRecommendResponse> recommend(String search, double lat, double lon) {
+    public List<VacationRecommendResponse> recommend(String search, double lat, double lon, Long userId) {
         List<VacationRecommendResponse> combinedRecommendations = new ArrayList<>();
 
         for (VacationRecommendStrategy strategy : strategies) {
-            combinedRecommendations.addAll(strategy.recommend(search, lat, lon));
+            combinedRecommendations.addAll(strategy.recommend(search, lat, lon, userId));
         }
 
         return combinedRecommendations;

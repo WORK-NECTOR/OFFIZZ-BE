@@ -1,9 +1,9 @@
 package com.worknector.offizz.domain.vacation.recommend.domain.strategy;
 
-import com.worknector.offizz.domain.vacation.culture.domain.entity.Culture;
 import com.worknector.offizz.domain.vacation.culture.domain.service.CultureGetService;
 import com.worknector.offizz.domain.vacation.recommend.application.dto.res.VacationRecommendResponse;
 import com.worknector.offizz.domain.vacation.recommend.application.mapper.VacationRecommendMapper;
+import com.worknector.offizz.domain.vacation.recommend.application.projection.VacationRecommendProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +24,11 @@ public class CultureRecommendStrategy implements VacationRecommendStrategy {
      * @return 주어진 검색어와 위치를 기반으로 문화 추천 목록을 {@link VacationRecommendResponse} 형식으로 반환
      */
     @Override
-    public List<VacationRecommendResponse> recommend(String search, double lat, double lon) {
-        List<Culture> cultures = cultureGetService.getAllCultureBySearch(search, lat, lon);
+    public List<VacationRecommendResponse> recommend(String search, double lat, double lon, Long userId) {
+        List<VacationRecommendProjection> cultures = cultureGetService.getAllCultureBySearch(search, lat, lon, userId);
 
         return cultures.stream()
-                .map(VacationRecommendMapper::fromCulture)
+                .map(VacationRecommendMapper::fromVacationRecommendProjection)
                 .toList();
     }
 }
