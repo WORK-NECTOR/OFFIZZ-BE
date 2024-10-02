@@ -24,6 +24,15 @@ public class WorkationGetService {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public Workation findByWorkationId(long workationId) {
+        return workationRepository.findById(workationId)
+                .orElseThrow();
+    }
+
+    public List<Workation> allWorkation(User user) {
+        return workationRepository.findAllByUserOrderByCreatedAtDesc(user);
+    }
+
     public List<WorkKeyword> findWorkKeyword(Workation workation) {
         return workKeywordRepository.findAllByWorkation(workation)
                 .stream()
