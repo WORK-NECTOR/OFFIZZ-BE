@@ -35,7 +35,9 @@ public class OnboardingUseCase {
     public Long createOnboarding(User user, OnboardingRequest onboardingRequest) {
         Workation workation = saveWorkation(user, onboardingRequest);
         saveWorkationKeywords(workation, onboardingRequest.workKeywords(), onboardingRequest.vacationKeywords());
-        saveBucketlists(workation, onboardingRequest.bucketlists());
+        if (onboardingRequest.bucketlists() != null) {
+            saveBucketlists(workation, onboardingRequest.bucketlists());
+        }
         saveDaily(workation);
         return workation.getWorkationId();
     }
