@@ -46,6 +46,7 @@ public class DashboardTodoUseCase {
         List<WorkTodo> workTodos = todoGetService.findAllTodos(user, day)
                 .workTodos();
         List<TodoHours> todoHours = workTodos.stream()
+                .filter(WorkTodo::isComplete)
                 .map(TodoMapper::mapToTodoHours)
                 .toList();
         return new WorkHours(todoHours, startCoreTime, endCoreTime);
