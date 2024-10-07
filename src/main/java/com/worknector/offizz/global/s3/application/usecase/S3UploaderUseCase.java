@@ -55,24 +55,19 @@ public class S3UploaderUseCase {
         }
     }
 
-    private String uploadMultipartFileToS3(MultipartFile multipartFile) throws IOException {
-        String fileName = dirName + "/" +
-                multipartFile.getOriginalFilename() + "_" +
-                UUID.randomUUID().toString().substring(0, 10);
-
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType(multipartFile.getContentType());
-        metadata.setContentLength(multipartFile.getBytes().length);
-
+    private String uploadMultipartFileToS3(MultipartFile multipartFile) {
         try {
-            PutObjectRequest putObjectRequest =
-                    new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
-                            .withCannedAcl(CannedAccessControlList.PublicRead);
-            amazonS3.putObject(putObjectRequest);
-        } catch (Exception e) {
+            String originalFilename = multipartFile.getOriginalFilename();
+            String fileName = dirName + "/" + originalFilename + UUID.randomUUID();
+
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(multipartFile.getSize());
+            metadata.setContentType(multipartFile.getContentType());
+
+            amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), metadata);
+            return amazonS3.getUrl(bucket, fileName).toString();
+        } catch (IOException ex) {
             throw new S3UploadFailedException();
         }
-
-        return amazonS3.getUrl(bucket, fileName).toString();
     }
 }
