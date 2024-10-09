@@ -22,7 +22,7 @@ public class VacationRecommendController {
 
     private final VacationRecommendUseCase vacationRecommendUseCase;
 
-    @GetMapping("/recommend/{filter}/{page}/{size}")
+    @GetMapping("/{filter}/location/{page}/{size}")
     @Operation(summary = "VACATION > 추천) 검색에 따른 vacation 페이지",
             description = "'서울 강남' 검색 -> 서울과 강남을 모두 포함하는 주소 혹은 자연/맛집/문화예술/쇼핑 이름")
     public ResponseEntity<PagingVacationRecommendResponse> searchRecommendVacation(
