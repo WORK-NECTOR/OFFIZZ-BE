@@ -74,7 +74,7 @@ public class ShoppingDslRepositoryImpl implements ShoppingDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, shopping.lat, shopping.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, shopping.lat, shopping.lon).loe(1.0));
     }
 
     @Override

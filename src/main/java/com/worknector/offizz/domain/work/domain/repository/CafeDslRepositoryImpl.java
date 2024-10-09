@@ -51,7 +51,7 @@ public class CafeDslRepositoryImpl implements CafeDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, cafe.lat, cafe.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, cafe.lat, cafe.lon).loe(1.0));
     }
 
     private BooleanBuilder searchBuilder(String search) {

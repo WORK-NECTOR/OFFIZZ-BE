@@ -74,7 +74,7 @@ public class CourseDslRepositoryImpl implements CourseDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, course.lat, course.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, course.lat, course.lon).loe(1.0));
     }
 
     @Override

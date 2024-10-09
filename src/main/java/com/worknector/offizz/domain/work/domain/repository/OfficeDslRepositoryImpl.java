@@ -108,7 +108,7 @@ public class OfficeDslRepositoryImpl implements OfficeDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, office.lat, office.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, office.lat, office.lon).loe(1.0));
     }
 
     private BooleanBuilder searchBuilder(String search) {

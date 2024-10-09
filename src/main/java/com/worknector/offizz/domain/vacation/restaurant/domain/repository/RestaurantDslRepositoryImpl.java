@@ -74,7 +74,7 @@ public class RestaurantDslRepositoryImpl implements RestaurantDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, restaurant.lat, restaurant.lon).loe(1.0));
     }
 
     @Override

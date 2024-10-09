@@ -74,7 +74,7 @@ public class CultureDslRepositoryImpl implements CultureDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, culture.lat, culture.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, culture.lat, culture.lon).loe(1.0));
     }
 
     @Override

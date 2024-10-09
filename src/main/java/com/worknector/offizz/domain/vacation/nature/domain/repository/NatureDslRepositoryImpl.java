@@ -74,7 +74,7 @@ public class NatureDslRepositoryImpl implements NatureDslRepository {
 
     private BooleanBuilder locationBuilder(double lat, double lon) {
         return new BooleanBuilder()
-                .and(distanceTemplate(lat, lon, nature.lat, nature.lon).loe(10.0));
+                .and(distanceTemplate(lat, lon, nature.lat, nature.lon).loe(1.0));
     }
 
     @Override
