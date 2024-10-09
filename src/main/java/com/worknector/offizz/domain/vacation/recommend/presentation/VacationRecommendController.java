@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import reactor.util.annotation.Nullable;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class VacationRecommendController {
             @AuthenticationPrincipal User user,
             @Schema(description = "vacation 필터: culture, nature, restaurant, shopping, all")
             @PathVariable Filter filter,
-            @RequestParam(name = "search") String search,
+            @RequestParam(name = "search") @Nullable String search,
             @RequestParam(name = "lat") double lat,
             @RequestParam(name = "lon") double lon,
             @PathVariable(name = "page") int page,
