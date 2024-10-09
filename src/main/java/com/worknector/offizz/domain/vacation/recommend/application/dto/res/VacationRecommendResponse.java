@@ -2,12 +2,12 @@ package com.worknector.offizz.domain.vacation.recommend.application.dto.res;
 
 public record VacationRecommendResponse(
         String category,
-        Long natureId,
-        String addr,
+        Long id,
+        String address,
         double lon,
         double lat,
-        String title,
-        String firstImage,
+        String name,
+        String image,
         boolean isLike
 ) {
 }
