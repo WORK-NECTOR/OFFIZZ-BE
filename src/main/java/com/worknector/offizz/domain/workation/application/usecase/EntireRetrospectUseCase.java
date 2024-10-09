@@ -41,6 +41,7 @@ public class EntireRetrospectUseCase {
     public List<AllRecapResponse> findAllRecap(User user) {
         List<Workation> workations = workationGetService.allWorkation(user);
         return workations.stream()
+                .filter(workation -> workation.getRetrospect() != null)
                 .map(WorkationMapper::mapToRecapResponse)
                 .toList();
     }
