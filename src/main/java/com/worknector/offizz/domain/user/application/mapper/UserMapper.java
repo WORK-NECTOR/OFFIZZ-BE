@@ -23,11 +23,11 @@ public class UserMapper {
 
     public static User mapToUser(LoginRequest request) {
         Random rd = new Random();
-        long sid = rd.nextLong(1000000, 9999999);
+        int sid = rd.nextInt(1000000, 9999999);
         return User.builder()
                 .pw(request.password())
                 .nickName(Provider.OFFIZZ.name() + sid)
-                .socialId(sid)
+                .socialId((long) sid)
                 .email(request.email())
                 .build();
     }
