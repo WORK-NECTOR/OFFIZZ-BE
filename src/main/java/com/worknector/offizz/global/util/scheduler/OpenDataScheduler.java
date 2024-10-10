@@ -3,6 +3,7 @@ package com.worknector.offizz.global.util.scheduler;
 import com.worknector.offizz.openapi.course.application.usecase.CourseOpenDataUseCase;
 import com.worknector.offizz.openapi.office.application.usecase.OfficeOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.AccommodationOpenDataUseCase;
+import com.worknector.offizz.openapi.tour.application.usecase.AreaBasedNatureOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.CultureOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.RestaurantOpenDataUseCase;
 import com.worknector.offizz.openapi.tour.application.usecase.ShoppingOpenDataUseCase;
@@ -26,15 +27,16 @@ public class OpenDataScheduler {
     private final RestaurantOpenDataUseCase restaurantOpenDataUseCase;
     private final CultureOpenDataUseCase cultureOpenDataUseCase;
     private final ShoppingOpenDataUseCase shoppingOpenDataUseCase;
+    private final AreaBasedNatureOpenDataUseCase areaBasedNatureOpenDataUseCase;
 
     // 공유오피스 데이터 매달 1일 자정마다 update
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleOfficeOpenDataUpdate() {
         officeDataUseCase.updateOfficeData();
     }
 
     // 산책로 데이터 매달 1일 자정마다 update
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleCourseOpenDataUpdate() {
         try {
             courseOpenDataUseCase.updateCourseData();
@@ -44,31 +46,35 @@ public class OpenDataScheduler {
     }
 
     // 숙박시설 데이터 매달 1일 자정마다 update
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleAccommodationOpenDataUpdate() {
         accommodationOpenDataUseCase.updateAccommodationData();
     }
 
     // 카페 데이터 매달 1일 자정마다 update
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleCafeUpdate() {
         accommodationOpenDataUseCase.updateCafeData();
     }
 
     // 음식점 데이터 매달 1일 자정마다 update
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleRestaurantOpenDataUpdate() {
         restaurantOpenDataUseCase.updateRestaurantData(RESTAURANT_CAT3_LIST);
     }
 
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleCultureOpenDataUpdate() {
         cultureOpenDataUseCase.updateCultureData();
     }
 
-
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 13 * ?")
     public void scheduleShoppingOpenDataUpdate() {
         shoppingOpenDataUseCase.updateShoppingData();
+    }
+
+    @Scheduled(cron = "0 0 0 13 * ?")
+    public void scheduleNatureOpenDataUpdate() {
+        areaBasedNatureOpenDataUseCase.updateAreaBasedNatureData();
     }
 }
