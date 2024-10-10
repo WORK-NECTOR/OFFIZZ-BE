@@ -34,6 +34,8 @@ public class User extends BaseEntity {
     @Builder.Default
     private UserStatusType status = USABLE;
 
+    private String pw;
+
     public boolean isDeleted() {
         return this.status.equals(DELETED);
     }
