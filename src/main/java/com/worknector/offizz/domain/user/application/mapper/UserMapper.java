@@ -23,7 +23,10 @@ public class UserMapper {
 
     public static User mapToUser(LoginRequest request) {
         Random rd = new Random();
-        int sid = rd.nextInt(1000000, 9999999);
+        int min = 1000000;
+        int max = 9999999;
+        int sid = rd.nextInt((max - min) + 1) + min;
+
         return User.builder()
                 .pw(request.password())
                 .nickName(Provider.OFFIZZ.name() + sid)
