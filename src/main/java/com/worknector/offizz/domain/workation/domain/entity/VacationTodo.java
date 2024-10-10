@@ -52,6 +52,8 @@ public class VacationTodo extends BaseEntity {
         this.isComplete = true;
         if (request.image() != null)
             this.image = request.image();
+        if (request.image() == null)
+            this.image = "https://offizz-s3.s3.ap-northeast-2.amazonaws.com/offizz-record/emptyVacation.png";
     }
 
     public void updateVacationTodo(VacationTodoFinRequest request) {
@@ -62,7 +64,7 @@ public class VacationTodo extends BaseEntity {
         if (request.image() != null)
             this.image = request.image();
         else
-            this.image = null;
+            this.image = "https://offizz-s3.s3.ap-northeast-2.amazonaws.com/offizz-record/emptyVacation.png";
     }
 
     public void updateNotFin() {
