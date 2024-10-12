@@ -5,10 +5,10 @@ import com.worknector.offizz.domain.workation.domain.entity.Daily;
 import com.worknector.offizz.domain.workation.domain.entity.Workation;
 import com.worknector.offizz.domain.workation.domain.repository.DailyRepository;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationRepository;
+import com.worknector.offizz.global.exception.ObjectNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,9 +20,9 @@ public class DailyGetService {
         Workation workation = workationRepository.findAllByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .findFirst()
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(ObjectNotFoundException::new);
         return dailyRepository.findByWorkationAndDay(workation, day)
-                .orElseThrow(IllegalAccessError::new);
+                .orElseThrow(ObjectNotFoundException::new);
     }
 
     public List<Daily> findAllDailyByWorkation(Workation workation) {
