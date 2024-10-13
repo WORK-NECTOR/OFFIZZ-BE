@@ -4,7 +4,9 @@ import com.worknector.offizz.domain.user.application.dto.req.UserInfoRequest;
 import com.worknector.offizz.domain.user.application.dto.res.UserInfoResponse;
 import com.worknector.offizz.domain.user.domain.entity.User;
 import com.worknector.offizz.domain.user.domain.service.UserGetService;
+import com.worknector.offizz.domain.workation.domain.service.WorkationGetService;
 import com.worknector.offizz.global.exception.ExceptionResponse;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import static com.worknector.offizz.domain.user.presentation.constant.UserRespon
 public class UserUseCase {
 
     private final UserGetService userGetService;
+    private final WorkationGetService workationGetService;
 
     public UserInfoResponse getUserInfo(User user) {
         User findUser = userGetService.byUserId(user.getUserId());
@@ -35,6 +38,10 @@ public class UserUseCase {
     public Long withdrawUser(User user) {
         user.changeStatusToDeleted();
         return user.getUserId();
+    }
+
+    public boolean getOnGoingWorkation(User user) {
+        return !workationGetService.findOnGoingWorkation(user).isEmpty();
     }
 
     private void validateUsableUser(User user) {

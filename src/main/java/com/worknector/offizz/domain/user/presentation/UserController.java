@@ -40,4 +40,11 @@ public class UserController {
         Long userId = userUseCase.withdrawUser(user);
         return ResponseEntity.ok(userId);
     }
+
+    @GetMapping("/workation/ongoing")
+    @Operation(summary = "진행 중인 workation 조회", description = "존재하면 true, 존재하지 않으면 false")
+    public ResponseEntity<Boolean> getOnGoingWorkation(@AuthenticationPrincipal User user) {
+        boolean onGoingWorkation = userUseCase.getOnGoingWorkation(user);
+        return ResponseEntity.ok(onGoingWorkation);
+    }
 }

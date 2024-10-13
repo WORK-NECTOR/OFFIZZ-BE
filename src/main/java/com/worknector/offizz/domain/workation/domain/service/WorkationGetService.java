@@ -5,6 +5,7 @@ import com.worknector.offizz.domain.workation.domain.entity.*;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationRepository;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationVacationKeywordRepository;
 import com.worknector.offizz.domain.workation.domain.repository.WorkationWorkKeywordRepository;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,9 @@ public class WorkationGetService {
                 .stream()
                 .map(WorkationVacationKeyword::getKeyword)
                 .toList();
+    }
+
+    public List<Workation> findOnGoingWorkation(User user) {
+        return workationRepository.findOngoingWorkations(user, LocalDate.now());
     }
 }
