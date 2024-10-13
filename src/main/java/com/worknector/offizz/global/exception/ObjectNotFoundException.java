@@ -1,6 +1,6 @@
 package com.worknector.offizz.global.exception;
 
-import static com.worknector.offizz.global.exception.GlobalExceptionCode.OBJECT_NOT_FOUND;
+import static com.worknector.offizz.global.exception.constant.GlobalExceptionCode.OBJECT_NOT_FOUND;
 
 public class ObjectNotFoundException extends ApplicationException {
     public ObjectNotFoundException() {

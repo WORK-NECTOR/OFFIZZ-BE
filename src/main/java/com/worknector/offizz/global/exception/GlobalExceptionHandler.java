@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Objects;
 
-import static com.worknector.offizz.global.exception.GlobalExceptionCode.*;
+import static com.worknector.offizz.global.exception.constant.GlobalExceptionCode.*;
 
 @RestControllerAdvice
 @Slf4j
