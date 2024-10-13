@@ -52,6 +52,7 @@ public class EntireRetrospectUseCase {
     }
 
     private RecapResponse getEntireRetrospect(Workation workation) {
+        RecapResponse.ZeroPage zeroPage = new RecapResponse.ZeroPage(workation.getLocate(), workation.getAddress(), workation.getStartDate(), workation.getEndDate());
         String reason = workation.getReason();
         RecapResponse.FirstPage firstPage = new RecapResponse.FirstPage(reason);
 
@@ -93,7 +94,7 @@ public class EntireRetrospectUseCase {
         RecapResponse.SeventhPage seventhPage = getSevenPage(finVacationTodos);
 //        페이지 9
 
-        return new RecapResponse(firstPage, secondPage, thirdPage, fourthPage, fifthPage, sixthPage, seventhPage);
+        return new RecapResponse(zeroPage, firstPage, secondPage, thirdPage, fourthPage, fifthPage, sixthPage, seventhPage);
     }
 
     private RecapResponse.FourthPage getFourthPage(Workation workation, List<Daily> dailies) {

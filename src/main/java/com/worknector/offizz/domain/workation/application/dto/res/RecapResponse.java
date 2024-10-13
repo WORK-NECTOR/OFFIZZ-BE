@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public record RecapResponse(
+    ZeroPage zeroPage,
     FirstPage firstPage,
     SecondPage secondPage,
     ThirdPage thirdPage,
@@ -13,6 +14,12 @@ public record RecapResponse(
     SixthPage sixthPage,
     SeventhPage seventhPage
 ) {
+    public record ZeroPage(
+            String name,
+            String address,
+            LocalDate startDate,
+            LocalDate endDate
+    ){}
     public record FirstPage(String reason){}
     public record SecondPage(long totalTime, LocalTime startTime, LocalTime endTime, long averageTime){}
     public record ThirdPage(double rate){}
