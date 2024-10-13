@@ -52,6 +52,7 @@ public class EntireRetrospectUseCase {
     }
 
     private RecapResponse getEntireRetrospect(Workation workation) {
+        RecapResponse.ZeroPage zeroPage = new RecapResponse.ZeroPage(workation.getLocate(), workation.getAddress(), workation.getStartDate(), workation.getEndDate());
         String reason = workation.getReason();
         RecapResponse.FirstPage firstPage = new RecapResponse.FirstPage(reason);
 
@@ -81,28 +82,19 @@ public class EntireRetrospectUseCase {
         RecapResponse.FourthPage fourthPage = getFourthPage(workation, dailies);
         //페이지 4
 
-        RecapResponse.FifthPage fifthPage = getFifthPage(workation, dailies);
-        //페이지 5
-
-        //페이지 6에서 업무 공간 만족도를 제공할 수 없음 -> 가지고 있지 않음
-
-        //페이지 7에서 여행 시간은 따로 측정하지 않아서 제공할 수 없음
         List<VacationTodo> vacationTodos = allTodo.vacationTodos();
         List<VacationTodo> finVacationTodos = vacationTodos.stream()
                 .filter(VacationTodo::isComplete)
                 .collect(toCollection(ArrayList::new));
-        RecapResponse.SixthPage sixthPage = getSixthPage(finVacationTodos);
-        //페이지 7
+        RecapResponse.FifthPage fifthPage = getFifthPage(finVacationTodos);
+        //페이지 5
 
-        Daily daily = dailies.get(0);
-        RecapResponse.SeventhPage seventhPage = new RecapResponse.SeventhPage(List.of(daily.getDate()));
-        //todo : 지원님 변경사항으로 work/vacation Condition이 변경됨 이에 따라 맞춰 변경 필요
-        //페이지 8
+        RecapResponse.SixthPage sixthPage = getSixthPage(vacationTodos);
 
-        RecapResponse.EighthPage eightPage = getEightPage(finVacationTodos);
-        //페이지 9
+        RecapResponse.SeventhPage seventhPage = getSevenPage(finVacationTodos);
+//        페이지 9
 
-        return new RecapResponse(firstPage, secondPage, thirdPage, fourthPage, fifthPage, sixthPage, seventhPage, eightPage);
+        return new RecapResponse(zeroPage, firstPage, secondPage, thirdPage, fourthPage, fifthPage, sixthPage, seventhPage);
     }
 
     private RecapResponse.FourthPage getFourthPage(Workation workation, List<Daily> dailies) {
@@ -130,29 +122,24 @@ public class EntireRetrospectUseCase {
         return new RecapResponse.FourthPage(bestWorkDay, diff);
     }
 
-    private RecapResponse.FifthPage getFifthPage(Workation workation, List<Daily> dailies) {
-        List<LocalDate> bestWorkDays = new ArrayList<>();
-//        int finalBestScore = 0;
-//        dailies.stream()
-//                .filter(daily -> daily.getWorkCondition() == finalBestScore)
-//                .map(daily -> bestWorkDays.add(workation.getStartDate().plusDays(daily.getDay()-1)));
-        Daily daily = dailies.get(0);
-        bestWorkDays.add(daily.getDate());
-        /**
-         * condition 변경에 따른 임시 데이터
-         */
-        return new RecapResponse.FifthPage(bestWorkDays);
-    }
-
-    private RecapResponse.SixthPage getSixthPage(List<VacationTodo> finVacationTodos) {
+    private RecapResponse.FifthPage getFifthPage(List<VacationTodo> finVacationTodos) {
         int finishVacationCount = finVacationTodos.size();
         double finishVacationRate = finVacationTodos.stream()
                 .mapToDouble(VacationTodo::getRating)
                 .sum()/finishVacationCount;
-        return new RecapResponse.SixthPage(finishVacationCount,finishVacationRate);
+        return new RecapResponse.FifthPage(finishVacationCount,finishVacationRate);
     }
 
-    private RecapResponse.EighthPage getEightPage(List<VacationTodo> finVacationTodos) {
+    private RecapResponse.SixthPage getSixthPage(List<VacationTodo> vacationTodos) {
+        long count = vacationTodos.stream()
+                .filter(VacationTodo::isComplete)
+                .count();
+        double finishRate = vacationTodos.size() == 0 ? 100 : (count / vacationTodos.size()) * 100;
+
+        return new RecapResponse.SixthPage(finishRate);
+    }
+
+    private RecapResponse.SeventhPage getSevenPage(List<VacationTodo> finVacationTodos) {
         finVacationTodos.sort(new Comparator<VacationTodo>() {
             @Override
             public int compare(VacationTodo o1, VacationTodo o2) {
@@ -170,13 +157,14 @@ public class EntireRetrospectUseCase {
                 break;
             last = i;
         }
+
         // last 까지 모두 만족도 최대 추가
         List<RecapResponse.BestVacation> bestVacations = new ArrayList<>();
-        for (int i = 0; i < last; i++) {
+        for (int i = 0; i <= last; i++) {
             VacationTodo vacationTodo = finVacationTodos.get(i);
             RecapResponse.BestVacation bestVacation = new RecapResponse.BestVacation(vacationTodo.getDaily().getDate(), vacationTodo.getName());
             bestVacations.add(bestVacation);
         }
-        return new RecapResponse.EighthPage(bestVacations);
+        return new RecapResponse.SeventhPage(bestVacations);
     }
 }
